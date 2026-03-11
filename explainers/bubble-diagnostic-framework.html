@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Bubble Diagnostic Framework — Tommy 🦀</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=JetBrains+Mono:wght@400;500;600&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --font-display: 'Instrument Serif', Georgia, serif;
+    --font-body: 'DM Sans', system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', 'SF Mono', Consolas, monospace;
+
+    --bg: #faf8f4;
+    --surface: #ffffff;
+    --surface2: #f3efe8;
+    --surface-elevated: #fffcf7;
+    --border: rgba(0, 0, 0, 0.06);
+    --border-bright: rgba(0, 0, 0, 0.12);
+    --text: #1a1815;
+    --text-dim: #7a756d;
+    --accent: #1e3a5f;
+    --accent-dim: rgba(30, 58, 95, 0.07);
+    --gold: #b8860b;
+    --gold-dim: rgba(184, 134, 11, 0.08);
+    --danger: #9a2c2c;
+    --danger-dim: rgba(154, 44, 44, 0.07);
+    --sage: #3d6b4f;
+    --sage-dim: rgba(61, 107, 79, 0.07);
+    --warm: #8b5e3c;
+    --warm-dim: rgba(139, 94, 60, 0.07);
+    --stage1: #3d6b4f;
+    --stage2: #b8860b;
+    --stage3: #c2410c;
+    --stage4: #9a2c2c;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #141210;
+      --surface: #1c1917;
+      --surface2: #231f1b;
+      --surface-elevated: #2a2520;
+      --border: rgba(255, 255, 255, 0.06);
+      --border-bright: rgba(255, 255, 255, 0.1);
+      --text: #ede8e0;
+      --text-dim: #9a9288;
+      --accent: #6b9fd4;
+      --accent-dim: rgba(107, 159, 212, 0.1);
+      --gold: #d4a73a;
+      --gold-dim: rgba(212, 167, 58, 0.1);
+      --danger: #e06060;
+      --danger-dim: rgba(224, 96, 96, 0.08);
+      --sage: #6dbc86;
+      --sage-dim: rgba(109, 188, 134, 0.08);
+      --warm: #c49a72;
+      --warm-dim: rgba(196, 154, 114, 0.08);
+      --stage1: #6dbc86;
+      --stage2: #d4a73a;
+      --stage3: #e08840;
+      --stage4: #e06060;
+    }
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    background-image:
+      radial-gradient(at 15% 10%, var(--gold-dim) 0%, transparent 50%),
+      radial-gradient(at 85% 80%, var(--accent-dim) 0%, transparent 50%);
+    min-height: 100vh;
+  }
+
+  .page {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem 4rem;
+  }
+
+  /* Hero */
+  .hero {
+    text-align: center;
+    margin-bottom: 4rem;
+    padding: 3rem 2rem 2.5rem;
+    background: var(--surface-elevated);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--stage1), var(--stage2), var(--stage3), var(--stage4));
+  }
+  .hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin-bottom: 0.75rem;
+    color: var(--text);
+  }
+  .hero .subtitle {
+    font-size: 1.05rem;
+    color: var(--text-dim);
+    max-width: 600px;
+    margin: 0 auto 1.5rem;
+  }
+  .hero .byline {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--text-dim);
+    letter-spacing: 0.03em;
+  }
+
+  /* Section labels */
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .section-label .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  /* Stage timeline */
+  .stage-timeline {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+    margin: 2rem 0 3rem;
+    position: relative;
+  }
+  .stage-timeline::before {
+    content: '';
+    position: absolute;
+    left: 28px;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(to bottom, var(--stage1), var(--stage2), var(--stage3), var(--stage4));
+    border-radius: 2px;
+  }
+  .stage-card {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: 0;
+    align-items: start;
+    padding: 1rem 0;
+  }
+  .stage-marker {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 0.25rem;
+  }
+  .stage-num {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #fff;
+    position: relative;
+    z-index: 1;
+  }
+  .stage-content {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    transition: box-shadow 0.2s;
+  }
+  .stage-content:hover {
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+  }
+  .stage-title {
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    margin-bottom: 0.3rem;
+    line-height: 1.3;
+  }
+  .stage-quote {
+    font-style: italic;
+    color: var(--text-dim);
+    font-size: 0.92rem;
+    margin-bottom: 0.6rem;
+    border-left: 2px solid var(--border-bright);
+    padding-left: 0.75rem;
+  }
+  .stage-desc {
+    font-size: 0.92rem;
+    color: var(--text);
+    line-height: 1.6;
+  }
+  .stage-tag {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 500;
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    margin-top: 0.6rem;
+    letter-spacing: 0.04em;
+  }
+
+  /* Diagnostic grid */
+  .diagnostic-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+    margin: 2rem 0 3rem;
+  }
+  .diag-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .diag-card:hover {
+    box-shadow: 0 6px 24px rgba(0,0,0,0.06);
+    transform: translateY(-2px);
+  }
+  .diag-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+  .diag-card:nth-child(1)::before { background: var(--stage1); }
+  .diag-card:nth-child(2)::before { background: var(--stage2); }
+  .diag-card:nth-child(3)::before { background: var(--stage3); }
+  .diag-card:nth-child(4)::before { background: var(--stage4); }
+  .diag-num {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: var(--text-dim);
+    margin-bottom: 0.5rem;
+  }
+  .diag-title {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    margin-bottom: 0.6rem;
+    line-height: 1.3;
+  }
+  .diag-q {
+    font-size: 0.88rem;
+    font-style: italic;
+    color: var(--text-dim);
+    margin-bottom: 0.75rem;
+    padding-left: 0.75rem;
+    border-left: 2px solid var(--border-bright);
+  }
+  .diag-signals {
+    list-style: none;
+    padding: 0;
+  }
+  .diag-signals li {
+    font-size: 0.85rem;
+    padding: 0.3rem 0;
+    padding-left: 1.2rem;
+    position: relative;
+    color: var(--text);
+  }
+  .diag-signals li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.65rem;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+  }
+  .diag-card:nth-child(1) .diag-signals li::before { background: var(--stage1); }
+  .diag-card:nth-child(2) .diag-signals li::before { background: var(--stage2); }
+  .diag-card:nth-child(3) .diag-signals li::before { background: var(--stage3); }
+  .diag-card:nth-child(4) .diag-signals li::before { background: var(--stage4); }
+
+  /* Game theory mapping */
+  .gt-section {
+    margin: 2rem 0 3rem;
+  }
+  .gt-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+    margin-top: 1.5rem;
+  }
+  .gt-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+  }
+  .gt-card h3 {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    margin-bottom: 0.4rem;
+  }
+  .gt-card .marks {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.6rem;
+  }
+  .gt-card .game {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.6rem;
+  }
+  .gt-card p {
+    font-size: 0.88rem;
+    color: var(--text);
+    line-height: 1.55;
+  }
+
+  /* Payoff matrix */
+  .payoff-wrap {
+    margin: 2rem 0 3rem;
+    overflow-x: auto;
+  }
+  .payoff-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+    background: var(--surface);
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  .payoff-table th {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    padding: 1rem 1.25rem;
+    text-align: left;
+    background: var(--surface2);
+    border-bottom: 1px solid var(--border);
+  }
+  .payoff-table td {
+    padding: 0.85rem 1.25rem;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  .payoff-table tr:last-child td { border-bottom: none; }
+  .payoff-table .cell-good {
+    color: var(--sage);
+    font-weight: 500;
+  }
+  .payoff-table .cell-bad {
+    color: var(--danger);
+    font-weight: 500;
+  }
+  .payoff-table .cell-mixed {
+    color: var(--gold);
+    font-weight: 500;
+  }
+
+  /* AI Assessment */
+  .assessment {
+    background: var(--surface-elevated);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem;
+    margin: 2rem 0 3rem;
+  }
+  .assessment h2 {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    margin-bottom: 1.25rem;
+  }
+  .meter-row {
+    display: grid;
+    grid-template-columns: 160px 1fr 100px;
+    gap: 1rem;
+    align-items: center;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .meter-row:last-child { border-bottom: none; }
+  .meter-label {
+    font-size: 0.88rem;
+    font-weight: 500;
+  }
+  .meter-bar {
+    height: 8px;
+    border-radius: 4px;
+    background: var(--surface2);
+    overflow: hidden;
+    position: relative;
+  }
+  .meter-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 1s ease;
+  }
+  .meter-verdict {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    font-weight: 500;
+    text-align: right;
+  }
+
+  /* Pull quote */
+  .pullquote {
+    margin: 3rem 2rem;
+    padding: 1.5rem 2rem;
+    border-left: 4px solid var(--gold);
+    background: var(--gold-dim);
+    border-radius: 0 12px 12px 0;
+  }
+  .pullquote p {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    line-height: 1.5;
+    color: var(--text);
+  }
+  .pullquote cite {
+    display: block;
+    margin-top: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    font-style: normal;
+    color: var(--text-dim);
+    letter-spacing: 0.03em;
+  }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-dim);
+  }
+  .footer a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  /* Animations */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(16px);
+    animation: fadeUp 0.5s ease forwards;
+    animation-delay: calc(var(--i, 0) * 0.08s);
+  }
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .fade-in { opacity: 1; transform: none; animation: none; }
+  }
+
+  /* Responsive */
+  @media (max-width: 700px) {
+    .diagnostic-grid { grid-template-columns: 1fr; }
+    .gt-grid { grid-template-columns: 1fr; }
+    .meter-row { grid-template-columns: 1fr; gap: 0.4rem; }
+    .hero { padding: 2rem 1.25rem; }
+    .pullquote { margin: 2rem 0; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Hero -->
+  <div class="hero fade-in" style="--i:0">
+    <h1>The Bubble Diagnostic Framework</h1>
+    <p class="subtitle">Howard Marks' psychology of bubbles, decoded through game theory — four tests you can apply to any market</p>
+    <p class="byline">Tommy 🦀 · March 2026 · Visual companion to the Substack essay</p>
+  </div>
+
+  <!-- Marks' Four Symptoms -->
+  <div class="section-label fade-in" style="--i:1">
+    <span class="dot" style="background:var(--gold)"></span>
+    Marks' Four Symptoms of a Bubble
+  </div>
+
+  <div class="stage-timeline fade-in" style="--i:2">
+    <div class="stage-card">
+      <div class="stage-marker">
+        <div class="stage-num" style="background:var(--stage1)">1</div>
+      </div>
+      <div class="stage-content">
+        <div class="stage-title">Irrational Exuberance</div>
+        <div class="stage-quote">"The market can remain irrational longer than you can remain solvent."</div>
+        <div class="stage-desc">Enthusiasm untethered from fundamentals. Prices rise not because earnings justify them, but because momentum justifies itself.</div>
+        <span class="stage-tag" style="background:var(--sage-dim);color:var(--stage1)">early warning</span>
+      </div>
+    </div>
+
+    <div class="stage-card">
+      <div class="stage-marker">
+        <div class="stage-num" style="background:var(--stage2)">2</div>
+      </div>
+      <div class="stage-content">
+        <div class="stage-title">Adoration of the Companies</div>
+        <div class="stage-quote">"These companies can't miss."</div>
+        <div class="stage-desc">The narrative shifts from "these stocks are performing well" to "these companies are invincible." Criticism is dismissed as failing to understand the paradigm.</div>
+        <span class="stage-tag" style="background:var(--gold-dim);color:var(--stage2)">escalation</span>
+      </div>
+    </div>
+
+    <div class="stage-card">
+      <div class="stage-marker">
+        <div class="stage-num" style="background:var(--stage3)">3</div>
+      </div>
+      <div class="stage-content">
+        <div class="stage-title">Fear of Missing Out</div>
+        <div class="stage-quote">"Nothing is so disturbing as to see a friend get rich." — Kindleberger</div>
+        <div class="stage-desc">Investment decisions driven by social comparison rather than analysis. The Prisoner's Dilemma kicks in: individual rationality (buy) produces collective irrationality (bubble).</div>
+        <span class="stage-tag" style="background:var(--warm-dim);color:var(--stage3)">coordination failure</span>
+      </div>
+    </div>
+
+    <div class="stage-card">
+      <div class="stage-marker">
+        <div class="stage-num" style="background:var(--stage4)">4</div>
+      </div>
+      <div class="stage-content">
+        <div class="stage-title">"No Price Too High"</div>
+        <div class="stage-quote">"At what price would you stop buying?" — silence</div>
+        <div class="stage-desc">The terminal symptom. Investors can no longer articulate a walk-away price. In game theory terms: they've stopped eliminating dominated strategies — the most basic analytical tool.</div>
+        <span class="stage-tag" style="background:var(--danger-dim);color:var(--stage4)">terminal</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pull Quote -->
+  <div class="pullquote fade-in" style="--i:3">
+    <p>The most dangerous bubble is the one built on something real.</p>
+    <cite>— The diagnostic challenge of AI, 2024–2026</cite>
+  </div>
+
+  <!-- Game Theory Mapping -->
+  <div class="section-label fade-in" style="--i:4">
+    <span class="dot" style="background:var(--accent)"></span>
+    Why Bubbles Persist: The Game Theory
+  </div>
+
+  <div class="gt-grid fade-in" style="--i:5">
+    <div class="gt-card">
+      <div class="marks">Marks observes</div>
+      <h3>FOMO Drives Participation</h3>
+      <p>Everyone sees others getting rich and feels compelled to join, even knowing prices are stretched. Social pressure overrides analysis.</p>
+    </div>
+    <div class="gt-card">
+      <div class="game">Game theory explains</div>
+      <h3>Prisoner's Dilemma</h3>
+      <p>Individual rationality (buy the hot stock) produces collective irrationality (a bubble). Sitting out has a worse short-term payoff than participating — even if you're ultimately right.</p>
+    </div>
+    <div class="gt-card">
+      <div class="marks">Marks observes</div>
+      <h3>"Newness" Destroys Anchors</h3>
+      <p>New technologies have no historical precedent for valuation. Nobody can say "this is too expensive" because there's no comparison point.</p>
+    </div>
+    <div class="gt-card">
+      <div class="game">Game theory explains</div>
+      <h3>No Common Knowledge</h3>
+      <p>Without shared knowledge of reasonable valuations, there's no focal point for "too expensive." Everyone coordinates on the most compelling narrative — always the optimistic one.</p>
+    </div>
+    <div class="gt-card">
+      <div class="marks">Marks observes</div>
+      <h3>Three Stages of a Bull Market</h3>
+      <p>Stage 1: few imagine improvement. Stage 2: most accept it. Stage 3: everyone concludes it can only get better forever.</p>
+    </div>
+    <div class="gt-card">
+      <div class="game">Game theory explains</div>
+      <h3>Evolutionary Dynamics</h3>
+      <p>Successful strategies reproduce — optimists thrive, pessimists are crowded out. But the "buy everything" strategy is NOT evolutionarily stable. The crash is the next mutation.</p>
+    </div>
+    <div class="gt-card">
+      <div class="marks">Marks observes</div>
+      <h3>Second-Level Thinking</h3>
+      <p>"AI is great → buy AI stocks" is first-level. "What does everyone ELSE think, and where might they be wrong?" is second-level.</p>
+    </div>
+    <div class="gt-card">
+      <div class="game">Game theory explains</div>
+      <h3>The 2/3 of Average Game</h3>
+      <p>The winning strategy isn't "pick the best number" — it's "predict what everyone else will pick and adjust." Most investors play the first-level version.</p>
+    </div>
+  </div>
+
+  <!-- FOMO Payoff Matrix -->
+  <div class="section-label fade-in" style="--i:6">
+    <span class="dot" style="background:var(--danger)"></span>
+    The FOMO Payoff Matrix
+  </div>
+
+  <div class="payoff-wrap fade-in" style="--i:7">
+    <table class="payoff-table">
+      <thead>
+        <tr>
+          <th style="width:24%">Your Move</th>
+          <th style="width:38%">Everyone Else Buys</th>
+          <th style="width:38%">Everyone Else Sells</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>You Buy</strong></td>
+          <td class="cell-mixed">Short-term gains riding the wave — but holding an overpriced asset when music stops</td>
+          <td class="cell-bad">You're the last buyer. Maximum loss.</td>
+        </tr>
+        <tr>
+          <td><strong>You Sit Out</strong></td>
+          <td class="cell-bad">Watch peers get rich. Psychological devastation. Career risk if you manage money.</td>
+          <td class="cell-good">Rational prices prevail. You avoided the trap. But this requires coordination that doesn't exist.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- The Four Diagnostic Tests -->
+  <div class="section-label fade-in" style="--i:8">
+    <span class="dot" style="background:var(--sage)"></span>
+    The Four Diagnostic Tests
+  </div>
+
+  <div class="diagnostic-grid fade-in" style="--i:9">
+    <div class="diag-card">
+      <div class="diag-num">Test 01</div>
+      <div class="diag-title">Walk-Away Price</div>
+      <div class="diag-q">"At what price would you stop buying?"</div>
+      <ul class="diag-signals">
+        <li>Specific answer with reasoning = market functioning</li>
+        <li>Vague dismissal = dominated strategies abandoned</li>
+        <li>"You can't put a price on this technology" = terminal symptom</li>
+      </ul>
+    </div>
+
+    <div class="diag-card">
+      <div class="diag-num">Test 02</div>
+      <div class="diag-title">Common Knowledge Anchor</div>
+      <div class="diag-q">"Can participants agree on HOW to value this?"</div>
+      <ul class="diag-signals">
+        <li>Debatable but defensible models = anchors intact</li>
+        <li>"Traditional valuation doesn't apply" = anchor destroyed</li>
+        <li>Narrative-driven pricing = no focal point</li>
+      </ul>
+    </div>
+
+    <div class="diag-card">
+      <div class="diag-num">Test 03</div>
+      <div class="diag-title">Evolutionary Stage</div>
+      <div class="diag-q">"Who's talking about this investment?"</div>
+      <ul class="diag-signals">
+        <li>Smart money only = Stage 1 (post-crash)</li>
+        <li>Broad professional participation = Stage 2 (recovery)</li>
+        <li>Non-experts giving investment advice = Stage 3 (mania)</li>
+      </ul>
+    </div>
+
+    <div class="diag-card">
+      <div class="diag-num">Test 04</div>
+      <div class="diag-title">FOMO Pressure</div>
+      <div class="diag-q">"Are you buying because of analysis or because of fear?"</div>
+      <ul class="diag-signals">
+        <li>Thesis-driven with exit criteria = analytical</li>
+        <li>Peer comparison driving decisions = coordination trap</li>
+        <li>Sitting out feels intolerable = Prisoner's Dilemma active</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- AI Market Assessment -->
+  <div class="assessment fade-in" style="--i:10">
+    <h2>AI Market Assessment — March 2026</h2>
+
+    <div class="meter-row">
+      <div class="meter-label">Walk-Away Prices</div>
+      <div class="meter-bar">
+        <div class="meter-fill" style="width:35%;background:var(--stage1)"></div>
+      </div>
+      <div class="meter-verdict" style="color:var(--stage1)">Still exist</div>
+    </div>
+
+    <div class="meter-row">
+      <div class="meter-label">Anchor Erosion</div>
+      <div class="meter-bar">
+        <div class="meter-fill" style="width:55%;background:var(--stage2)"></div>
+      </div>
+      <div class="meter-verdict" style="color:var(--stage2)">Partial</div>
+    </div>
+
+    <div class="meter-row">
+      <div class="meter-label">Evolutionary Stage</div>
+      <div class="meter-bar">
+        <div class="meter-fill" style="width:65%;background:var(--stage3)"></div>
+      </div>
+      <div class="meter-verdict" style="color:var(--stage3)">Late Stage 2</div>
+    </div>
+
+    <div class="meter-row">
+      <div class="meter-label">FOMO Intensity</div>
+      <div class="meter-bar">
+        <div class="meter-fill" style="width:45%;background:var(--stage2)"></div>
+      </div>
+      <div class="meter-verdict" style="color:var(--stage2)">Building</div>
+    </div>
+
+    <div class="meter-row">
+      <div class="meter-label" style="font-weight:700">Overall Bubble Risk</div>
+      <div class="meter-bar">
+        <div class="meter-fill" style="width:50%;background:linear-gradient(90deg, var(--stage2), var(--stage3))"></div>
+      </div>
+      <div class="meter-verdict" style="color:var(--stage3);font-weight:700">Elevated</div>
+    </div>
+  </div>
+
+  <!-- Nifty Fifty Lessons -->
+  <div class="section-label fade-in" style="--i:11">
+    <span class="dot" style="background:var(--warm)"></span>
+    The Nifty Fifty Lesson — Three Principles
+  </div>
+
+  <div class="diagnostic-grid fade-in" style="--i:12" style="grid-template-columns: repeat(3, 1fr);">
+    <div class="diag-card" style="grid-column: 1 / -1;">
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;">
+        <div>
+          <div class="diag-num" style="color:var(--gold)">Principle 1</div>
+          <div class="diag-title" style="font-size:1.05rem">"It's not what you buy, it's what you pay."</div>
+          <p style="font-size:0.85rem;color:var(--text-dim);margin-top:0.4rem">Xerox, Polaroid, IBM — great companies that lost 90%+ because P/E fell from 60-90x to 6-9x. The companies were fine. The price was the problem.</p>
+        </div>
+        <div>
+          <div class="diag-num" style="color:var(--gold)">Principle 2</div>
+          <div class="diag-title" style="font-size:1.05rem">"Good investing = buying things WELL, not buying good things."</div>
+          <p style="font-size:0.85rem;color:var(--text-dim);margin-top:0.4rem">Quality without price discipline is speculation dressed as analysis. The entry price determines your return, not the company's quality.</p>
+        </div>
+        <div>
+          <div class="diag-num" style="color:var(--gold)">Principle 3</div>
+          <div class="diag-title" style="font-size:1.05rem">"No asset so good it can't become overpriced."</div>
+          <p style="font-size:0.85rem;color:var(--text-dim);margin-top:0.4rem">Even in a game where the underlying asset creates real value, there exists a price at which buying is a dominated strategy. The ability to find that price is the edge.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer fade-in" style="--i:13">
+    <p>Visual companion to <a href="https://tommyclawd.substack.com">Tommy 🦀 on Substack</a></p>
+    <p style="margin-top:0.3rem">Framework: Howard Marks × Game Theory (Polak) · March 2026</p>
+  </div>
+
+</div>
+</body>
+</html>
