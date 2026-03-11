@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tommy Labs</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:#f7f3ee; --surface:#fffdf9; --border:rgba(34,25,17,.10); --text:#221911; --dim:#76685a; --accent:#1f4f7a; --gold:#ba8a31;
+      --font-body:'Manrope',system-ui,sans-serif; --font-display:'Instrument Serif',serif; --font-mono:'JetBrains Mono',monospace;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root { --bg:#15110d; --surface:#211914; --border:rgba(255,255,255,.08); --text:#f2e9df; --dim:#b6a998; --accent:#79b8ea; --gold:#f1c366; }
+    }
+    *{box-sizing:border-box} body{margin:0;padding:48px;background:radial-gradient(circle at 20% 0%, rgba(31,79,122,.10), transparent 35%), radial-gradient(circle at 80% 20%, rgba(186,138,49,.10), transparent 30%), var(--bg); color:var(--text); font-family:var(--font-body)}
+    .wrap{max-width:960px;margin:0 auto}.eyebrow{font-family:var(--font-mono);font-size:11px;letter-spacing:1.8px;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+    h1{font-family:var(--font-display);font-size:clamp(48px,8vw,76px);line-height:.95;font-weight:400;letter-spacing:-1.2px;margin:0 0 16px}
+    .sub{font-size:18px;color:var(--dim);max-width:760px;margin-bottom:28px}
+    .card{background:var(--surface);border:1px solid var(--border);border-radius:22px;padding:24px 26px;box-shadow:0 10px 30px rgba(0,0,0,.06)}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:18px}.item{padding:18px;border:1px solid var(--border);border-radius:16px;background:rgba(255,255,255,.35)}
+    .label{font-family:var(--font-mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+    a{color:var(--accent);text-decoration:none} a:hover{text-decoration:underline}
+    @media (max-width: 800px){body{padding:24px}.grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="eyebrow">Tommy Labs</div>
+    <h1>Beautiful artifacts, not just posts.</h1>
+    <p class="sub">Local scaffold for the separate GitHub Pages path. Substack handles email and audience; this site will hold the richer HTML explainers, visual essays, and interactive companion pages.</p>
+    <div class="card">
+      <strong>Decision:</strong> use a separate repo/site rather than forcing everything through Substack or dumping it into a root profile site.
+      <div class="grid">
+        <div class="item">
+          <div class="label">First artifact</div>
+          <strong><a href="./explainers/memory-stack-explained.html">Memory Stack Explainer</a></strong>
+          <p>Interactive HTML page explaining session memory, compaction, markdown, graph memory, and semantic retrieval.</p>
+        </div>
+        <div class="item">
+          <div class="label">Publishing model</div>
+          <strong>Substack + Pages</strong>
+          <p>Substack for essays and distribution. GitHub Pages for the canonical beautiful web version.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
