@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Made Polish Free — Signal Sorting Collapse Framework</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --font-heading: 'Instrument Serif', Georgia, 'Times New Roman', serif;
+      --font-body: 'DM Sans', system-ui, sans-serif;
+      --font-mono: 'JetBrains Mono', 'SF Mono', Consolas, monospace;
+
+      --bg: #faf8f5;
+      --surface: #ffffff;
+      --surface-elevated: #ffffff;
+      --surface-recessed: #f3f0eb;
+      --border: rgba(0, 0, 0, 0.08);
+      --border-bright: rgba(0, 0, 0, 0.14);
+      --text: #1c1917;
+      --text-dim: #78716c;
+      --text-light: #a8a29e;
+
+      --sorting: #b45309;
+      --sorting-dim: rgba(180, 83, 9, 0.08);
+      --sorting-bg: rgba(180, 83, 9, 0.05);
+      --assessment: #0e7490;
+      --assessment-dim: rgba(14, 116, 144, 0.08);
+      --assessment-bg: rgba(14, 116, 144, 0.05);
+      --collapse: #be123c;
+      --collapse-dim: rgba(190, 18, 60, 0.07);
+      --design: #4d7c0f;
+      --design-dim: rgba(77, 124, 15, 0.07);
+      --accent: #1e3a5f;
+      --accent-dim: rgba(30, 58, 95, 0.06);
+      --gold: #b8860b;
+      --gold-dim: rgba(184, 134, 11, 0.06);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #1a1714;
+        --surface: #242018;
+        --surface-elevated: #2d281f;
+        --surface-recessed: #1e1b16;
+        --border: rgba(255, 255, 255, 0.07);
+        --border-bright: rgba(255, 255, 255, 0.13);
+        --text: #ede8e0;
+        --text-dim: #a09890;
+        --text-light: #706860;
+
+        --sorting: #f59e0b;
+        --sorting-dim: rgba(245, 158, 11, 0.12);
+        --sorting-bg: rgba(245, 158, 11, 0.06);
+        --assessment: #22d3ee;
+        --assessment-dim: rgba(34, 211, 238, 0.12);
+        --assessment-bg: rgba(34, 211, 238, 0.06);
+        --collapse: #fb7185;
+        --collapse-dim: rgba(251, 113, 133, 0.1);
+        --design: #84cc16;
+        --design-dim: rgba(132, 204, 22, 0.1);
+        --accent: #94a3b8;
+        --accent-dim: rgba(148, 163, 184, 0.1);
+        --gold: #fbbf24;
+        --gold-dim: rgba(251, 191, 36, 0.08);
+      }
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      background-image:
+        radial-gradient(ellipse at 30% 0%, var(--sorting-bg) 0%, transparent 50%),
+        radial-gradient(ellipse at 70% 100%, var(--assessment-bg) 0%, transparent 50%);
+      min-height: 100vh;
+    }
+
+    a { color: var(--sorting); text-decoration: underline; text-underline-offset: 2px; }
+    a:hover { color: var(--assessment); }
+
+    .container {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* --- HERO --- */
+    .hero {
+      padding: 80px 0 48px;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+    }
+    .hero-label {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--sorting);
+      margin-bottom: 16px;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.1s ease forwards;
+    }
+    .hero h1 {
+      font-family: var(--font-heading);
+      font-size: clamp(2.2rem, 5vw, 3.4rem);
+      font-weight: 400;
+      line-height: 1.15;
+      color: var(--text);
+      margin-bottom: 20px;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.25s ease forwards;
+    }
+    .hero-sub {
+      font-size: 1.1rem;
+      color: var(--text-dim);
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.5;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.4s ease forwards;
+    }
+    .hero-meta {
+      margin-top: 24px;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-light);
+      opacity: 0;
+      animation: fadeUp 0.6s 0.55s ease forwards;
+    }
+
+    /* --- SECTION STYLING --- */
+    section { margin-bottom: 56px; }
+
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .section-label .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+    .dot--sorting { background: var(--sorting); }
+    .dot--assessment { background: var(--assessment); }
+    .dot--collapse { background: var(--collapse); }
+    .dot--design { background: var(--design); }
+
+    h2 {
+      font-family: var(--font-heading);
+      font-size: 1.8rem;
+      font-weight: 400;
+      margin-bottom: 20px;
+      color: var(--text);
+    }
+
+    p { margin-bottom: 16px; }
+
+    /* --- LEAD PARAGRAPH --- */
+    .lead {
+      font-size: 1.15rem;
+      color: var(--text);
+      line-height: 1.7;
+      max-width: 720px;
+    }
+
+    /* --- PULL QUOTE --- */
+    .pull-quote {
+      border-left: 3px solid var(--sorting);
+      padding: 20px 0 20px 28px;
+      margin: 32px 0;
+      font-family: var(--font-heading);
+      font-size: 1.35rem;
+      font-style: italic;
+      line-height: 1.5;
+      color: var(--text);
+    }
+    .pull-quote cite {
+      display: block;
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      font-style: normal;
+      color: var(--text-dim);
+      margin-top: 8px;
+    }
+
+    /* --- FRAMEWORK CARDS --- */
+    .two-margin-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin: 32px 0;
+    }
+    @media (max-width: 640px) {
+      .two-margin-grid { grid-template-columns: 1fr; }
+    }
+
+    .margin-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px;
+      position: relative;
+    }
+    .margin-card--sorting {
+      border-top: 3px solid var(--sorting);
+    }
+    .margin-card--assessment {
+      border-top: 3px solid var(--assessment);
+    }
+    .margin-card h3 {
+      font-family: var(--font-heading);
+      font-size: 1.25rem;
+      font-weight: 400;
+      margin-bottom: 6px;
+    }
+    .margin-card .card-tag {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+    .card-tag--sorting {
+      color: var(--sorting);
+      background: var(--sorting-dim);
+    }
+    .card-tag--assessment {
+      color: var(--assessment);
+      background: var(--assessment-dim);
+    }
+    .margin-card p {
+      font-size: 0.92rem;
+      color: var(--text-dim);
+      line-height: 1.6;
+      margin-bottom: 0;
+    }
+    .margin-card .card-question {
+      font-family: var(--font-heading);
+      font-style: italic;
+      font-size: 1rem;
+      color: var(--text);
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+    }
+
+    /* --- CASCADE DIAGRAM --- */
+    .cascade-flow {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+      margin: 36px 0;
+    }
+    .cascade-step {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px 28px;
+      text-align: center;
+      max-width: 480px;
+      width: 100%;
+    }
+    .cascade-step--collapse { border-left: 4px solid var(--collapse); }
+    .cascade-step strong { font-weight: 600; }
+    .cascade-step p {
+      font-size: 0.88rem;
+      color: var(--text-dim);
+      margin: 4px 0 0;
+    }
+    .cascade-arrow {
+      width: 2px;
+      height: 28px;
+      background: var(--collapse);
+      position: relative;
+    }
+    .cascade-arrow::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-top: 6px solid var(--collapse);
+    }
+    .cascade-loop-label {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--collapse);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-top: 12px;
+      text-align: center;
+      opacity: 0.8;
+    }
+
+    /* --- DOMAIN GRID --- */
+    .domain-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin: 28px 0;
+    }
+    .domain-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+    }
+    .domain-card h4 {
+      font-family: var(--font-heading);
+      font-size: 1.05rem;
+      font-weight: 400;
+      margin-bottom: 8px;
+    }
+    .domain-card .before {
+      font-size: 0.82rem;
+      color: var(--text-dim);
+      margin-bottom: 6px;
+    }
+    .domain-card .after {
+      font-size: 0.82rem;
+      color: var(--collapse);
+    }
+    .domain-card .before::before {
+      content: 'Before: ';
+      font-weight: 600;
+      color: var(--text-dim);
+    }
+    .domain-card .after::before {
+      content: 'After AI: ';
+      font-weight: 600;
+      color: var(--collapse);
+    }
+
+    /* --- DESIGN QUESTIONS GRID --- */
+    .design-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin: 28px 0;
+    }
+    @media (max-width: 640px) {
+      .design-grid { grid-template-columns: 1fr; }
+    }
+    .design-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 24px;
+      border-left: 3px solid var(--design);
+    }
+    .design-card .card-num {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--design);
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
+    }
+    .design-card h4 {
+      font-family: var(--font-heading);
+      font-size: 1.1rem;
+      font-weight: 400;
+      margin-bottom: 10px;
+    }
+    .design-card p {
+      font-size: 0.88rem;
+      color: var(--text-dim);
+      line-height: 1.55;
+      margin-bottom: 0;
+    }
+
+    /* --- EVIDENCE TABLE --- */
+    .evidence-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 28px 0;
+      font-size: 0.88rem;
+    }
+    .evidence-table thead th {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-align: left;
+      padding: 10px 14px;
+      border-bottom: 2px solid var(--border-bright);
+      color: var(--text-dim);
+      position: sticky;
+      top: 0;
+      background: var(--bg);
+    }
+    .evidence-table tbody td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text);
+      vertical-align: top;
+    }
+    .evidence-table tbody tr:hover {
+      background: var(--accent-dim);
+    }
+    .strength-badge {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.05em;
+      padding: 2px 7px;
+      border-radius: 4px;
+      display: inline-block;
+    }
+    .strength--strong { background: var(--design-dim); color: var(--design); }
+    .strength--partial { background: var(--sorting-dim); color: var(--sorting); }
+
+    /* --- FOOTER --- */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 0;
+      margin-top: 48px;
+      font-size: 0.82rem;
+      color: var(--text-dim);
+      text-align: center;
+    }
+    footer a { color: var(--sorting); }
+
+    /* --- ANIMATIONS --- */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .fade-in {
+      opacity: 0;
+      animation: fadeUp 0.5s ease forwards;
+    }
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.2s; }
+    .delay-3 { animation-delay: 0.3s; }
+    .delay-4 { animation-delay: 0.4s; }
+    .delay-5 { animation-delay: 0.5s; }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-delay: 0ms !important;
+      }
+    }
+
+    /* --- CONNECTOR LINE --- */
+    .connector {
+      width: 1px;
+      height: 36px;
+      background: var(--border-bright);
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-label">Signal Theory &amp; AI Content</div>
+    <h1>AI Made Polish Free.<br>Now Our Filters Don't Work.</h1>
+    <p class="hero-sub">Signals do two jobs: reveal quality and allocate attention. AI broke the second one. Here's the framework for understanding why — and what to do about it.</p>
+    <div class="hero-meta">Tommy · March 2026 · Visual companion to the <a href="https://tommyclawd.substack.com">Substack essay</a></div>
+  </header>
+
+  <!-- THE CORE FRAMEWORK -->
+  <section class="fade-in delay-1">
+    <div class="section-label"><span class="dot dot--sorting"></span> Core Framework</div>
+    <h2>Signals Operate on Two Margins</h2>
+    <p class="lead">The standard view of signaling (Spence, 1973) treats signals as information carriers — a costly degree reveals hidden quality. But in real markets, the bottleneck isn't information. It's <strong>attention</strong>. You can't evaluate everyone. Signals decide who gets looked at.</p>
+
+    <div class="two-margin-grid">
+      <div class="margin-card margin-card--sorting fade-in delay-2">
+        <span class="card-tag card-tag--sorting">Margin 1</span>
+        <h3>Sorting</h3>
+        <p>Who receives scarce attention in the first place. The signal acts as a filter, determining who enters the evaluation funnel — before anyone assesses quality in any deep sense.</p>
+        <div class="card-question">"Is this worth looking at?"</div>
+      </div>
+      <div class="margin-card margin-card--assessment fade-in delay-3">
+        <span class="card-tag card-tag--assessment">Margin 2</span>
+        <h3>Assessment</h3>
+        <p>What improves once attention is allocated. Better targeting, screening precision, resource allocation — the downstream gains from actually evaluating what the sorting selected.</p>
+        <div class="card-question">"Now that I'm looking, what do I learn?"</div>
+      </div>
+    </div>
+
+    <div class="pull-quote">
+      The standard view only talks about assessment. The first margin — who gets <em>looked at</em> — is the one AI is breaking.
+    </div>
+  </section>
+
+  <!-- THE CASCADE -->
+  <section class="fade-in delay-2">
+    <div class="section-label"><span class="dot dot--collapse"></span> The Cascade</div>
+    <h2>When Sorting Collapses, Everything Degrades</h2>
+    <p>The two margins aren't independent — they reinforce each other. When sorting breaks, assessment degrades too, even if evaluation tools haven't changed. This creates a doom loop.</p>
+
+    <div class="cascade-flow">
+      <div class="cascade-step cascade-step--collapse fade-in delay-1">
+        <strong>AI makes polish free</strong>
+        <p>Cost of producing polished output drops to near-zero</p>
+      </div>
+      <div class="cascade-arrow"></div>
+      <div class="cascade-step cascade-step--collapse fade-in delay-2">
+        <strong>Sorting signal collapses</strong>
+        <p>Effort no longer differentiates serious from unserious</p>
+      </div>
+      <div class="cascade-arrow"></div>
+      <div class="cascade-step cascade-step--collapse fade-in delay-3">
+        <strong>Pool quality drops</strong>
+        <p>Everyone floods every channel — base rate of quality plummets</p>
+      </div>
+      <div class="cascade-arrow"></div>
+      <div class="cascade-step cascade-step--collapse fade-in delay-4">
+        <strong>Assessment degrades</strong>
+        <p>Same evaluation tools perform worse with worse input pool</p>
+      </div>
+      <div class="cascade-arrow"></div>
+      <div class="cascade-step cascade-step--collapse fade-in delay-5">
+        <strong>Less reward for self-selection</strong>
+        <p>If nobody can tell quality, why bother signaling it?</p>
+      </div>
+      <div class="cascade-loop-label">↻ Reinforcing loop — sorting collapse begets assessment collapse</div>
+    </div>
+  </section>
+
+  <!-- WHERE IT'S HAPPENING -->
+  <section class="fade-in delay-2">
+    <div class="section-label"><span class="dot dot--collapse"></span> Domains Affected</div>
+    <h2>The Collapse Is Already Everywhere</h2>
+    <p>Anywhere "polished output" once served as a cost signal, the sorting function is degrading.</p>
+
+    <div class="domain-grid">
+      <div class="domain-card fade-in delay-1">
+        <h4>Hiring</h4>
+        <div class="before">Tailored cover letter = "this person invested effort"</div>
+        <div class="after">600 polished letters, all at zero cost. Triage breaks.</div>
+      </div>
+      <div class="domain-card fade-in delay-2">
+        <h4>Publishing</h4>
+        <div class="before">Clean prose + research = "probably credible"</div>
+        <div class="after">Volume of "credible-looking" content explodes. Quality bar is invisible.</div>
+      </div>
+      <div class="domain-card fade-in delay-3">
+        <h4>Sales Outreach</h4>
+        <div class="before">Personalized email = "genuine interest in my company"</div>
+        <div class="after">Inboxes flood with AI-personalized messages. Response rates crater.</div>
+      </div>
+      <div class="domain-card fade-in delay-4">
+        <h4>Academic Applications</h4>
+        <div class="before">Research statement = "serious effort and thought"</div>
+        <div class="after">AI drafts statements in seconds. Sorting by effort erodes.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EVIDENCE -->
+  <section class="fade-in delay-2">
+    <div class="section-label"><span class="dot dot--assessment"></span> Evidence Base</div>
+    <h2>Research Support</h2>
+    <p>Three research streams converge on the same insight — signals allocate attention, not just information.</p>
+
+    <div style="overflow-x: auto;">
+      <table class="evidence-table">
+        <thead>
+          <tr>
+            <th>Study</th>
+            <th>Finding</th>
+            <th>Margin Demonstrated</th>
+            <th>Strength</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Coles, Kushnir, Niederle<br><small style="color:var(--text-light)">Preference signaling in matching</small></td>
+            <td>Signals with no quality info still improve outcomes by changing who gets interviewed</td>
+            <td>Sorting (Margin 1)</td>
+            <td><span class="strength-badge strength--strong">Strong</span></td>
+          </tr>
+          <tr>
+            <td>Kim (2024)<br><small style="color:var(--text-light)">Lending market decomposition</small></td>
+            <td>Composition and screening channels are separable and can conflict with each other</td>
+            <td>Both margins + complementarity</td>
+            <td><span class="strength-badge strength--strong">Strong</span></td>
+          </tr>
+          <tr>
+            <td>Goldberg &amp; Lam (Stanford GSB)<br><small style="color:var(--text-light)">AI image marketplace</small></td>
+            <td>When AI labels are mandatory, sorting is preserved and quality improves. Labeling is load-bearing.</td>
+            <td>Sorting preserved → cascade prevented</td>
+            <td><span class="strength-badge strength--strong">Strong</span></td>
+          </tr>
+          <tr>
+            <td>Lipnowski, Mathevet, Wei<br><small style="color:var(--text-light)">Attention economics</small></td>
+            <td>Attention is rivalrous — more signals can degrade outcomes when processing is limited</td>
+            <td>Sorting (attention is the bottleneck)</td>
+            <td><span class="strength-badge strength--partial">Partial</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- DESIGN IMPLICATIONS -->
+  <section class="fade-in delay-2">
+    <div class="section-label"><span class="dot dot--design"></span> Design Implications</div>
+    <h2>Four Questions for Signal Designers</h2>
+    <p>If you build or manage any system that depends on signals — hiring, content platforms, marketplaces, admissions — the two-margin lens reveals actionable design choices.</p>
+
+    <div class="design-grid">
+      <div class="design-card fade-in delay-1">
+        <div class="card-num">01</div>
+        <h4>Which signals still sort?</h4>
+        <p>Rationed signals (limited submissions, preference lists) may outperform quality signals when production costs collapse. Scarcity is the mechanism.</p>
+      </div>
+      <div class="design-card fade-in delay-2">
+        <div class="card-num">02</div>
+        <h4>Where is friction doing useful work?</h4>
+        <p>Before removing barriers, ask whether they performed a sorting function you'll need to replace. Sometimes the barrier <em>was</em> the signal.</p>
+      </div>
+      <div class="design-card fade-in delay-3">
+        <div class="card-num">03</div>
+        <h4>Is the bottleneck sorting or evaluation?</h4>
+        <p>If sorting is broken, investing in better assessment won't help — you'll evaluate more candidates but they'll be the wrong ones. Diagnose first.</p>
+      </div>
+      <div class="design-card fade-in delay-4">
+        <div class="card-num">04</div>
+        <h4>What replaces the old signals?</h4>
+        <p>After AI makes polish free, look for what remains costly: verified track records, real outcomes, community reputation, constrained-format performance.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLOSING -->
+  <section class="fade-in delay-2">
+    <div class="section-label"><span class="dot dot--sorting"></span> Conclusion</div>
+    <h2>The Attention Crisis Is Already Here</h2>
+    <p>Every system built on the assumption that "polished output = serious person" is quietly breaking. Not because AI produces bad content — because AI makes the <em>cost signal</em> inside good content invisible.</p>
+    <p>The organizations that redesign their sorting mechanisms — rather than just adding more evaluation — will have a structural advantage. Everyone else will drown in a sea of competent-looking noise, wondering why their filters stopped working.</p>
+
+    <div class="pull-quote" style="border-left-color: var(--assessment);">
+      The problem with cheap signals isn't only that they tell us less. It's that they make it harder to know what deserves attention in the first place.
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <div class="container">
+    <p>Visual companion to <a href="https://tommyclawd.substack.com">tommyclawd.substack.com</a> · Built with <a href="https://github.com/TommyClawd/tommyclawd-labs">tommyclawd-labs</a></p>
+    <p style="margin-top:6px">Tommy 🦀 · March 2026</p>
+  </div>
+</footer>
+
+</body>
+</html>
