@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The $400/Month Company Kills the Org Chart</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --font-body: 'IBM Plex Sans', system-ui, sans-serif;
+      --font-display: 'Instrument Serif', Georgia, serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --bg: #f7f3ec;
+      --surface: rgba(255,255,255,0.78);
+      --surface-strong: rgba(255,255,255,0.92);
+      --border: rgba(26, 47, 72, 0.10);
+      --border-strong: rgba(26, 47, 72, 0.18);
+      --text: #1d2b3a;
+      --text-dim: #5e6a77;
+      --blue: #1f4b7a;
+      --blue-dim: rgba(31, 75, 122, 0.09);
+      --gold: #b07a24;
+      --gold-dim: rgba(176, 122, 36, 0.10);
+      --green: #2f6b58;
+      --green-dim: rgba(47, 107, 88, 0.10);
+      --rose: #8f4350;
+      --rose-dim: rgba(143, 67, 80, 0.10);
+      --shadow: 0 20px 60px rgba(34, 44, 58, 0.08);
+      --radius: 24px;
+      --radius-sm: 16px;
+      --max: 1220px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #10161c;
+        --surface: rgba(20, 27, 34, 0.82);
+        --surface-strong: rgba(24, 31, 39, 0.94);
+        --border: rgba(255,255,255,0.07);
+        --border-strong: rgba(255,255,255,0.14);
+        --text: #e9edf2;
+        --text-dim: #a5b0bb;
+        --blue: #77a9df;
+        --blue-dim: rgba(119, 169, 223, 0.12);
+        --gold: #dfb35f;
+        --gold-dim: rgba(223, 179, 95, 0.14);
+        --green: #78b9a0;
+        --green-dim: rgba(120, 185, 160, 0.13);
+        --rose: #d08b96;
+        --rose-dim: rgba(208, 139, 150, 0.12);
+        --shadow: 0 24px 70px rgba(0, 0, 0, 0.35);
+      }
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: var(--font-body);
+      color: var(--text);
+      background:
+        radial-gradient(circle at 12% 0%, var(--gold-dim) 0, transparent 26%),
+        radial-gradient(circle at 85% 18%, var(--blue-dim) 0, transparent 28%),
+        radial-gradient(circle at 60% 100%, var(--green-dim) 0, transparent 26%),
+        var(--bg);
+      line-height: 1.55;
+    }
+    .wrap {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+    }
+    .label {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .dot {
+      width: 8px; height: 8px; border-radius: 50%; background: var(--gold);
+      box-shadow: 0 0 0 6px var(--gold-dim);
+    }
+    header.hero {
+      padding: 48px 0 28px;
+    }
+    .hero-panel {
+      padding: 36px;
+      border-radius: 32px;
+      background: linear-gradient(180deg, var(--surface-strong), var(--surface));
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-panel::after {
+      content: "";
+      position: absolute;
+      inset: auto -80px -80px auto;
+      width: 260px;
+      height: 260px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--gold-dim), transparent 70%);
+      pointer-events: none;
+    }
+    h1 {
+      margin: 16px 0 14px;
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 6vw, 5.6rem);
+      line-height: 0.94;
+      letter-spacing: -0.03em;
+      font-weight: 400;
+      max-width: 900px;
+    }
+    .dek {
+      max-width: 760px;
+      font-size: 1.18rem;
+      color: var(--text-dim);
+      margin-bottom: 26px;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 20px;
+      align-items: start;
+      margin-top: 24px;
+    }
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    .stat {
+      padding: 18px;
+      border-radius: 18px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      min-width: 0;
+    }
+    .stat .k {
+      display: block;
+      font-size: 2rem;
+      line-height: 1;
+      font-weight: 700;
+      color: var(--blue);
+      margin-bottom: 8px;
+    }
+    .stat .t {
+      display: block;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-dim);
+      font-family: var(--font-mono);
+      margin-bottom: 8px;
+    }
+    .stat p { margin: 0; color: var(--text-dim); font-size: 0.95rem; }
+    .thesis {
+      padding: 20px 22px;
+      border-radius: 22px;
+      background: linear-gradient(180deg, var(--blue-dim), transparent), var(--surface);
+      border: 1px solid var(--border);
+    }
+    .thesis h2, .section-title {
+      margin: 0 0 10px;
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 3.4vw, 3rem);
+      line-height: 1;
+      font-weight: 400;
+    }
+    .thesis p { margin: 0; font-size: 1.02rem; }
+    nav.quick {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(12px);
+      background: color-mix(in srgb, var(--bg) 78%, transparent);
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 20px;
+    }
+    nav.quick .wrap {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      padding: 12px 0;
+    }
+    nav.quick a {
+      text-decoration: none;
+      color: var(--text-dim);
+      border: 1px solid var(--border);
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: var(--surface);
+      white-space: nowrap;
+      font-size: 0.95rem;
+    }
+    main { padding-bottom: 60px; }
+    section {
+      margin: 26px 0;
+      padding: 28px;
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, var(--surface-strong), var(--surface));
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+    }
+    .sub {
+      margin: 0 0 20px;
+      color: var(--text-dim);
+      max-width: 760px;
+      font-size: 1.02rem;
+    }
+    .two-col, .three-col, .four-col {
+      display: grid;
+      gap: 18px;
+    }
+    .two-col { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .three-col { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .four-col { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .card {
+      border: 1px solid var(--border);
+      background: var(--surface);
+      border-radius: 20px;
+      padding: 18px;
+      min-width: 0;
+    }
+    .card h3 {
+      margin: 0 0 10px;
+      font-size: 1.15rem;
+    }
+    .card p:last-child, .card ul:last-child { margin-bottom: 0; }
+    .eyebrow {
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      font-size: 11px;
+      color: var(--text-dim);
+      margin-bottom: 10px;
+    }
+    .accent-blue { background: linear-gradient(180deg, var(--blue-dim), transparent), var(--surface); }
+    .accent-gold { background: linear-gradient(180deg, var(--gold-dim), transparent), var(--surface); }
+    .accent-green { background: linear-gradient(180deg, var(--green-dim), transparent), var(--surface); }
+    .accent-rose { background: linear-gradient(180deg, var(--rose-dim), transparent), var(--surface); }
+
+    .vs {
+      display: grid;
+      grid-template-columns: 1fr 92px 1fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+    .versus {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 2rem;
+      color: var(--gold);
+      border: 1px dashed var(--border-strong);
+      border-radius: 22px;
+      background: color-mix(in srgb, var(--surface) 85%, transparent);
+    }
+    ul.clean {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 10px;
+    }
+    ul.clean li {
+      padding-left: 18px;
+      position: relative;
+      color: var(--text-dim);
+    }
+    ul.clean li::before {
+      content: "";
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--blue);
+      position: absolute;
+      left: 0; top: 0.6em;
+    }
+    .stack {
+      display: grid;
+      gap: 14px;
+      max-width: 980px;
+      margin: 8px auto 0;
+    }
+    .layer {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 16px;
+      align-items: center;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 16px 18px;
+      background: var(--surface);
+    }
+    .layer .left {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+    .layer .right strong { color: var(--text); }
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 10px;
+    }
+    .flow .step {
+      padding: 18px;
+      border-radius: 18px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      position: relative;
+    }
+    .flow .step:not(:last-child)::after {
+      content: "→";
+      position: absolute;
+      right: -12px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 22px;
+      color: var(--gold);
+      font-family: var(--font-display);
+    }
+    .callout {
+      margin-top: 18px;
+      padding: 18px 20px;
+      border-radius: 18px;
+      border: 1px solid var(--border);
+      background: linear-gradient(180deg, var(--rose-dim), transparent), var(--surface);
+    }
+    .quote {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1.04;
+      letter-spacing: -0.02em;
+      margin: 0;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+    }
+    th, td {
+      text-align: left;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+    th {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-dim);
+      background: color-mix(in srgb, var(--surface) 92%, transparent);
+    }
+    tr:last-child td { border-bottom: none; }
+    footer {
+      padding: 8px 0 60px;
+      color: var(--text-dim);
+      font-size: 0.94rem;
+    }
+    code {
+      font-family: var(--font-mono);
+      font-size: 0.92em;
+      background: color-mix(in srgb, var(--blue-dim) 80%, transparent);
+      padding: 0.14em 0.42em;
+      border-radius: 8px;
+    }
+    @media (max-width: 980px) {
+      .hero-grid, .two-col, .three-col, .four-col, .vs, .flow { grid-template-columns: 1fr; }
+      .stat-grid { grid-template-columns: 1fr; }
+      .layer { grid-template-columns: 1fr; }
+      .versus { min-height: 72px; }
+      .flow .step:not(:last-child)::after { display: none; }
+    }
+    @media (max-width: 640px) {
+      header.hero { padding-top: 24px; }
+      .hero-panel, section { padding: 20px; border-radius: 22px; }
+      .wrap { width: min(var(--max), calc(100% - 18px)); }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="wrap hero-panel">
+      <span class="label"><span class="dot"></span> Visual companion · business architecture explainer</span>
+      <h1>The $400/Month Company Kills the Org Chart</h1>
+      <p class="dek">The real shift is not “AI makes labor cheaper.” It’s that <strong>coordination is becoming software</strong>. When that happens, business formation stops being constrained by team assembly and starts being constrained by design quality.</p>
+      <div class="hero-grid">
+        <div class="thesis">
+          <h2>The thesis</h2>
+          <p>Old companies were built around reporting lines because humans are slow, expensive, and hard to synchronize. Agentic companies are built around <strong>orchestration logic</strong>: a coordinator routes work, specialist agents execute, APIs carry the handoffs, and the org chart starts to look like legacy infrastructure.</p>
+        </div>
+        <div class="stat-grid">
+          <div class="stat">
+            <span class="t">Operating cost</span>
+            <span class="k">$400</span>
+            <p>Monthly run-rate for a real AI-native business architecture.</p>
+          </div>
+          <div class="stat">
+            <span class="t">Headcount</span>
+            <span class="k">0</span>
+            <p>No employees — just coordination, agents, and interfaces.</p>
+          </div>
+          <div class="stat">
+            <span class="t">Core insight</span>
+            <span class="k">Design</span>
+            <p>The bottleneck moves from management to system architecture.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <nav class="quick">
+    <div class="wrap">
+      <a href="#old-vs-new">Old vs new company</a>
+      <a href="#stack">The orchestration stack</a>
+      <a href="#economics">Why margins become bait</a>
+      <a href="#moats">What still compounds</a>
+      <a href="#skills">What to learn now</a>
+    </div>
+  </nav>
+
+  <main class="wrap">
+    <section id="old-vs-new">
+      <div class="eyebrow">1 · Structural change</div>
+      <h2 class="section-title">A company used to be a hierarchy. Now it can be a recipe.</h2>
+      <p class="sub">The important transition is not “leaner team” but <strong>different unit of organization</strong>. The old firm coordinated people. The new firm coordinates capabilities.</p>
+      <div class="vs">
+        <div class="card accent-gold">
+          <div class="eyebrow">Industrial model</div>
+          <h3>Org chart company</h3>
+          <ul class="clean">
+            <li>Founder → managers → specialists → departments</li>
+            <li>Coordination happens through meetings, reporting lines, and handoffs</li>
+            <li>Growth means hiring, training, and managerial overhead</li>
+            <li>The hidden tax is synchronization friction</li>
+          </ul>
+        </div>
+        <div class="versus">→</div>
+        <div class="card accent-blue">
+          <div class="eyebrow">Agentic model</div>
+          <h3>Executable company</h3>
+          <ul class="clean">
+            <li>Coordinator routes tasks to specialized agents</li>
+            <li>APIs handle the boring plumbing and external actions</li>
+            <li>Growth means better system design, not just more headcount</li>
+            <li>The hidden asset is orchestration logic</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="stack">
+      <div class="eyebrow">2 · What replaces the org chart</div>
+      <h2 class="section-title">The new company is a stack.</h2>
+      <p class="sub">A serious AI-native business still needs judgment, execution, quality control, and delivery. The difference is that these functions can now be assembled as layers instead of departments.</p>
+      <div class="stack">
+        <div class="layer">
+          <div class="left">Layer 1 · Coordination</div>
+          <div class="right"><strong>One premium coordinator</strong> decides what work exists, who should do it, and what counts as done.</div>
+        </div>
+        <div class="layer">
+          <div class="left">Layer 2 · Specialized agents</div>
+          <div class="right"><strong>Research, writing, design, development, review, operations, growth.</strong> Expensive models where judgment matters; cheap models where volume matters.</div>
+        </div>
+        <div class="layer">
+          <div class="left">Layer 3 · Interfaces</div>
+          <div class="right"><strong>APIs, crawlers, publishing hooks, payment rails, analytics, CRMs.</strong> This is where handoff friction collapses.</div>
+        </div>
+        <div class="layer">
+          <div class="left">Layer 4 · Feedback</div>
+          <div class="right"><strong>Metrics, audit trails, performance histories, user behavior.</strong> The system gets better when it can see what worked.</div>
+        </div>
+      </div>
+      <div class="callout">
+        <strong>Key idea:</strong> management has been partially virtualized. The business still needs coordination — but coordination no longer has to live inside a middle-management layer.
+      </div>
+    </section>
+
+    <section id="economics">
+      <div class="eyebrow">3 · Why this gets dangerous fast</div>
+      <h2 class="section-title">High margins are real. They are also bait.</h2>
+      <p class="sub">If operating costs collapse, margins expand. But low startup cost also invites entrants. That means the first-order effect is profit potential; the second-order effect is moat compression.</p>
+      <div class="flow">
+        <div class="step accent-green">
+          <div class="eyebrow">Step 1</div>
+          <h3>Capability gets cheaper</h3>
+          <p>Research, content, design, code, and support become rentable by the API call.</p>
+        </div>
+        <div class="step accent-gold">
+          <div class="eyebrow">Step 2</div>
+          <h3>Entry barriers fall</h3>
+          <p>More people can launch something coherent without assembling a full team first.</p>
+        </div>
+        <div class="step accent-rose">
+          <div class="eyebrow">Step 3</div>
+          <h3>Competition spikes</h3>
+          <p>More pseudo-companies chase the same customers with roughly the same model stack.</p>
+        </div>
+        <div class="step accent-blue">
+          <div class="eyebrow">Step 4</div>
+          <h3>Moats get tested</h3>
+          <p>“We use AI” stops being an edge. Survivors need something harder to copy.</p>
+        </div>
+      </div>
+      <p class="quote">When participation gets cheap, competition gets stupid.</p>
+    </section>
+
+    <section id="moats">
+      <div class="eyebrow">4 · What still matters</div>
+      <h2 class="section-title">The four surviving moats</h2>
+      <p class="sub">If anyone can assemble a competent agent stack, then the durable advantages move upstream and outward. Execution gets commoditized; selection and structure become scarce.</p>
+      <div class="four-col">
+        <div class="card accent-blue">
+          <div class="eyebrow">Moat 1</div>
+          <h3>Proprietary distribution</h3>
+          <p>Audience, trust, access, channels, or relationships that let your output actually reach people.</p>
+        </div>
+        <div class="card accent-green">
+          <div class="eyebrow">Moat 2</div>
+          <h3>Unique data</h3>
+          <p>Behavioral loops, customer history, domain-specific signals, and performance records that improve decisions.</p>
+        </div>
+        <div class="card accent-gold">
+          <div class="eyebrow">Moat 3</div>
+          <h3>Mechanism design</h3>
+          <p>Systems that filter noise, compound with use, and make imitation expensive even when the parts are commodity.</p>
+        </div>
+        <div class="card accent-rose">
+          <div class="eyebrow">Moat 4</div>
+          <h3>Taste + judgment</h3>
+          <p>Knowing what not to build, what to amplify, what to ignore, and where human responsibility still matters.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills">
+      <div class="eyebrow">5 · Personal implication</div>
+      <h2 class="section-title">The skill that compounds now is system design.</h2>
+      <p class="sub">If the company becomes architecture, then career advice has to change too. Traditional management matters less than decomposition, instrumentation, and good boundaries between humans and machines.</p>
+      <table>
+        <thead>
+          <tr>
+            <th>Old career signal</th>
+            <th>Why it mattered</th>
+            <th>New career signal</th>
+            <th>Why it matters now</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Managing more people</td>
+            <td>Coordination was scarce and expensive</td>
+            <td>Designing better systems</td>
+            <td>Coordination is becoming software</td>
+          </tr>
+          <tr>
+            <td>Owning a department</td>
+            <td>Specialists were organized into silos</td>
+            <td>Owning the interfaces</td>
+            <td>Value flows through APIs, prompts, schemas, and metrics</td>
+          </tr>
+          <tr>
+            <td>Operational hustle</td>
+            <td>Execution bottlenecks dominated</td>
+            <td>Judgment under abundance</td>
+            <td>The bottleneck shifts to prioritization and taste</td>
+          </tr>
+          <tr>
+            <td>Internal efficiency</td>
+            <td>Lean teams outperformed bloated ones</td>
+            <td>External defensibility</td>
+            <td>Everyone can now look lean from the inside</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <div class="eyebrow">Bottom line</div>
+      <h2 class="section-title">The org chart is not sacred. It was a workaround.</h2>
+      <p class="sub">A $400/month company is not amazing because it is cheap. It is amazing because it reveals what was secretly expensive all along: <strong>the coordination of labor</strong>. Once coordination becomes software, the hard question changes from “Can you hire a team?” to “Why will your system matter when anyone can build one?”</p>
+    </section>
+  </main>
+
+  <footer class="wrap">
+    Visual companion for the Substack essay <em>The $400/Month Company Kills the Org Chart</em> · built as an explainer page for GitHub Pages.
+  </footer>
+</body>
+</html>
