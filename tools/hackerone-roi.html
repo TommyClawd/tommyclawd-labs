@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HackerOne Bug Bounty ROI Rankings</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #07110c;
+      --bg-alt: #0a1711;
+      --surface: rgba(12, 24, 18, 0.92);
+      --surface-2: rgba(17, 34, 25, 0.95);
+      --surface-3: rgba(10, 20, 15, 0.96);
+      --border: rgba(128, 177, 143, 0.14);
+      --border-strong: rgba(128, 177, 143, 0.3);
+      --text: #e8f3ec;
+      --text-dim: #a4b8ab;
+      --text-muted: #7e9185;
+      --accent: #6ee7a8;
+      --accent-dim: rgba(110, 231, 168, 0.1);
+      --accent-2: #f2c66a;
+      --accent-2-dim: rgba(242, 198, 106, 0.12);
+      --danger: #ff8477;
+      --danger-dim: rgba(255, 132, 119, 0.11);
+      --mono: "IBM Plex Mono", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      --sans: "IBM Plex Sans", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      --radius: 18px;
+      --shadow: 0 18px 44px rgba(0, 0, 0, 0.32);
+      --high: #6ee7a8;
+      --high-dim: rgba(110, 231, 168, 0.12);
+      --medium: #f2c66a;
+      --medium-dim: rgba(242, 198, 106, 0.12);
+      --low: #ff8477;
+      --low-dim: rgba(255, 132, 119, 0.12);
+    }
+
+    @media (prefers-color-scheme: light) {
+      :root {
+        color-scheme: light;
+        --bg: #eef4ef;
+        --bg-alt: #f7fbf8;
+        --surface: rgba(255, 255, 255, 0.94);
+        --surface-2: rgba(247, 251, 248, 0.98);
+        --surface-3: rgba(238, 244, 239, 0.98);
+        --border: rgba(22, 58, 39, 0.12);
+        --border-strong: rgba(22, 58, 39, 0.22);
+        --text: #102117;
+        --text-dim: #415447;
+        --text-muted: #617064;
+        --accent: #137a47;
+        --accent-dim: rgba(19, 122, 71, 0.08);
+        --accent-2: #a05d00;
+        --accent-2-dim: rgba(160, 93, 0, 0.1);
+        --danger: #c64536;
+        --danger-dim: rgba(198, 69, 54, 0.1);
+        --high: #137a47;
+        --high-dim: rgba(19, 122, 71, 0.08);
+        --medium: #a05d00;
+        --medium-dim: rgba(160, 93, 0, 0.1);
+        --low: #c64536;
+        --low-dim: rgba(198, 69, 54, 0.1);
+        --shadow: 0 16px 40px rgba(16, 33, 23, 0.08);
+      }
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: var(--sans);
+      background:
+        radial-gradient(circle at top left, rgba(110, 231, 168, 0.08), transparent 28%),
+        radial-gradient(circle at bottom right, rgba(242, 198, 106, 0.08), transparent 24%),
+        linear-gradient(180deg, var(--bg), var(--bg-alt));
+      color: var(--text);
+      min-height: 100vh;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(126, 145, 133, 0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(126, 145, 133, 0.045) 1px, transparent 1px);
+      background-size: 32px 32px;
+      mask-image: radial-gradient(circle at center, black 48%, transparent 90%);
+      opacity: 0.55;
+    }
+
+    a { color: var(--accent); }
+    .page {
+      width: min(1440px, calc(100vw - 32px));
+      margin: 0 auto;
+      padding: 28px 0 40px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0)), var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    .hero {
+      padding: 28px;
+      margin-bottom: 18px;
+      overflow: hidden;
+      position: relative;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto -10% -40% auto;
+      width: 360px;
+      height: 360px;
+      background: radial-gradient(circle, rgba(110,231,168,0.18), transparent 65%);
+      filter: blur(10px);
+      pointer-events: none;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: var(--accent-dim);
+      border: 1px solid var(--border);
+      color: var(--accent);
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .eyebrow::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+    h1 {
+      font-size: clamp(32px, 5vw, 56px);
+      line-height: 1.02;
+      letter-spacing: -0.04em;
+      margin: 18px 0 14px;
+      max-width: 13ch;
+    }
+    .lede {
+      max-width: 760px;
+      color: var(--text-dim);
+      font-size: clamp(16px, 2vw, 20px);
+      line-height: 1.65;
+      margin: 0 0 26px;
+    }
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 16px;
+      margin-bottom: 26px;
+      color: var(--text-muted);
+      font-size: 13px;
+      font-family: var(--mono);
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .stat {
+      padding: 18px 20px;
+      background: linear-gradient(180deg, rgba(110, 231, 168, 0.05), transparent), var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      min-width: 0;
+    }
+    .stat__label {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+    .stat__value {
+      font-size: clamp(24px, 3vw, 34px);
+      line-height: 1.05;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin-bottom: 6px;
+      overflow-wrap: anywhere;
+    }
+    .stat__sub {
+      color: var(--text-dim);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .controls {
+      margin-bottom: 18px;
+      padding: 18px 20px;
+      display: grid;
+      grid-template-columns: minmax(260px, 1.4fr) minmax(220px, 1fr);
+      gap: 14px 20px;
+      align-items: end;
+    }
+    .control-block { min-width: 0; }
+    .label {
+      display: block;
+      margin-bottom: 8px;
+      font-family: var(--mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-muted);
+    }
+    .search-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    input[type="search"] {
+      appearance: none;
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: 14px;
+      border: 1px solid var(--border-strong);
+      background: var(--surface-3);
+      color: var(--text);
+      font: inherit;
+      outline: none;
+      transition: border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    input[type="search"]:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px var(--accent-dim);
+    }
+    .button {
+      border: 1px solid var(--border-strong);
+      background: var(--surface-3);
+      color: var(--text);
+      padding: 12px 16px;
+      border-radius: 14px;
+      font: inherit;
+      cursor: pointer;
+      transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+    }
+    .button:hover { transform: translateY(-1px); border-color: var(--accent); }
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 0 0 10px;
+    }
+    .legend-pill, .metric-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--surface-3);
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--text-dim);
+      white-space: nowrap;
+    }
+    .legend-pill::before, .metric-pill::before {
+      content: "";
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: currentColor;
+      flex: 0 0 auto;
+    }
+    .legend-pill.high { color: var(--high); background: var(--high-dim); }
+    .legend-pill.medium { color: var(--medium); background: var(--medium-dim); }
+    .legend-pill.low { color: var(--low); background: var(--low-dim); }
+    .results {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--text-dim);
+    }
+
+    .table-card {
+      overflow: hidden;
+      margin-bottom: 18px;
+    }
+    .table-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      align-items: center;
+      padding: 18px 20px;
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(110,231,168,0.03), transparent), var(--surface-2);
+    }
+    .section-label {
+      font-family: var(--mono);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 11px;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    .section-title {
+      font-size: clamp(24px, 2.2vw, 30px);
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin: 0;
+    }
+    .section-copy {
+      margin: 6px 0 0;
+      color: var(--text-dim);
+      font-size: 14px;
+      max-width: 720px;
+    }
+    .table-wrap {
+      overflow: auto;
+      max-height: 72vh;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 1160px;
+    }
+    thead th {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      background: rgba(7, 17, 12, 0.92);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border-strong);
+      text-align: left;
+      padding: 0;
+      white-space: nowrap;
+    }
+    @media (prefers-color-scheme: light) {
+      thead th { background: rgba(247, 251, 248, 0.94); }
+    }
+    .sort-button {
+      appearance: none;
+      border: none;
+      background: transparent;
+      color: var(--text-dim);
+      font: inherit;
+      width: 100%;
+      text-align: left;
+      padding: 14px 14px;
+      font-family: var(--mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+    }
+    .sort-button:hover,
+    .sort-button.active { color: var(--text); background: rgba(255,255,255,0.02); }
+    .sort-indicator {
+      font-size: 12px;
+      color: var(--accent);
+      min-width: 1em;
+      text-align: center;
+    }
+    tbody tr {
+      border-bottom: 1px solid var(--border);
+      transition: background 0.15s ease;
+    }
+    tbody tr:hover { background: rgba(255,255,255,0.03); }
+    tbody tr.roi-high { background-image: linear-gradient(90deg, var(--high-dim), transparent 18%); }
+    tbody tr.roi-medium { background-image: linear-gradient(90deg, var(--medium-dim), transparent 18%); }
+    tbody tr.roi-low { background-image: linear-gradient(90deg, var(--low-dim), transparent 18%); }
+    td {
+      padding: 14px;
+      vertical-align: top;
+      color: var(--text);
+      font-size: 14px;
+      line-height: 1.45;
+    }
+    td.num {
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+      font-family: var(--mono);
+      white-space: nowrap;
+    }
+    td.rank {
+      font-family: var(--mono);
+      color: var(--text-dim);
+      width: 76px;
+    }
+    td.program { min-width: 250px; max-width: 420px; }
+    .program-link {
+      display: inline-block;
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 700;
+      margin-bottom: 5px;
+    }
+    .program-link:hover { color: var(--accent); }
+    .handle {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--text-muted);
+      overflow-wrap: anywhere;
+    }
+    .handle::before {
+      content: "↗";
+      color: var(--accent);
+      font-size: 11px;
+    }
+    .roi-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 92px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      border: 1px solid currentColor;
+    }
+    .roi-badge.high { color: var(--high); background: var(--high-dim); }
+    .roi-badge.medium { color: var(--medium); background: var(--medium-dim); }
+    .roi-badge.low { color: var(--low); background: var(--low-dim); }
+    .subline {
+      display: block;
+      color: var(--text-muted);
+      font-size: 12px;
+      margin-top: 4px;
+      overflow-wrap: anywhere;
+    }
+    .muted { color: var(--text-muted); }
+
+    .methodology {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr 1fr;
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+    .method-card {
+      padding: 22px;
+      min-width: 0;
+    }
+    .method-card h2,
+    .method-card h3 {
+      margin: 0 0 12px;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+    }
+    .method-card p,
+    .method-card li {
+      color: var(--text-dim);
+      font-size: 14px;
+      line-height: 1.65;
+    }
+    .method-card ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+    .formula {
+      margin: 14px 0 14px;
+      padding: 16px 18px;
+      border-radius: 16px;
+      background: var(--surface-3);
+      border: 1px solid var(--border);
+      font-family: var(--mono);
+      font-size: clamp(14px, 1.9vw, 17px);
+      line-height: 1.7;
+      color: var(--text);
+      overflow-wrap: anywhere;
+    }
+    .footer {
+      padding: 18px 20px 4px;
+      color: var(--text-muted);
+      font-size: 13px;
+      line-height: 1.6;
+      text-align: center;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .hero, .controls, .table-card, .methodology, .footer {
+      animation: fadeUp 0.4s ease-out both;
+    }
+    .controls { animation-delay: 0.04s; }
+    .table-card { animation-delay: 0.08s; }
+    .methodology { animation-delay: 0.12s; }
+    .footer { animation-delay: 0.16s; }
+
+    @media (max-width: 1100px) {
+      .stats,
+      .methodology,
+      .controls {
+        grid-template-columns: 1fr;
+      }
+      .table-top {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .page {
+        width: min(100vw - 24px, 1440px);
+      }
+    }
+    @media (max-width: 720px) {
+      .page { width: min(100vw - 16px, 1440px); padding-top: 16px; }
+      .hero, .controls, .table-top, .method-card { padding: 18px; }
+      h1 { max-width: none; }
+      .search-row { flex-direction: column; }
+      .button { width: 100%; }
+      .table-wrap { max-height: none; }
+      table { min-width: 980px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="hero card">
+      <div class="eyebrow">HackerOne Program Intelligence</div>
+      <h1>Bug Bounty ROI Rankings</h1>
+      <p class="lede">A full-screen view of 374 public HackerOne bounty programs, ranked by a competition-adjusted ROI score that rewards payout quality, responsiveness, and activity while penalizing crowded programs.</p>
+      <div class="hero-meta">
+        <span>Dataset size: 374 programs</span>
+        <span>Programs with non-zero ROI: 286</span>
+        <span>Median ROI score: 14.47</span>
+      </div>
+      <div class="stats">
+        <article class="stat">
+          <div class="stat__label">Total programs</div>
+          <div class="stat__value">374</div>
+          <div class="stat__sub">Every public bounty program in the supplied dataset is included in the table below.</div>
+        </article>
+        <article class="stat">
+          <div class="stat__label">Average upper bounty</div>
+          <div class="stat__value">$510</div>
+          <div class="stat__sub">Mean of <span class="muted">average_bounty_upper_amount</span> across all programs.</div>
+        </article>
+        <article class="stat">
+          <div class="stat__label">Best ROI program</div>
+          <div class="stat__value">Symbol</div>
+          <div class="stat__sub">ROI score <strong>360.00</strong> · handle <span class="muted">@symbol</span></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="controls card">
+      <div class="control-block">
+        <label class="label" for="searchInput">Search/filter by program name</label>
+        <div class="search-row">
+          <input id="searchInput" type="search" placeholder="Type a program name or handle…" autocomplete="off" />
+          <button id="clearSearch" class="button" type="button">Clear filter</button>
+        </div>
+      </div>
+      <div class="control-block">
+        <div class="label">ROI color bands</div>
+        <div class="legend">
+          <span class="legend-pill high">High ROI ≥ 22.50</span>
+          <span class="legend-pill medium">Medium ROI ≥ 7.11</span>
+          <span class="legend-pill low">Low ROI &lt; 7.11</span>
+        </div>
+        <div id="resultsSummary" class="results"></div>
+      </div>
+    </section>
+
+    <section class="table-card card">
+      <div class="table-top">
+        <div>
+          <div class="section-label">Interactive table</div>
+          <h2 class="section-title">Sortable full-program leaderboard</h2>
+          <p class="section-copy">Click any column header to sort. The <strong>ROI Rank</strong> column stays fixed to the original ROI ordering so you can always see where a program lands in the master ranking.</p>
+        </div>
+        <div class="metric-pill" id="sortReadout">Default sort: ROI score ↓</div>
+      </div>
+      <div class="table-wrap">
+        <table aria-label="HackerOne bug bounty ROI rankings">
+          <thead>
+            <tr>
+              <th><button class="sort-button" data-key="roiRank">ROI Rank <span class="sort-indicator"></span></button></th>
+              <th><button class="sort-button" data-key="name">Program <span class="sort-indicator"></span></button></th>
+              <th><button class="sort-button" data-key="roiScore">ROI Score <span class="sort-indicator"></span></button></th>
+              <th><button class="sort-button" data-key="averageBountyUpperAmount">Avg Bounty <span class="sort-indicator"></span></button></th>
+              <th><button class="sort-button" data-key="topBountyUpperAmount">Top Bounty <span class="sort-indicator"></span></button></th>
+              <th><button class="sort-button" data-key="minimumBounty">Min Bounty <span class="sort-indicator"></span></button></th>
+              <th><button class="sort-button" data-key="resolvedReportCount">Resolved Reports <span class="sort-indicator"></span></button></th>
+              <th><button class="sort-button" data-key="reportsReceivedLast90Days">Reports (90d) <span class="sort-indicator"></span></button></th>
+              <th><button class="sort-button" data-key="responseEfficiencyPercentage">Response Eff. <span class="sort-indicator"></span></button></th>
+              <th><button class="sort-button" data-key="participantsCount">Participants <span class="sort-indicator"></span></button></th>
+            </tr>
+          </thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="methodology">
+      <article class="method-card card">
+        <div class="section-label">Methodology</div>
+        <h2>How the ROI score works</h2>
+        <p>This dashboard uses the score already calculated in the dataset generator. In plain English: bigger average payouts help, better response efficiency helps, steadier recent activity helps, and heavy researcher crowding hurts.</p>
+        <div class="formula">ROI score = (average bounty × response efficiency × activity factor) ÷ √participants<br><br>activity factor = clamp(resolved reports ÷ max(1, reports in last 90 days × 4), 0.5, 2.0)</div>
+        <p>The square-root crowding penalty matters: a program does not need to be obscure to rank well, but it does need enough payout quality and throughput to justify how many hunters are already there.</p>
+      </article>
+      <article class="method-card card">
+        <div class="section-label">Reading the table</div>
+        <h3>What green, yellow, and red mean</h3>
+        <ul>
+          <li><strong style="color:var(--high)">High ROI</strong> = top third of scores in this dataset.</li>
+          <li><strong style="color:var(--medium)">Medium ROI</strong> = middle third.</li>
+          <li><strong style="color:var(--low)">Low ROI</strong> = bottom third, including zero-score programs.</li>
+          <li>Search narrows by program name or handle; sorting lets you compare any field directly.</li>
+        </ul>
+      </article>
+      <article class="method-card card">
+        <div class="section-label">Caveats</div>
+        <h3>Use this as a screener, not a guarantee</h3>
+        <ul>
+          <li>The score is a heuristic, not a true expected-value model.</li>
+          <li>It does not capture severity mix, duplicate rate, asset sprawl, or researcher skill fit.</li>
+          <li>Programs with tiny sample sizes can look amazing; programs with huge crowds can still be worth it if you have a real edge.</li>
+        </ul>
+      </article>
+    </section>
+
+    <footer class="footer">Data from HackerOne public API. Analysis by Tommy 🦀 at tommyclawd.substack.com</footer>
+  </main>
+
+  <script>
+    const programs = [{"handle":"symbol","name":"Symbol","averageBountyUpperAmount":1000,"topBountyUpperAmount":2500,"minimumBounty":150,"resolvedReportCount":1,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":72,"participantsCount":4,"roiScore":360.0,"roiRank":1,"roiBucket":"high"},{"handle":"pogo","name":"Pogo","averageBountyUpperAmount":500,"topBountyUpperAmount":1000,"minimumBounty":50,"resolvedReportCount":3,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":50,"participantsCount":3,"roiScore":288.68,"roiRank":2,"roiBucket":"high"},{"handle":"nintendo","name":"Nintendo","averageBountyUpperAmount":1352,"topBountyUpperAmount":12168,"minimumBounty":100,"resolvedReportCount":157,"reportsReceivedLast90Days":22,"responseEfficiencyPercentage":86,"participantsCount":55,"roiScore":279.71,"roiRank":3,"roiBucket":"high"},{"handle":"makerdao_bbp","name":"BlockDev Sp. Z o.o","averageBountyUpperAmount":500,"topBountyUpperAmount":50000,"minimumBounty":100,"resolvedReportCount":21,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":92,"participantsCount":22,"roiScore":196.14,"roiRank":4,"roiBucket":"high"},{"handle":"teradici","name":"Teradici","averageBountyUpperAmount":500,"topBountyUpperAmount":1000,"minimumBounty":0,"resolvedReportCount":23,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":100,"participantsCount":26,"roiScore":196.12,"roiRank":5,"roiBucket":"high"},{"handle":"saytechnologies","name":"Say Technologies","averageBountyUpperAmount":486,"topBountyUpperAmount":9600,"minimumBounty":100,"resolvedReportCount":8,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":96,"participantsCount":25,"roiScore":186.62,"roiRank":6,"roiBucket":"high"},{"handle":"zenly","name":"Zenly","averageBountyUpperAmount":750,"topBountyUpperAmount":5000,"minimumBounty":50,"resolvedReportCount":48,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":75,"participantsCount":56,"roiScore":150.33,"roiRank":7,"roiBucket":"high"},{"handle":"myetherwallet","name":"MyEtherWallet","averageBountyUpperAmount":500,"topBountyUpperAmount":1000,"minimumBounty":50,"resolvedReportCount":16,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":50,"participantsCount":13,"roiScore":138.68,"roiRank":8,"roiBucket":"high"},{"handle":"linktree","name":"Linktree","averageBountyUpperAmount":750,"topBountyUpperAmount":6000,"minimumBounty":50,"resolvedReportCount":189,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":98,"participantsCount":123,"roiScore":132.55,"roiRank":9,"roiBucket":"high"},{"handle":"floqast","name":"FloQast","averageBountyUpperAmount":1000,"topBountyUpperAmount":5000,"minimumBounty":50,"resolvedReportCount":175,"reportsReceivedLast90Days":36,"responseEfficiencyPercentage":94,"participantsCount":91,"roiScore":119.75,"roiRank":10,"roiBucket":"high"},{"handle":"hedera-hashgraph","name":"Hedera Hashgraph","averageBountyUpperAmount":500,"topBountyUpperAmount":40000,"minimumBounty":50,"resolvedReportCount":80,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":96,"participantsCount":66,"roiScore":118.17,"roiRank":11,"roiBucket":"high"},{"handle":"wisdomtree","name":"WisdomTree, Inc.","averageBountyUpperAmount":1000,"topBountyUpperAmount":4000,"minimumBounty":50,"resolvedReportCount":23,"reportsReceivedLast90Days":65,"responseEfficiencyPercentage":98,"participantsCount":18,"roiScore":115.49,"roiRank":12,"roiBucket":"high"},{"handle":"recorded-future","name":"Recorded Future","averageBountyUpperAmount":750,"topBountyUpperAmount":5000,"minimumBounty":50,"resolvedReportCount":101,"reportsReceivedLast90Days":2,"responseEfficiencyPercentage":80,"participantsCount":113,"roiScore":112.89,"roiRank":13,"roiBucket":"high"},{"handle":"tomochain","name":"TomoChain","averageBountyUpperAmount":200,"topBountyUpperAmount":1000,"minimumBounty":50,"resolvedReportCount":43,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":100,"participantsCount":15,"roiScore":103.28,"roiRank":14,"roiBucket":"high"},{"handle":"otf","name":"Open Technology Fund","averageBountyUpperAmount":100,"topBountyUpperAmount":500,"minimumBounty":100,"resolvedReportCount":5,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":100,"participantsCount":4,"roiScore":100.0,"roiRank":15,"roiBucket":"high"},{"handle":"blend-labs","name":"Blend Labs","averageBountyUpperAmount":750,"topBountyUpperAmount":5000,"minimumBounty":50,"resolvedReportCount":13,"reportsReceivedLast90Days":23,"responseEfficiencyPercentage":96,"participantsCount":13,"roiScore":99.85,"roiRank":16,"roiBucket":"high"},{"handle":"upserve","name":"Upserve ","averageBountyUpperAmount":500,"topBountyUpperAmount":4000,"minimumBounty":50,"resolvedReportCount":103,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":94,"participantsCount":92,"roiScore":98.0,"roiRank":17,"roiBucket":"high"},{"handle":"scopely","name":"Scopely","averageBountyUpperAmount":900,"topBountyUpperAmount":10000,"minimumBounty":150,"resolvedReportCount":384,"reportsReceivedLast90Days":59,"responseEfficiencyPercentage":95,"participantsCount":207,"roiScore":96.69,"roiRank":18,"roiBucket":"high"},{"handle":"twitter-algorithmic-bias","name":"Twitter Algorithmic Bias","averageBountyUpperAmount":1000,"topBountyUpperAmount":3500,"minimumBounty":500,"resolvedReportCount":0,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":100,"participantsCount":28,"roiScore":94.49,"roiRank":19,"roiBucket":"high"},{"handle":"whatnot","name":"Whatnot","averageBountyUpperAmount":2000,"topBountyUpperAmount":15000,"minimumBounty":50,"resolvedReportCount":0,"reportsReceivedLast90Days":914,"responseEfficiencyPercentage":95,"participantsCount":111,"roiScore":90.17,"roiRank":20,"roiBucket":"high"},{"handle":"robinhood","name":"Robinhood Markets Bounty","averageBountyUpperAmount":1431,"topBountyUpperAmount":11500,"minimumBounty":50,"resolvedReportCount":133,"reportsReceivedLast90Days":1261,"responseEfficiencyPercentage":98,"participantsCount":70,"roiScore":83.81,"roiRank":21,"roiBucket":"high"},{"handle":"filezilla","name":"FileZilla","averageBountyUpperAmount":283,"topBountyUpperAmount":3643,"minimumBounty":250,"resolvedReportCount":30,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":75,"participantsCount":26,"roiScore":83.25,"roiRank":22,"roiBucket":"high"},{"handle":"clubhouse","name":"Clubhouse","averageBountyUpperAmount":500,"topBountyUpperAmount":3000,"minimumBounty":50,"resolvedReportCount":66,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":44,"participantsCount":30,"roiScore":80.33,"roiRank":23,"roiBucket":"high"},{"handle":"lark_technologies","name":"Lark Technologies","averageBountyUpperAmount":500,"topBountyUpperAmount":5000,"minimumBounty":100,"resolvedReportCount":352,"reportsReceivedLast90Days":50,"responseEfficiencyPercentage":92,"participantsCount":112,"roiScore":76.5,"roiRank":24,"roiBucket":"high"},{"handle":"cosmos","name":"Cosmos","averageBountyUpperAmount":2500,"topBountyUpperAmount":100000,"minimumBounty":1000,"resolvedReportCount":209,"reportsReceivedLast90Days":768,"responseEfficiencyPercentage":97,"participantsCount":258,"roiScore":75.49,"roiRank":25,"roiBucket":"high"},{"handle":"payoneer","name":"Payoneer","averageBountyUpperAmount":750,"topBountyUpperAmount":5000,"minimumBounty":50,"resolvedReportCount":114,"reportsReceivedLast90Days":26,"responseEfficiencyPercentage":77,"participantsCount":74,"roiScore":73.59,"roiRank":26,"roiBucket":"high"},{"handle":"temu","name":"Temu","averageBountyUpperAmount":737,"topBountyUpperAmount":7895,"minimumBounty":50,"resolvedReportCount":25,"reportsReceivedLast90Days":170,"responseEfficiencyPercentage":100,"participantsCount":26,"roiScore":72.27,"roiRank":27,"roiBucket":"high"},{"handle":"magic-bbp","name":"Magic","averageBountyUpperAmount":350,"topBountyUpperAmount":3000,"minimumBounty":150,"resolvedReportCount":76,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":89,"participantsCount":78,"roiScore":70.54,"roiRank":28,"roiBucket":"high"},{"handle":"vodafone_oman","name":"Vodafone Oman","averageBountyUpperAmount":1000,"topBountyUpperAmount":10000,"minimumBounty":50,"resolvedReportCount":15,"reportsReceivedLast90Days":136,"responseEfficiencyPercentage":96,"participantsCount":50,"roiScore":67.88,"roiRank":29,"roiBucket":"high"},{"handle":"doordash","name":"DoorDash","averageBountyUpperAmount":724,"topBountyUpperAmount":5700,"minimumBounty":50,"resolvedReportCount":2,"reportsReceivedLast90Days":540,"responseEfficiencyPercentage":96,"participantsCount":28,"roiScore":65.68,"roiRank":30,"roiBucket":"high"},{"handle":"skale_network","name":"SKALE Network","averageBountyUpperAmount":250,"topBountyUpperAmount":50000,"minimumBounty":100,"resolvedReportCount":11,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":53,"participantsCount":17,"roiScore":64.27,"roiRank":31,"roiBucket":"high"},{"handle":"klarna","name":"Klarna","averageBountyUpperAmount":1000,"topBountyUpperAmount":7000,"minimumBounty":50,"resolvedReportCount":37,"reportsReceivedLast90Days":106,"responseEfficiencyPercentage":95,"participantsCount":57,"roiScore":62.92,"roiRank":32,"roiBucket":"high"},{"handle":"s-pankki","name":"S-Pankki","averageBountyUpperAmount":500,"topBountyUpperAmount":5000,"minimumBounty":150,"resolvedReportCount":118,"reportsReceivedLast90Days":21,"responseEfficiencyPercentage":90,"participantsCount":102,"roiScore":62.59,"roiRank":33,"roiBucket":"high"},{"handle":"semmle","name":"Semmle","averageBountyUpperAmount":150,"topBountyUpperAmount":2000,"minimumBounty":150,"resolvedReportCount":27,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":100,"participantsCount":23,"roiScore":62.55,"roiRank":34,"roiBucket":"high"},{"handle":"rei_bbp","name":"REI BBP","averageBountyUpperAmount":750,"topBountyUpperAmount":15000,"minimumBounty":50,"resolvedReportCount":83,"reportsReceivedLast90Days":27,"responseEfficiencyPercentage":97,"participantsCount":80,"roiScore":62.51,"roiRank":35,"roiBucket":"high"},{"handle":"ibb","name":"Internet Bug Bounty","averageBountyUpperAmount":1000,"topBountyUpperAmount":25000,"minimumBounty":50,"resolvedReportCount":1057,"reportsReceivedLast90Days":78,"responseEfficiencyPercentage":65,"participantsCount":436,"roiScore":62.26,"roiRank":36,"roiBucket":"high"},{"handle":"rootstocklabs","name":"Rootstock Labs","averageBountyUpperAmount":1000,"topBountyUpperAmount":70000,"minimumBounty":400,"resolvedReportCount":44,"reportsReceivedLast90Days":40,"responseEfficiencyPercentage":88,"participantsCount":50,"roiScore":62.23,"roiRank":37,"roiBucket":"high"},{"handle":"banco_plata","name":"Banco Plata","averageBountyUpperAmount":350,"topBountyUpperAmount":750,"minimumBounty":50,"resolvedReportCount":1,"reportsReceivedLast90Days":1121,"responseEfficiencyPercentage":98,"participantsCount":8,"roiScore":60.63,"roiRank":38,"roiBucket":"high"},{"handle":"curl","name":"curl","averageBountyUpperAmount":800,"topBountyUpperAmount":2000,"minimumBounty":50,"resolvedReportCount":85,"reportsReceivedLast90Days":79,"responseEfficiencyPercentage":100,"participantsCount":44,"roiScore":60.3,"roiRank":39,"roiBucket":"high"},{"handle":"chaturbate","name":"Chaturbate","averageBountyUpperAmount":400,"topBountyUpperAmount":20000,"minimumBounty":100,"resolvedReportCount":304,"reportsReceivedLast90Days":27,"responseEfficiencyPercentage":96,"participantsCount":163,"roiScore":60.15,"roiRank":40,"roiBucket":"high"},{"handle":"forescout_technologies","name":"ForeScout Technologies","averageBountyUpperAmount":1000,"topBountyUpperAmount":3200,"minimumBounty":100,"resolvedReportCount":96,"reportsReceivedLast90Days":19,"responseEfficiencyPercentage":61,"participantsCount":169,"roiScore":59.27,"roiRank":41,"roiBucket":"high"},{"handle":"coinspot","name":"CoinSpot","averageBountyUpperAmount":1000,"topBountyUpperAmount":100000,"minimumBounty":250,"resolvedReportCount":73,"reportsReceivedLast90Days":54,"responseEfficiencyPercentage":93,"participantsCount":63,"roiScore":58.58,"roiRank":42,"roiBucket":"high"},{"handle":"chia_network","name":"Chia Network","averageBountyUpperAmount":1000,"topBountyUpperAmount":25000,"minimumBounty":50,"resolvedReportCount":41,"reportsReceivedLast90Days":2118,"responseEfficiencyPercentage":100,"participantsCount":73,"roiScore":58.52,"roiRank":43,"roiBucket":"high"},{"handle":"starbucks_japan","name":"Starbucks Japan","averageBountyUpperAmount":530,"topBountyUpperAmount":760,"minimumBounty":50,"resolvedReportCount":12,"reportsReceivedLast90Days":62,"responseEfficiencyPercentage":84,"participantsCount":15,"roiScore":57.48,"roiRank":44,"roiBucket":"high"},{"handle":"savedroid","name":"savedroid","averageBountyUpperAmount":250,"topBountyUpperAmount":2000,"minimumBounty":100,"resolvedReportCount":31,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":86,"participantsCount":56,"roiScore":57.46,"roiRank":46,"roiBucket":"high"},{"handle":"starbucks_china","name":"Starbucks China","averageBountyUpperAmount":500,"topBountyUpperAmount":1500,"minimumBounty":50,"resolvedReportCount":21,"reportsReceivedLast90Days":20,"responseEfficiencyPercentage":86,"participantsCount":14,"roiScore":57.46,"roiRank":45,"roiBucket":"high"},{"handle":"cornershop","name":"Cornershop","averageBountyUpperAmount":400,"topBountyUpperAmount":2500,"minimumBounty":100,"resolvedReportCount":191,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":90,"participantsCount":172,"roiScore":54.9,"roiRank":47,"roiBucket":"high"},{"handle":"visa","name":"Visa","averageBountyUpperAmount":750,"topBountyUpperAmount":3000,"minimumBounty":50,"resolvedReportCount":84,"reportsReceivedLast90Days":93,"responseEfficiencyPercentage":91,"participantsCount":40,"roiScore":53.96,"roiRank":48,"roiBucket":"high"},{"handle":"yelp","name":"Yelp","averageBountyUpperAmount":500,"topBountyUpperAmount":15000,"minimumBounty":50,"resolvedReportCount":502,"reportsReceivedLast90Days":53,"responseEfficiencyPercentage":100,"participantsCount":350,"roiScore":53.45,"roiRank":49,"roiBucket":"high"},{"handle":"smartsheet","name":"Smartsheet","averageBountyUpperAmount":500,"topBountyUpperAmount":3000,"minimumBounty":50,"resolvedReportCount":355,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":90,"participantsCount":294,"roiScore":52.49,"roiRank":50,"roiBucket":"high"},{"handle":"mapbox","name":"Mapbox","averageBountyUpperAmount":400,"topBountyUpperAmount":10000,"minimumBounty":200,"resolvedReportCount":398,"reportsReceivedLast90Days":48,"responseEfficiencyPercentage":100,"participantsCount":233,"roiScore":52.41,"roiRank":51,"roiBucket":"high"},{"handle":"yuga_labs","name":"Yuga Labs","averageBountyUpperAmount":1000,"topBountyUpperAmount":17500,"minimumBounty":50,"resolvedReportCount":0,"reportsReceivedLast90Days":11,"responseEfficiencyPercentage":82,"participantsCount":62,"roiScore":52.07,"roiRank":52,"roiBucket":"high"},{"handle":"six-group","name":"SIX Group","averageBountyUpperAmount":900,"topBountyUpperAmount":7500,"minimumBounty":50,"resolvedReportCount":0,"reportsReceivedLast90Days":71,"responseEfficiencyPercentage":86,"participantsCount":58,"roiScore":50.82,"roiRank":53,"roiBucket":"high"},{"handle":"mainwp","name":"MainWP","averageBountyUpperAmount":150,"topBountyUpperAmount":500,"minimumBounty":5,"resolvedReportCount":95,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":90,"participantsCount":29,"roiScore":50.14,"roiRank":54,"roiBucket":"high"},{"handle":"django","name":"Django","averageBountyUpperAmount":500,"topBountyUpperAmount":3000,"minimumBounty":250,"resolvedReportCount":22,"reportsReceivedLast90Days":42,"responseEfficiencyPercentage":98,"participantsCount":24,"roiScore":50.01,"roiRank":55,"roiBucket":"high"},{"handle":"paypal","name":"PayPal","averageBountyUpperAmount":3200,"topBountyUpperAmount":52000,"minimumBounty":0,"resolvedReportCount":2305,"reportsReceivedLast90Days":1067,"responseEfficiencyPercentage":97,"participantsCount":1154,"roiScore":49.35,"roiRank":56,"roiBucket":"high"},{"handle":"sifchain","name":"Sifchain","averageBountyUpperAmount":100,"topBountyUpperAmount":15000,"minimumBounty":50,"resolvedReportCount":78,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":98,"participantsCount":17,"roiScore":47.54,"roiRank":57,"roiBucket":"high"},{"handle":"magic-eden","name":"Magic Eden","averageBountyUpperAmount":1000,"topBountyUpperAmount":10100,"minimumBounty":50,"resolvedReportCount":90,"reportsReceivedLast90Days":81,"responseEfficiencyPercentage":91,"participantsCount":93,"roiScore":47.18,"roiRank":58,"roiBucket":"high"},{"handle":"affirm","name":"Affirm","averageBountyUpperAmount":500,"topBountyUpperAmount":2000,"minimumBounty":100,"resolvedReportCount":84,"reportsReceivedLast90Days":21,"responseEfficiencyPercentage":95,"participantsCount":105,"roiScore":46.36,"roiRank":59,"roiBucket":"high"},{"handle":"goodrx","name":"GoodRx","averageBountyUpperAmount":300,"topBountyUpperAmount":5500,"minimumBounty":100,"resolvedReportCount":216,"reportsReceivedLast90Days":25,"responseEfficiencyPercentage":92,"participantsCount":148,"roiScore":45.37,"roiRank":60,"roiBucket":"high"},{"handle":"tron_dao","name":"TRON DAO","averageBountyUpperAmount":350,"topBountyUpperAmount":100000,"minimumBounty":50,"resolvedReportCount":22,"reportsReceivedLast90Days":885,"responseEfficiencyPercentage":89,"participantsCount":12,"roiScore":44.96,"roiRank":61,"roiBucket":"high"},{"handle":"unico_idtech","name":"Unico IDtech","averageBountyUpperAmount":500,"topBountyUpperAmount":5000,"minimumBounty":50,"resolvedReportCount":22,"reportsReceivedLast90Days":651,"responseEfficiencyPercentage":98,"participantsCount":32,"roiScore":43.31,"roiRank":62,"roiBucket":"high"},{"handle":"curve","name":"Curve","averageBountyUpperAmount":500,"topBountyUpperAmount":10000,"minimumBounty":150,"resolvedReportCount":0,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":100,"participantsCount":34,"roiScore":42.87,"roiRank":63,"roiBucket":"high"},{"handle":"cs_money","name":"CS Money","averageBountyUpperAmount":300,"topBountyUpperAmount":15000,"minimumBounty":50,"resolvedReportCount":138,"reportsReceivedLast90Days":12,"responseEfficiencyPercentage":82,"participantsCount":138,"roiScore":41.88,"roiRank":64,"roiBucket":"high"},{"handle":"lightspark_bbp","name":"Lightspark BBP","averageBountyUpperAmount":750,"topBountyUpperAmount":5000,"minimumBounty":50,"resolvedReportCount":30,"reportsReceivedLast90Days":1192,"responseEfficiencyPercentage":92,"participantsCount":69,"roiScore":41.53,"roiRank":65,"roiBucket":"high"},{"handle":"valve","name":"Valve","averageBountyUpperAmount":750,"topBountyUpperAmount":20000,"minimumBounty":100,"resolvedReportCount":1279,"reportsReceivedLast90Days":199,"responseEfficiencyPercentage":83,"participantsCount":598,"roiScore":40.9,"roiRank":66,"roiBucket":"high"},{"handle":"sidefx","name":"SideFX","averageBountyUpperAmount":500,"topBountyUpperAmount":5000,"minimumBounty":50,"resolvedReportCount":79,"reportsReceivedLast90Days":31,"responseEfficiencyPercentage":90,"participantsCount":50,"roiScore":40.54,"roiRank":67,"roiBucket":"high"},{"handle":"capital-one-bounty","name":"Capital One Bug Bounty","averageBountyUpperAmount":750,"topBountyUpperAmount":5000,"minimumBounty":50,"resolvedReportCount":61,"reportsReceivedLast90Days":42,"responseEfficiencyPercentage":95,"participantsCount":79,"roiScore":40.08,"roiRank":68,"roiBucket":"high"},{"handle":"alsco","name":"ALSCO","averageBountyUpperAmount":210,"topBountyUpperAmount":1000,"minimumBounty":50,"resolvedReportCount":5,"reportsReceivedLast90Days":122,"responseEfficiencyPercentage":100,"participantsCount":7,"roiScore":39.69,"roiRank":69,"roiBucket":"high"},{"handle":"mattermost","name":"Mattermost","averageBountyUpperAmount":300,"topBountyUpperAmount":2200,"minimumBounty":50,"resolvedReportCount":277,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":92,"participantsCount":198,"roiScore":39.23,"roiRank":70,"roiBucket":"high"},{"handle":"portswigger","name":"PortSwigger Web Security","averageBountyUpperAmount":400,"topBountyUpperAmount":5000,"minimumBounty":100,"resolvedReportCount":99,"reportsReceivedLast90Days":26,"responseEfficiencyPercentage":96,"participantsCount":91,"roiScore":38.32,"roiRank":71,"roiBucket":"high"},{"handle":"phabricator","name":"Phabricator","averageBountyUpperAmount":300,"topBountyUpperAmount":2000,"minimumBounty":300,"resolvedReportCount":56,"reportsReceivedLast90Days":12,"responseEfficiencyPercentage":64,"participantsCount":35,"roiScore":37.86,"roiRank":72,"roiBucket":"high"},{"handle":"oasisprotocol","name":"Oasis Protocol Foundation","averageBountyUpperAmount":150,"topBountyUpperAmount":3000,"minimumBounty":50,"resolvedReportCount":32,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":77,"participantsCount":38,"roiScore":37.47,"roiRank":73,"roiBucket":"high"},{"handle":"marriott","name":"Marriott Bug Bounty Program","averageBountyUpperAmount":500,"topBountyUpperAmount":11000,"minimumBounty":100,"resolvedReportCount":768,"reportsReceivedLast90Days":132,"responseEfficiencyPercentage":98,"participantsCount":364,"roiScore":37.36,"roiRank":74,"roiBucket":"high"},{"handle":"torproject","name":"Tor","averageBountyUpperAmount":250,"topBountyUpperAmount":3000,"minimumBounty":100,"resolvedReportCount":61,"reportsReceivedLast90Days":13,"responseEfficiencyPercentage":92,"participantsCount":55,"roiScore":36.38,"roiRank":75,"roiBucket":"high"},{"handle":"liberapay","name":"Liberapay","averageBountyUpperAmount":100,"topBountyUpperAmount":100,"minimumBounty":100,"resolvedReportCount":23,"reportsReceivedLast90Days":1,"responseEfficiencyPercentage":100,"participantsCount":31,"roiScore":35.92,"roiRank":76,"roiBucket":"high"},{"handle":"metamask","name":"MetaMask","averageBountyUpperAmount":1000,"topBountyUpperAmount":50000,"minimumBounty":50,"resolvedReportCount":182,"reportsReceivedLast90Days":505,"responseEfficiencyPercentage":84,"participantsCount":138,"roiScore":35.75,"roiRank":77,"roiBucket":"high"},{"handle":"vend","name":"Vend by Lightspeed","averageBountyUpperAmount":150,"topBountyUpperAmount":6250,"minimumBounty":150,"resolvedReportCount":68,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":100,"participantsCount":71,"roiScore":35.6,"roiRank":78,"roiBucket":"high"},{"handle":"expediagroup_bbp","name":"Expedia Group Bug Bounty","averageBountyUpperAmount":750,"topBountyUpperAmount":6000,"minimumBounty":100,"resolvedReportCount":664,"reportsReceivedLast90Days":115,"responseEfficiencyPercentage":68,"participantsCount":435,"roiScore":35.3,"roiRank":79,"roiBucket":"high"},{"handle":"neon_bbp","name":"Neon","averageBountyUpperAmount":750,"topBountyUpperAmount":5000,"minimumBounty":50,"resolvedReportCount":33,"reportsReceivedLast90Days":608,"responseEfficiencyPercentage":95,"participantsCount":103,"roiScore":35.1,"roiRank":80,"roiBucket":"high"},{"handle":"opensea","name":"OpenSea","averageBountyUpperAmount":750,"topBountyUpperAmount":100100,"minimumBounty":50,"resolvedReportCount":0,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":100,"participantsCount":120,"roiScore":34.23,"roiRank":81,"roiBucket":"high"},{"handle":"audible","name":"Audible","averageBountyUpperAmount":600,"topBountyUpperAmount":12000,"minimumBounty":50,"resolvedReportCount":66,"reportsReceivedLast90Days":67,"responseEfficiencyPercentage":97,"participantsCount":74,"roiScore":33.83,"roiRank":82,"roiBucket":"high"},{"handle":"adobe","name":"Adobe","averageBountyUpperAmount":769,"topBountyUpperAmount":10000,"minimumBounty":0,"resolvedReportCount":8539,"reportsReceivedLast90Days":658,"responseEfficiencyPercentage":96,"participantsCount":1930,"roiScore":33.61,"roiRank":83,"roiBucket":"high"},{"handle":"bcny","name":"The Browser Company of NYC","averageBountyUpperAmount":500,"topBountyUpperAmount":10000,"minimumBounty":50,"resolvedReportCount":0,"reportsReceivedLast90Days":381,"responseEfficiencyPercentage":92,"participantsCount":47,"roiScore":33.55,"roiRank":84,"roiBucket":"high"},{"handle":"etoro_bbp","name":"eToro BBP","averageBountyUpperAmount":250,"topBountyUpperAmount":15000,"minimumBounty":7000,"resolvedReportCount":141,"reportsReceivedLast90Days":13,"responseEfficiencyPercentage":82,"participantsCount":154,"roiScore":33.04,"roiRank":85,"roiBucket":"high"},{"handle":"smtp2go","name":"SMTP2GO BBP","averageBountyUpperAmount":300,"topBountyUpperAmount":2000,"minimumBounty":100,"resolvedReportCount":245,"reportsReceivedLast90Days":69,"responseEfficiencyPercentage":96,"participantsCount":63,"roiScore":32.21,"roiRank":86,"roiBucket":"high"},{"handle":"blockchain","name":"Blockchain","averageBountyUpperAmount":250,"topBountyUpperAmount":10000,"minimumBounty":50,"resolvedReportCount":151,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":78,"participantsCount":151,"roiScore":31.74,"roiRank":88,"roiBucket":"high"},{"handle":"mpesa","name":"M-Pesa Africa Limited","averageBountyUpperAmount":500,"topBountyUpperAmount":2000,"minimumBounty":50,"resolvedReportCount":0,"reportsReceivedLast90Days":184,"responseEfficiencyPercentage":95,"participantsCount":56,"roiScore":31.74,"roiRank":87,"roiBucket":"high"},{"handle":"hyatt","name":"Hyatt Hotels","averageBountyUpperAmount":600,"topBountyUpperAmount":25000,"minimumBounty":0,"resolvedReportCount":694,"reportsReceivedLast90Days":126,"responseEfficiencyPercentage":98,"participantsCount":654,"roiScore":31.66,"roiRank":89,"roiBucket":"high"},{"handle":"wallet_on_telegram","name":"Wallet on Telegram","averageBountyUpperAmount":300,"topBountyUpperAmount":8000,"minimumBounty":50,"resolvedReportCount":14,"reportsReceivedLast90Days":330,"responseEfficiencyPercentage":100,"participantsCount":23,"roiScore":31.28,"roiRank":90,"roiBucket":"high"},{"handle":"trafficfactory","name":"Traffic Factory","averageBountyUpperAmount":100,"topBountyUpperAmount":1500,"minimumBounty":50,"resolvedReportCount":45,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":100,"participantsCount":41,"roiScore":31.23,"roiRank":91,"roiBucket":"high"},{"handle":"kayak","name":"KAYAK","averageBountyUpperAmount":250,"topBountyUpperAmount":5000,"minimumBounty":100,"resolvedReportCount":520,"reportsReceivedLast90Days":60,"responseEfficiencyPercentage":92,"participantsCount":220,"roiScore":31.01,"roiRank":92,"roiBucket":"high"},{"handle":"glassdoor","name":"Glassdoor","averageBountyUpperAmount":500,"topBountyUpperAmount":7500,"minimumBounty":50,"resolvedReportCount":1130,"reportsReceivedLast90Days":61,"responseEfficiencyPercentage":70,"participantsCount":514,"roiScore":30.88,"roiRank":93,"roiBucket":"high"},{"handle":"mergify","name":"Mergify","averageBountyUpperAmount":300,"topBountyUpperAmount":10000,"minimumBounty":50,"resolvedReportCount":30,"reportsReceivedLast90Days":36,"responseEfficiencyPercentage":100,"participantsCount":25,"roiScore":30.0,"roiRank":94,"roiBucket":"high"},{"handle":"zooplus","name":"Zooplus","averageBountyUpperAmount":1000,"topBountyUpperAmount":5000,"minimumBounty":50,"resolvedReportCount":377,"reportsReceivedLast90Days":255,"responseEfficiencyPercentage":100,"participantsCount":278,"roiScore":29.99,"roiRank":95,"roiBucket":"high"},{"handle":"ridewithvia","name":"Via","averageBountyUpperAmount":300,"topBountyUpperAmount":2000,"minimumBounty":50,"resolvedReportCount":94,"reportsReceivedLast90Days":26,"responseEfficiencyPercentage":100,"participantsCount":82,"roiScore":29.94,"roiRank":96,"roiBucket":"high"},{"handle":"remitano","name":"Remitano","averageBountyUpperAmount":100,"topBountyUpperAmount":10000,"minimumBounty":50,"resolvedReportCount":51,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":100,"participantsCount":45,"roiScore":29.81,"roiRank":97,"roiBucket":"high"},{"handle":"wellsfargo-bbp","name":"Wells Fargo Bounty","averageBountyUpperAmount":750,"topBountyUpperAmount":12500,"minimumBounty":150,"resolvedReportCount":187,"reportsReceivedLast90Days":80,"responseEfficiencyPercentage":94,"participantsCount":192,"roiScore":29.73,"roiRank":98,"roiBucket":"high"},{"handle":"netflix","name":"Netflix","averageBountyUpperAmount":600,"topBountyUpperAmount":25000,"minimumBounty":50,"resolvedReportCount":2937,"reportsReceivedLast90Days":1061,"responseEfficiencyPercentage":99,"participantsCount":199,"roiScore":29.14,"roiRank":99,"roiBucket":"high"},{"handle":"paragonie","name":"Paragon Initiative Enterprises","averageBountyUpperAmount":50,"topBountyUpperAmount":200,"minimumBounty":0,"resolvedReportCount":18,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":100,"participantsCount":12,"roiScore":28.87,"roiRank":100,"roiBucket":"high"},{"handle":"sorare","name":"Sorare","averageBountyUpperAmount":600,"topBountyUpperAmount":10000,"minimumBounty":50,"resolvedReportCount":70,"reportsReceivedLast90Days":51,"responseEfficiencyPercentage":78,"participantsCount":66,"roiScore":28.8,"roiRank":102,"roiBucket":"high"},{"handle":"vercel-open-source","name":"Vercel Open Source","averageBountyUpperAmount":907,"topBountyUpperAmount":10250,"minimumBounty":50,"resolvedReportCount":57,"reportsReceivedLast90Days":3101,"responseEfficiencyPercentage":88,"participantsCount":192,"roiScore":28.8,"roiRank":101,"roiBucket":"high"},{"handle":"zabbix","name":"Zabbix","averageBountyUpperAmount":500,"topBountyUpperAmount":4500,"minimumBounty":50,"resolvedReportCount":76,"reportsReceivedLast90Days":127,"responseEfficiencyPercentage":94,"participantsCount":67,"roiScore":28.71,"roiRank":103,"roiBucket":"high"},{"handle":"uber","name":"Uber","averageBountyUpperAmount":700,"topBountyUpperAmount":50000,"minimumBounty":500,"resolvedReportCount":2596,"reportsReceivedLast90Days":460,"responseEfficiencyPercentage":97,"participantsCount":1134,"roiScore":28.45,"roiRank":104,"roiBucket":"high"},{"handle":"coinhako","name":"Coinhako","averageBountyUpperAmount":300,"topBountyUpperAmount":2300,"minimumBounty":50,"resolvedReportCount":11,"reportsReceivedLast90Days":86,"responseEfficiencyPercentage":100,"participantsCount":28,"roiScore":28.35,"roiRank":105,"roiBucket":"high"},{"handle":"judgeme","name":"Judge.me ","averageBountyUpperAmount":500,"topBountyUpperAmount":1250,"minimumBounty":50,"resolvedReportCount":137,"reportsReceivedLast90Days":59,"responseEfficiencyPercentage":93,"participantsCount":91,"roiScore":28.3,"roiRank":106,"roiBucket":"high"},{"handle":"bybit_fintech","name":"Bybit Fintech Ltd","averageBountyUpperAmount":576,"topBountyUpperAmount":4000,"minimumBounty":50,"resolvedReportCount":85,"reportsReceivedLast90Days":126,"responseEfficiencyPercentage":97,"participantsCount":100,"roiScore":27.94,"roiRank":107,"roiBucket":"high"},{"handle":"exness","name":"EXNESS","averageBountyUpperAmount":250,"topBountyUpperAmount":48000,"minimumBounty":50,"resolvedReportCount":519,"reportsReceivedLast90Days":50,"responseEfficiencyPercentage":96,"participantsCount":301,"roiScore":27.67,"roiRank":108,"roiBucket":"high"},{"handle":"whoop_bug_bounty","name":"Whoop Bug Bounty","averageBountyUpperAmount":500,"topBountyUpperAmount":2000,"minimumBounty":50,"resolvedReportCount":32,"reportsReceivedLast90Days":77,"responseEfficiencyPercentage":87,"participantsCount":62,"roiScore":27.62,"roiRank":109,"roiBucket":"high"},{"handle":"wink_jq3al","name":"WINK","averageBountyUpperAmount":100,"topBountyUpperAmount":500,"minimumBounty":100,"resolvedReportCount":11,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":60,"participantsCount":20,"roiScore":26.83,"roiRank":110,"roiBucket":"high"},{"handle":"arkose_labs","name":"Arkose Labs","averageBountyUpperAmount":400,"topBountyUpperAmount":1500,"minimumBounty":50,"resolvedReportCount":48,"reportsReceivedLast90Days":38,"responseEfficiencyPercentage":98,"participantsCount":54,"roiScore":26.67,"roiRank":111,"roiBucket":"high"},{"handle":"frontegg","name":"Frontegg","averageBountyUpperAmount":500,"topBountyUpperAmount":3000,"minimumBounty":50,"resolvedReportCount":76,"reportsReceivedLast90Days":86,"responseEfficiencyPercentage":94,"participantsCount":79,"roiScore":26.44,"roiRank":112,"roiBucket":"high"},{"handle":"starbucks","name":"Starbucks","averageBountyUpperAmount":600,"topBountyUpperAmount":11640,"minimumBounty":100,"resolvedReportCount":2090,"reportsReceivedLast90Days":187,"responseEfficiencyPercentage":81,"participantsCount":1375,"roiScore":26.21,"roiRank":113,"roiBucket":"high"},{"handle":"panther_labs","name":"Panther Labs","averageBountyUpperAmount":150,"topBountyUpperAmount":1000,"minimumBounty":100,"resolvedReportCount":33,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":67,"participantsCount":59,"roiScore":26.17,"roiRank":114,"roiBucket":"high"},{"handle":"exodus","name":"Exodus","averageBountyUpperAmount":500,"topBountyUpperAmount":10000,"minimumBounty":100,"resolvedReportCount":107,"reportsReceivedLast90Days":86,"responseEfficiencyPercentage":99,"participantsCount":91,"roiScore":25.95,"roiRank":115,"roiBucket":"high"},{"handle":"launchdarkly","name":"LaunchDarkly","averageBountyUpperAmount":750,"topBountyUpperAmount":7500,"minimumBounty":50,"resolvedReportCount":154,"reportsReceivedLast90Days":164,"responseEfficiencyPercentage":82,"participantsCount":143,"roiScore":25.71,"roiRank":116,"roiBucket":"high"},{"handle":"nba-public","name":"NBA Public Bug Bounty","averageBountyUpperAmount":400,"topBountyUpperAmount":4500,"minimumBounty":50,"resolvedReportCount":48,"reportsReceivedLast90Days":192,"responseEfficiencyPercentage":100,"participantsCount":65,"roiScore":24.81,"roiRank":117,"roiBucket":"high"},{"handle":"plaid","name":"Plaid","averageBountyUpperAmount":500,"topBountyUpperAmount":10000,"minimumBounty":100,"resolvedReportCount":101,"reportsReceivedLast90Days":56,"responseEfficiencyPercentage":95,"participantsCount":96,"roiScore":24.24,"roiRank":118,"roiBucket":"high"},{"handle":"gitlab","name":"GitLab","averageBountyUpperAmount":1370,"topBountyUpperAmount":36500,"minimumBounty":100,"resolvedReportCount":2102,"reportsReceivedLast90Days":1703,"responseEfficiencyPercentage":98,"participantsCount":774,"roiScore":24.13,"roiRank":119,"roiBucket":"high"},{"handle":"vimeo","name":"Vimeo","averageBountyUpperAmount":500,"topBountyUpperAmount":7500,"minimumBounty":100,"resolvedReportCount":1614,"reportsReceivedLast90Days":277,"responseEfficiencyPercentage":100,"participantsCount":939,"roiScore":23.77,"roiRank":120,"roiBucket":"high"},{"handle":"tinder","name":"Tinder","averageBountyUpperAmount":500,"topBountyUpperAmount":10000,"minimumBounty":250,"resolvedReportCount":125,"reportsReceivedLast90Days":56,"responseEfficiencyPercentage":100,"participantsCount":139,"roiScore":23.67,"roiRank":121,"roiBucket":"high"},{"handle":"logitech","name":"Logitech","averageBountyUpperAmount":500,"topBountyUpperAmount":2750,"minimumBounty":200,"resolvedReportCount":1230,"reportsReceivedLast90Days":174,"responseEfficiencyPercentage":76,"participantsCount":817,"roiScore":23.49,"roiRank":122,"roiBucket":"high"},{"handle":"hypr-corp","name":"HYPR","averageBountyUpperAmount":250,"topBountyUpperAmount":2500,"minimumBounty":50,"resolvedReportCount":174,"reportsReceivedLast90Days":45,"responseEfficiencyPercentage":96,"participantsCount":102,"roiScore":22.97,"roiRank":123,"roiBucket":"high"},{"handle":"yoti","name":"Yoti","averageBountyUpperAmount":300,"topBountyUpperAmount":3000,"minimumBounty":100,"resolvedReportCount":118,"reportsReceivedLast90Days":15,"responseEfficiencyPercentage":40,"participantsCount":108,"roiScore":22.71,"roiRank":124,"roiBucket":"high"},{"handle":"rubygems","name":"RubyGems","averageBountyUpperAmount":500,"topBountyUpperAmount":1500,"minimumBounty":500,"resolvedReportCount":106,"reportsReceivedLast90Days":36,"responseEfficiencyPercentage":59,"participantsCount":93,"roiScore":22.52,"roiRank":125,"roiBucket":"high"},{"handle":"truecaller","name":"Truecaller ","averageBountyUpperAmount":400,"topBountyUpperAmount":3000,"minimumBounty":100,"resolvedReportCount":54,"reportsReceivedLast90Days":49,"responseEfficiencyPercentage":96,"participantsCount":73,"roiScore":22.47,"roiRank":126,"roiBucket":"medium"},{"handle":"wordpoints","name":"WordPoints","averageBountyUpperAmount":25,"topBountyUpperAmount":35,"minimumBounty":50,"resolvedReportCount":7,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":100,"participantsCount":5,"roiScore":22.36,"roiRank":127,"roiBucket":"medium"},{"handle":"amazonvrp-devices","name":"Amazon Vulnerability Research Program - Devices","averageBountyUpperAmount":600,"topBountyUpperAmount":20000,"minimumBounty":50,"resolvedReportCount":88,"reportsReceivedLast90Days":89,"responseEfficiencyPercentage":89,"participantsCount":143,"roiScore":22.33,"roiRank":128,"roiBucket":"medium"},{"handle":"palantir_public","name":"Palantir Public","averageBountyUpperAmount":500,"topBountyUpperAmount":10000,"minimumBounty":50,"resolvedReportCount":36,"reportsReceivedLast90Days":39,"responseEfficiencyPercentage":67,"participantsCount":59,"roiScore":21.81,"roiRank":129,"roiBucket":"medium"},{"handle":"wealthsimple","name":"Wealthsimple","averageBountyUpperAmount":500,"topBountyUpperAmount":20000,"minimumBounty":100,"resolvedReportCount":216,"reportsReceivedLast90Days":90,"responseEfficiencyPercentage":88,"participantsCount":150,"roiScore":21.56,"roiRank":130,"roiBucket":"medium"},{"handle":"toolsforhumanity","name":"Tools for Humanity","averageBountyUpperAmount":500,"topBountyUpperAmount":15000,"minimumBounty":100,"resolvedReportCount":103,"reportsReceivedLast90Days":583,"responseEfficiencyPercentage":93,"participantsCount":117,"roiScore":21.49,"roiRank":131,"roiBucket":"medium"},{"handle":"newegg","name":"Newegg","averageBountyUpperAmount":500,"topBountyUpperAmount":4500,"minimumBounty":50,"resolvedReportCount":116,"reportsReceivedLast90Days":165,"responseEfficiencyPercentage":99,"participantsCount":134,"roiScore":21.38,"roiRank":132,"roiBucket":"medium"},{"handle":"priceline","name":"Priceline","averageBountyUpperAmount":250,"topBountyUpperAmount":7300,"minimumBounty":100,"resolvedReportCount":640,"reportsReceivedLast90Days":107,"responseEfficiencyPercentage":95,"participantsCount":284,"roiScore":21.07,"roiRank":134,"roiBucket":"medium"},{"handle":"ruby","name":"Ruby","averageBountyUpperAmount":500,"topBountyUpperAmount":1500,"minimumBounty":500,"resolvedReportCount":71,"reportsReceivedLast90Days":58,"responseEfficiencyPercentage":71,"participantsCount":71,"roiScore":21.07,"roiRank":133,"roiBucket":"medium"},{"handle":"reverb","name":"Reverb.com","averageBountyUpperAmount":100,"topBountyUpperAmount":2000,"minimumBounty":50,"resolvedReportCount":167,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":100,"participantsCount":92,"roiScore":20.85,"roiRank":135,"roiBucket":"medium"},{"handle":"bumble","name":"Bumble","averageBountyUpperAmount":294,"topBountyUpperAmount":4000,"minimumBounty":130,"resolvedReportCount":354,"reportsReceivedLast90Days":75,"responseEfficiencyPercentage":99,"participantsCount":283,"roiScore":20.42,"roiRank":136,"roiBucket":"medium"},{"handle":"dynamic_labs","name":"Dynamic Labs","averageBountyUpperAmount":250,"topBountyUpperAmount":2000,"minimumBounty":50,"resolvedReportCount":95,"reportsReceivedLast90Days":40,"responseEfficiencyPercentage":93,"participantsCount":46,"roiScore":20.35,"roiRank":137,"roiBucket":"medium"},{"handle":"varonis","name":"Varonis","averageBountyUpperAmount":370,"topBountyUpperAmount":1100,"minimumBounty":50,"resolvedReportCount":0,"reportsReceivedLast90Days":59,"responseEfficiencyPercentage":97,"participantsCount":78,"roiScore":20.32,"roiRank":138,"roiBucket":"medium"},{"handle":"epicgames","name":"Epic Games","averageBountyUpperAmount":1000,"topBountyUpperAmount":100000,"minimumBounty":200,"resolvedReportCount":2343,"reportsReceivedLast90Days":854,"responseEfficiencyPercentage":91,"participantsCount":1007,"roiScore":19.67,"roiRank":139,"roiBucket":"medium"},{"handle":"sheer_bbp","name":"Sheer","averageBountyUpperAmount":228,"topBountyUpperAmount":5000,"minimumBounty":50,"resolvedReportCount":103,"reportsReceivedLast90Days":39,"responseEfficiencyPercentage":100,"participantsCount":59,"roiScore":19.6,"roiRank":140,"roiBucket":"medium"},{"handle":"okg","name":"OKG","averageBountyUpperAmount":450,"topBountyUpperAmount":36000,"minimumBounty":50,"resolvedReportCount":190,"reportsReceivedLast90Days":719,"responseEfficiencyPercentage":100,"participantsCount":136,"roiScore":19.29,"roiRank":141,"roiBucket":"medium"},{"handle":"consensys","name":"Consensys","averageBountyUpperAmount":300,"topBountyUpperAmount":5000,"minimumBounty":50,"resolvedReportCount":179,"reportsReceivedLast90Days":42,"responseEfficiencyPercentage":84,"participantsCount":196,"roiScore":19.18,"roiRank":142,"roiBucket":"medium"},{"handle":"inditex","name":"Inditex","averageBountyUpperAmount":416,"topBountyUpperAmount":5000,"minimumBounty":150,"resolvedReportCount":0,"reportsReceivedLast90Days":151,"responseEfficiencyPercentage":100,"participantsCount":118,"roiScore":19.15,"roiRank":143,"roiBucket":"medium"},{"handle":"tiktok","name":"TikTok","averageBountyUpperAmount":1000,"topBountyUpperAmount":30000,"minimumBounty":50,"resolvedReportCount":1579,"reportsReceivedLast90Days":830,"responseEfficiencyPercentage":94,"participantsCount":615,"roiScore":18.95,"roiRank":144,"roiBucket":"medium"},{"handle":"1win_com","name":"1win","averageBountyUpperAmount":300,"topBountyUpperAmount":2250,"minimumBounty":50,"resolvedReportCount":5,"reportsReceivedLast90Days":316,"responseEfficiencyPercentage":100,"participantsCount":64,"roiScore":18.75,"roiRank":145,"roiBucket":"medium"},{"handle":"homebargains","name":"Home Bargains","averageBountyUpperAmount":100,"topBountyUpperAmount":1000,"minimumBounty":25,"resolvedReportCount":58,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":60,"participantsCount":41,"roiScore":18.74,"roiRank":146,"roiBucket":"medium"},{"handle":"privy-bbp","name":"Privy (Bounty)","averageBountyUpperAmount":250,"topBountyUpperAmount":20000,"minimumBounty":100,"resolvedReportCount":0,"reportsReceivedLast90Days":219,"responseEfficiencyPercentage":99,"participantsCount":44,"roiScore":18.66,"roiRank":147,"roiBucket":"medium"},{"handle":"grindr","name":"Grindr","averageBountyUpperAmount":250,"topBountyUpperAmount":3000,"minimumBounty":50,"resolvedReportCount":106,"reportsReceivedLast90Days":32,"responseEfficiencyPercentage":94,"participantsCount":109,"roiScore":18.64,"roiRank":148,"roiBucket":"medium"},{"handle":"figma","name":"Figma","averageBountyUpperAmount":500,"topBountyUpperAmount":35000,"minimumBounty":50,"resolvedReportCount":228,"reportsReceivedLast90Days":207,"responseEfficiencyPercentage":90,"participantsCount":146,"roiScore":18.62,"roiRank":149,"roiBucket":"medium"},{"handle":"files","name":"Files.com","averageBountyUpperAmount":250,"topBountyUpperAmount":10000,"minimumBounty":100,"resolvedReportCount":261,"reportsReceivedLast90Days":59,"responseEfficiencyPercentage":75,"participantsCount":126,"roiScore":18.47,"roiRank":150,"roiBucket":"medium"},{"handle":"doppler","name":"Doppler","averageBountyUpperAmount":250,"topBountyUpperAmount":20000,"minimumBounty":50,"resolvedReportCount":41,"reportsReceivedLast90Days":174,"responseEfficiencyPercentage":95,"participantsCount":42,"roiScore":18.32,"roiRank":151,"roiBucket":"medium"},{"handle":"3cx","name":"3CX","averageBountyUpperAmount":350,"topBountyUpperAmount":3000,"minimumBounty":50,"resolvedReportCount":48,"reportsReceivedLast90Days":44,"responseEfficiencyPercentage":91,"participantsCount":76,"roiScore":18.27,"roiRank":152,"roiBucket":"medium"},{"handle":"stripe","name":"Stripe","averageBountyUpperAmount":632,"topBountyUpperAmount":25000,"minimumBounty":100,"resolvedReportCount":479,"reportsReceivedLast90Days":380,"responseEfficiencyPercentage":93,"participantsCount":260,"roiScore":18.23,"roiRank":153,"roiBucket":"medium"},{"handle":"pingidentity","name":"Ping Identity","averageBountyUpperAmount":300,"topBountyUpperAmount":10000,"minimumBounty":125,"resolvedReportCount":125,"reportsReceivedLast90Days":37,"responseEfficiencyPercentage":78,"participantsCount":119,"roiScore":18.12,"roiRank":154,"roiBucket":"medium"},{"handle":"bookingcom","name":"Booking.com","averageBountyUpperAmount":500,"topBountyUpperAmount":3000,"minimumBounty":100,"resolvedReportCount":1435,"reportsReceivedLast90Days":354,"responseEfficiencyPercentage":96,"participantsCount":741,"roiScore":17.87,"roiRank":155,"roiBucket":"medium"},{"handle":"pornbox","name":"PornBox","averageBountyUpperAmount":300,"topBountyUpperAmount":6000,"minimumBounty":50,"resolvedReportCount":90,"reportsReceivedLast90Days":71,"responseEfficiencyPercentage":94,"participantsCount":63,"roiScore":17.76,"roiRank":156,"roiBucket":"medium"},{"handle":"boozt","name":"Boozt Fashion AB","averageBountyUpperAmount":390,"topBountyUpperAmount":3000,"minimumBounty":50,"resolvedReportCount":53,"reportsReceivedLast90Days":137,"responseEfficiencyPercentage":98,"participantsCount":117,"roiScore":17.67,"roiRank":157,"roiBucket":"medium"},{"handle":"flipkart","name":"Flipkart","averageBountyUpperAmount":350,"topBountyUpperAmount":2000,"minimumBounty":100,"resolvedReportCount":63,"reportsReceivedLast90Days":300,"responseEfficiencyPercentage":98,"participantsCount":97,"roiScore":17.41,"roiRank":159,"roiBucket":"medium"},{"handle":"pixiv","name":"pixiv","averageBountyUpperAmount":500,"topBountyUpperAmount":7500,"minimumBounty":200,"resolvedReportCount":163,"reportsReceivedLast90Days":229,"responseEfficiencyPercentage":90,"participantsCount":167,"roiScore":17.41,"roiRank":158,"roiBucket":"medium"},{"handle":"slack","name":"Slack","averageBountyUpperAmount":500,"topBountyUpperAmount":17000,"minimumBounty":250,"resolvedReportCount":2225,"reportsReceivedLast90Days":536,"responseEfficiencyPercentage":99,"participantsCount":874,"roiScore":17.38,"roiRank":160,"roiBucket":"medium"},{"handle":"playstation","name":"PlayStation","averageBountyUpperAmount":400,"topBountyUpperAmount":70000,"minimumBounty":50,"resolvedReportCount":518,"reportsReceivedLast90Days":138,"responseEfficiencyPercentage":89,"participantsCount":386,"roiScore":17.0,"roiRank":161,"roiBucket":"medium"},{"handle":"hiro","name":"Hiro","averageBountyUpperAmount":150,"topBountyUpperAmount":1000,"minimumBounty":25,"resolvedReportCount":92,"reportsReceivedLast90Days":12,"responseEfficiencyPercentage":53,"participantsCount":81,"roiScore":16.93,"roiRank":162,"roiBucket":"medium"},{"handle":"reddit","name":"Reddit","averageBountyUpperAmount":500,"topBountyUpperAmount":15000,"minimumBounty":100,"resolvedReportCount":633,"reportsReceivedLast90Days":196,"responseEfficiencyPercentage":94,"participantsCount":509,"roiScore":16.82,"roiRank":163,"roiBucket":"medium"},{"handle":"superbet","name":"Superbet","averageBountyUpperAmount":400,"topBountyUpperAmount":20000,"minimumBounty":100,"resolvedReportCount":122,"reportsReceivedLast90Days":346,"responseEfficiencyPercentage":99,"participantsCount":141,"roiScore":16.67,"roiRank":164,"roiBucket":"medium"},{"handle":"compass-bbp","name":"Compass","averageBountyUpperAmount":500,"topBountyUpperAmount":6000,"minimumBounty":50,"resolvedReportCount":0,"reportsReceivedLast90Days":87,"responseEfficiencyPercentage":94,"participantsCount":203,"roiScore":16.49,"roiRank":165,"roiBucket":"medium"},{"handle":"att","name":"AT&T","averageBountyUpperAmount":400,"topBountyUpperAmount":10000,"minimumBounty":100,"resolvedReportCount":10122,"reportsReceivedLast90Days":707,"responseEfficiencyPercentage":95,"participantsCount":2135,"roiScore":16.45,"roiRank":166,"roiBucket":"medium"},{"handle":"roblox","name":"Roblox","averageBountyUpperAmount":619,"topBountyUpperAmount":20000,"minimumBounty":100,"resolvedReportCount":882,"reportsReceivedLast90Days":311,"responseEfficiencyPercentage":92,"participantsCount":603,"roiScore":16.44,"roiRank":167,"roiBucket":"medium"},{"handle":"kong","name":"Kong","averageBountyUpperAmount":200,"topBountyUpperAmount":1000,"minimumBounty":50,"resolvedReportCount":25,"reportsReceivedLast90Days":328,"responseEfficiencyPercentage":87,"participantsCount":28,"roiScore":16.44,"roiRank":168,"roiBucket":"medium"},{"handle":"bitmex","name":"BitMEX","averageBountyUpperAmount":300,"topBountyUpperAmount":15000,"minimumBounty":300,"resolvedReportCount":134,"reportsReceivedLast90Days":44,"responseEfficiencyPercentage":93,"participantsCount":171,"roiScore":16.24,"roiRank":169,"roiBucket":"medium"},{"handle":"mercadolibre","name":"MercadoLibre","averageBountyUpperAmount":300,"topBountyUpperAmount":22500,"minimumBounty":100,"resolvedReportCount":1720,"reportsReceivedLast90Days":373,"responseEfficiencyPercentage":97,"participantsCount":438,"roiScore":16.03,"roiRank":170,"roiBucket":"medium"},{"handle":"8x8-bounty","name":"8x8","averageBountyUpperAmount":500,"topBountyUpperAmount":3000,"minimumBounty":100,"resolvedReportCount":1192,"reportsReceivedLast90Days":374,"responseEfficiencyPercentage":100,"participantsCount":620,"roiScore":16.0,"roiRank":171,"roiBucket":"medium"},{"handle":"mongodb","name":"MongoDB","averageBountyUpperAmount":500,"topBountyUpperAmount":7500,"minimumBounty":50,"resolvedReportCount":218,"reportsReceivedLast90Days":193,"responseEfficiencyPercentage":86,"participantsCount":183,"roiScore":15.89,"roiRank":172,"roiBucket":"medium"},{"handle":"airbnb","name":"Airbnb","averageBountyUpperAmount":750,"topBountyUpperAmount":25000,"minimumBounty":0,"resolvedReportCount":1624,"reportsReceivedLast90Days":737,"responseEfficiencyPercentage":100,"participantsCount":687,"roiScore":15.76,"roiRank":173,"roiBucket":"medium"},{"handle":"ring","name":"Ring","averageBountyUpperAmount":400,"topBountyUpperAmount":18000,"minimumBounty":50,"resolvedReportCount":88,"reportsReceivedLast90Days":116,"responseEfficiencyPercentage":99,"participantsCount":158,"roiScore":15.75,"roiRank":174,"roiBucket":"medium"},{"handle":"quora","name":"Quora","averageBountyUpperAmount":200,"topBountyUpperAmount":11000,"minimumBounty":100,"resolvedReportCount":367,"reportsReceivedLast90Days":38,"responseEfficiencyPercentage":70,"participantsCount":317,"roiScore":15.73,"roiRank":175,"roiBucket":"medium"},{"handle":"braze_inc","name":"Braze, Inc.","averageBountyUpperAmount":250,"topBountyUpperAmount":5000,"minimumBounty":50,"resolvedReportCount":42,"reportsReceivedLast90Days":77,"responseEfficiencyPercentage":100,"participantsCount":65,"roiScore":15.5,"roiRank":176,"roiBucket":"medium"},{"handle":"xvideos","name":"XVIDEOS","averageBountyUpperAmount":200,"topBountyUpperAmount":20000,"minimumBounty":50,"resolvedReportCount":230,"reportsReceivedLast90Days":63,"responseEfficiencyPercentage":94,"participantsCount":123,"roiScore":15.47,"roiRank":177,"roiBucket":"medium"},{"handle":"discourse","name":"Discourse","averageBountyUpperAmount":512,"topBountyUpperAmount":2048,"minimumBounty":256,"resolvedReportCount":252,"reportsReceivedLast90Days":189,"responseEfficiencyPercentage":80,"participantsCount":176,"roiScore":15.44,"roiRank":178,"roiBucket":"medium"},{"handle":"greenhouse","name":"Greenhouse.io","averageBountyUpperAmount":250,"topBountyUpperAmount":2000,"minimumBounty":100,"resolvedReportCount":234,"reportsReceivedLast90Days":50,"responseEfficiencyPercentage":100,"participantsCount":370,"roiScore":15.21,"roiRank":179,"roiBucket":"medium"},{"handle":"twilio","name":"Twilio","averageBountyUpperAmount":300,"topBountyUpperAmount":1500,"minimumBounty":50,"resolvedReportCount":2938,"reportsReceivedLast90Days":1359,"responseEfficiencyPercentage":97,"participantsCount":107,"roiScore":15.2,"roiRank":180,"roiBucket":"medium"},{"handle":"modern_treasury","name":"Modern Treasury","averageBountyUpperAmount":300,"topBountyUpperAmount":10000,"minimumBounty":50,"resolvedReportCount":69,"reportsReceivedLast90Days":43,"responseEfficiencyPercentage":72,"participantsCount":52,"roiScore":14.98,"roiRank":181,"roiBucket":"medium"},{"handle":"early_warning","name":"Early Warning","averageBountyUpperAmount":300,"topBountyUpperAmount":8000,"minimumBounty":50,"resolvedReportCount":194,"reportsReceivedLast90Days":65,"responseEfficiencyPercentage":100,"participantsCount":224,"roiScore":14.96,"roiRank":182,"roiBucket":"medium"},{"handle":"mozilla","name":"Mozilla","averageBountyUpperAmount":500,"topBountyUpperAmount":12000,"minimumBounty":50,"resolvedReportCount":302,"reportsReceivedLast90Days":364,"responseEfficiencyPercentage":96,"participantsCount":260,"roiScore":14.88,"roiRank":183,"roiBucket":"medium"},{"handle":"grab","name":"Grab","averageBountyUpperAmount":500,"topBountyUpperAmount":12500,"minimumBounty":50,"resolvedReportCount":983,"reportsReceivedLast90Days":344,"responseEfficiencyPercentage":99,"participantsCount":570,"roiScore":14.81,"roiRank":184,"roiBucket":"medium"},{"handle":"flickr","name":"Flickr","averageBountyUpperAmount":341,"topBountyUpperAmount":7500,"minimumBounty":200,"resolvedReportCount":171,"reportsReceivedLast90Days":74,"responseEfficiencyPercentage":96,"participantsCount":168,"roiScore":14.59,"roiRank":185,"roiBucket":"medium"},{"handle":"fetlife","name":"FetLife","averageBountyUpperAmount":100,"topBountyUpperAmount":1500,"minimumBounty":100,"resolvedReportCount":281,"reportsReceivedLast90Days":40,"responseEfficiencyPercentage":100,"participantsCount":145,"roiScore":14.58,"roiRank":186,"roiBucket":"medium"},{"handle":"shein","name":"SHEIN","averageBountyUpperAmount":375,"topBountyUpperAmount":2000,"minimumBounty":100,"resolvedReportCount":154,"reportsReceivedLast90Days":76,"responseEfficiencyPercentage":89,"participantsCount":136,"roiScore":14.5,"roiRank":187,"roiBucket":"medium"},{"handle":"meesho_bbp","name":"Meesho","averageBountyUpperAmount":200,"topBountyUpperAmount":1700,"minimumBounty":50,"resolvedReportCount":36,"reportsReceivedLast90Days":932,"responseEfficiencyPercentage":99,"participantsCount":47,"roiScore":14.44,"roiRank":188,"roiBucket":"medium"},{"handle":"hilton","name":"Hilton","averageBountyUpperAmount":300,"topBountyUpperAmount":6000,"minimumBounty":50,"resolvedReportCount":440,"reportsReceivedLast90Days":132,"responseEfficiencyPercentage":98,"participantsCount":297,"roiScore":14.22,"roiRank":189,"roiBucket":"medium"},{"handle":"stripchat","name":"Stripchat","averageBountyUpperAmount":200,"topBountyUpperAmount":2500,"minimumBounty":50,"resolvedReportCount":50,"reportsReceivedLast90Days":374,"responseEfficiencyPercentage":99,"participantsCount":51,"roiScore":13.86,"roiRank":190,"roiBucket":"medium"},{"handle":"circle-bbp","name":"Circle BBP","averageBountyUpperAmount":200,"topBountyUpperAmount":10000,"minimumBounty":50,"resolvedReportCount":29,"reportsReceivedLast90Days":880,"responseEfficiencyPercentage":93,"participantsCount":45,"roiScore":13.86,"roiRank":191,"roiBucket":"medium"},{"handle":"evernote","name":"Evernote","averageBountyUpperAmount":450,"topBountyUpperAmount":5000,"minimumBounty":150,"resolvedReportCount":160,"reportsReceivedLast90Days":107,"responseEfficiencyPercentage":85,"participantsCount":194,"roiScore":13.73,"roiRank":192,"roiBucket":"medium"},{"handle":"fanduel","name":"FanDuel","averageBountyUpperAmount":500,"topBountyUpperAmount":3500,"minimumBounty":100,"resolvedReportCount":0,"reportsReceivedLast90Days":51,"responseEfficiencyPercentage":100,"participantsCount":332,"roiScore":13.72,"roiRank":193,"roiBucket":"medium"},{"handle":"eero","name":"eero","averageBountyUpperAmount":200,"topBountyUpperAmount":7000,"minimumBounty":50,"resolvedReportCount":11,"reportsReceivedLast90Days":134,"responseEfficiencyPercentage":98,"participantsCount":51,"roiScore":13.72,"roiRank":194,"roiBucket":"medium"},{"handle":"semrush","name":"Semrush","averageBountyUpperAmount":150,"topBountyUpperAmount":8000,"minimumBounty":100,"resolvedReportCount":793,"reportsReceivedLast90Days":71,"responseEfficiencyPercentage":100,"participantsCount":479,"roiScore":13.71,"roiRank":195,"roiBucket":"medium"},{"handle":"anduril_industries","name":"Anduril Industries","averageBountyUpperAmount":300,"topBountyUpperAmount":10000,"minimumBounty":50,"resolvedReportCount":12,"reportsReceivedLast90Days":1452,"responseEfficiencyPercentage":99,"participantsCount":120,"roiScore":13.56,"roiRank":196,"roiBucket":"medium"},{"handle":"enjin","name":"Enjin","averageBountyUpperAmount":250,"topBountyUpperAmount":1500,"minimumBounty":60,"resolvedReportCount":74,"reportsReceivedLast90Days":45,"responseEfficiencyPercentage":91,"participantsCount":72,"roiScore":13.41,"roiRank":197,"roiBucket":"medium"},{"handle":"koho","name":"KOHO","averageBountyUpperAmount":302,"topBountyUpperAmount":5000,"minimumBounty":50,"resolvedReportCount":57,"reportsReceivedLast90Days":122,"responseEfficiencyPercentage":100,"participantsCount":128,"roiScore":13.35,"roiRank":198,"roiBucket":"medium"},{"handle":"lyst","name":"Lyst","averageBountyUpperAmount":150,"topBountyUpperAmount":1400,"minimumBounty":100,"resolvedReportCount":98,"reportsReceivedLast90Days":22,"responseEfficiencyPercentage":95,"participantsCount":146,"roiScore":13.13,"roiRank":199,"roiBucket":"medium"},{"handle":"polygon-technology","name":"Polygon Technology","averageBountyUpperAmount":300,"topBountyUpperAmount":5500,"minimumBounty":50,"resolvedReportCount":97,"reportsReceivedLast90Days":123,"responseEfficiencyPercentage":97,"participantsCount":123,"roiScore":13.12,"roiRank":200,"roiBucket":"medium"},{"handle":"crypto","name":"Crypto.com","averageBountyUpperAmount":576,"topBountyUpperAmount":201000,"minimumBounty":100,"resolvedReportCount":380,"reportsReceivedLast90Days":754,"responseEfficiencyPercentage":100,"participantsCount":497,"roiScore":12.92,"roiRank":201,"roiBucket":"medium"},{"handle":"deribit","name":"Deribit","averageBountyUpperAmount":250,"topBountyUpperAmount":6000,"minimumBounty":50,"resolvedReportCount":45,"reportsReceivedLast90Days":77,"responseEfficiencyPercentage":74,"participantsCount":52,"roiScore":12.83,"roiRank":202,"roiBucket":"medium"},{"handle":"eufy_security","name":"eufy Security","averageBountyUpperAmount":300,"topBountyUpperAmount":2000,"minimumBounty":50,"resolvedReportCount":116,"reportsReceivedLast90Days":151,"responseEfficiencyPercentage":93,"participantsCount":119,"roiScore":12.79,"roiRank":203,"roiBucket":"medium"},{"handle":"matomo","name":"Matomo","averageBountyUpperAmount":333,"topBountyUpperAmount":2332,"minimumBounty":10000,"resolvedReportCount":254,"reportsReceivedLast90Days":260,"responseEfficiencyPercentage":100,"participantsCount":179,"roiScore":12.44,"roiRank":204,"roiBucket":"medium"},{"handle":"linkedin","name":"LinkedIn","averageBountyUpperAmount":500,"topBountyUpperAmount":15000,"minimumBounty":100,"resolvedReportCount":0,"reportsReceivedLast90Days":326,"responseEfficiencyPercentage":97,"participantsCount":383,"roiScore":12.39,"roiRank":205,"roiBucket":"medium"},{"handle":"superhuman","name":"Superhuman (formerly Grammarly)","averageBountyUpperAmount":500,"topBountyUpperAmount":50000,"minimumBounty":100,"resolvedReportCount":408,"reportsReceivedLast90Days":567,"responseEfficiencyPercentage":99,"participantsCount":411,"roiScore":12.21,"roiRank":206,"roiBucket":"medium"},{"handle":"moonpay","name":"MoonPay ","averageBountyUpperAmount":250,"topBountyUpperAmount":10000,"minimumBounty":50,"resolvedReportCount":93,"reportsReceivedLast90Days":106,"responseEfficiencyPercentage":97,"participantsCount":100,"roiScore":12.12,"roiRank":207,"roiBucket":"medium"},{"handle":"khealth","name":"KHealth","averageBountyUpperAmount":200,"topBountyUpperAmount":6000,"minimumBounty":100,"resolvedReportCount":68,"reportsReceivedLast90Days":54,"responseEfficiencyPercentage":100,"participantsCount":70,"roiScore":11.95,"roiRank":208,"roiBucket":"medium"},{"handle":"redox_bbp","name":"Redox","averageBountyUpperAmount":200,"topBountyUpperAmount":6000,"minimumBounty":50,"resolvedReportCount":44,"reportsReceivedLast90Days":47,"responseEfficiencyPercentage":100,"participantsCount":70,"roiScore":11.95,"roiRank":209,"roiBucket":"medium"},{"handle":"ui","name":"Ubiquiti Inc.","averageBountyUpperAmount":200,"topBountyUpperAmount":30000,"minimumBounty":150,"resolvedReportCount":1568,"reportsReceivedLast90Days":224,"responseEfficiencyPercentage":100,"participantsCount":894,"roiScore":11.71,"roiRank":210,"roiBucket":"medium"},{"handle":"flutteruki","name":"Flutter UK&I","averageBountyUpperAmount":300,"topBountyUpperAmount":5000,"minimumBounty":250,"resolvedReportCount":518,"reportsReceivedLast90Days":152,"responseEfficiencyPercentage":99,"participantsCount":469,"roiScore":11.68,"roiRank":211,"roiBucket":"medium"},{"handle":"helium","name":"Helium","averageBountyUpperAmount":100,"topBountyUpperAmount":500,"minimumBounty":25,"resolvedReportCount":70,"reportsReceivedLast90Days":4,"responseEfficiencyPercentage":67,"participantsCount":132,"roiScore":11.66,"roiRank":212,"roiBucket":"medium"},{"handle":"hostinger","name":"hostinger ","averageBountyUpperAmount":380,"topBountyUpperAmount":25500,"minimumBounty":100,"resolvedReportCount":818,"reportsReceivedLast90Days":382,"responseEfficiencyPercentage":100,"participantsCount":306,"roiScore":11.63,"roiRank":213,"roiBucket":"medium"},{"handle":"rockstargames","name":"Rockstar Games","averageBountyUpperAmount":500,"topBountyUpperAmount":9000,"minimumBounty":150,"resolvedReportCount":0,"reportsReceivedLast90Days":95,"responseEfficiencyPercentage":98,"participantsCount":453,"roiScore":11.51,"roiRank":214,"roiBucket":"medium"},{"handle":"creditkarma","name":"Credit Karma","averageBountyUpperAmount":300,"topBountyUpperAmount":5000,"minimumBounty":100,"resolvedReportCount":122,"reportsReceivedLast90Days":209,"responseEfficiencyPercentage":96,"participantsCount":161,"roiScore":11.35,"roiRank":215,"roiBucket":"medium"},{"handle":"gocardless_bbp","name":"GoCardless Bug Bounty Program","averageBountyUpperAmount":300,"topBountyUpperAmount":2500,"minimumBounty":50,"resolvedReportCount":116,"reportsReceivedLast90Days":76,"responseEfficiencyPercentage":100,"participantsCount":177,"roiScore":11.27,"roiRank":216,"roiBucket":"medium"},{"handle":"dynatrace","name":"Dynatrace","averageBountyUpperAmount":250,"topBountyUpperAmount":7500,"minimumBounty":100,"resolvedReportCount":331,"reportsReceivedLast90Days":116,"responseEfficiencyPercentage":99,"participantsCount":252,"roiScore":11.12,"roiRank":217,"roiBucket":"medium"},{"handle":"clear","name":"CLEAR","averageBountyUpperAmount":200,"topBountyUpperAmount":6000,"minimumBounty":100,"resolvedReportCount":100,"reportsReceivedLast90Days":509,"responseEfficiencyPercentage":95,"participantsCount":75,"roiScore":10.97,"roiRank":218,"roiBucket":"medium"},{"handle":"shopify","name":"Shopify","averageBountyUpperAmount":950,"topBountyUpperAmount":200000,"minimumBounty":500,"resolvedReportCount":2357,"reportsReceivedLast90Days":1376,"responseEfficiencyPercentage":75,"participantsCount":1100,"roiScore":10.74,"roiRank":219,"roiBucket":"medium"},{"handle":"1password","name":"1Password - Enterprise Password Manager","averageBountyUpperAmount":100,"topBountyUpperAmount":6000,"minimumBounty":50,"resolvedReportCount":0,"reportsReceivedLast90Days":58,"responseEfficiencyPercentage":91,"participantsCount":18,"roiScore":10.72,"roiRank":220,"roiBucket":"medium"},{"handle":"porsche","name":"Porsche","averageBountyUpperAmount":370,"topBountyUpperAmount":2300,"minimumBounty":50,"resolvedReportCount":0,"reportsReceivedLast90Days":2,"responseEfficiencyPercentage":83,"participantsCount":210,"roiScore":10.6,"roiRank":221,"roiBucket":"medium"},{"handle":"hubspot","name":"HubSpot","averageBountyUpperAmount":250,"topBountyUpperAmount":10000,"minimumBounty":50,"resolvedReportCount":150,"reportsReceivedLast90Days":412,"responseEfficiencyPercentage":99,"participantsCount":139,"roiScore":10.5,"roiRank":222,"roiBucket":"medium"},{"handle":"github","name":"GitHub","averageBountyUpperAmount":617,"topBountyUpperAmount":75000,"minimumBounty":617,"resolvedReportCount":2055,"reportsReceivedLast90Days":811,"responseEfficiencyPercentage":80,"participantsCount":905,"roiScore":10.39,"roiRank":223,"roiBucket":"medium"},{"handle":"chainlink","name":"Chainlink","averageBountyUpperAmount":250,"topBountyUpperAmount":100000,"minimumBounty":50,"resolvedReportCount":118,"reportsReceivedLast90Days":348,"responseEfficiencyPercentage":78,"participantsCount":96,"roiScore":9.95,"roiRank":224,"roiBucket":"medium"},{"handle":"bumba_bbp","name":"Bumba","averageBountyUpperAmount":75,"topBountyUpperAmount":150,"minimumBounty":50,"resolvedReportCount":5,"reportsReceivedLast90Days":480,"responseEfficiencyPercentage":98,"participantsCount":14,"roiScore":9.82,"roiRank":225,"roiBucket":"medium"},{"handle":"malwarebytes","name":"Malwarebytes","averageBountyUpperAmount":300,"topBountyUpperAmount":6000,"minimumBounty":50,"resolvedReportCount":328,"reportsReceivedLast90Days":118,"responseEfficiencyPercentage":81,"participantsCount":303,"roiScore":9.7,"roiRank":226,"roiBucket":"medium"},{"handle":"algolia","name":"Algolia","averageBountyUpperAmount":100,"topBountyUpperAmount":3000,"minimumBounty":100,"resolvedReportCount":316,"reportsReceivedLast90Days":24,"responseEfficiencyPercentage":83,"participantsCount":296,"roiScore":9.65,"roiRank":227,"roiBucket":"medium"},{"handle":"spotify","name":"Spotify","averageBountyUpperAmount":300,"topBountyUpperAmount":8000,"minimumBounty":250,"resolvedReportCount":1620,"reportsReceivedLast90Days":433,"responseEfficiencyPercentage":99,"participantsCount":848,"roiScore":9.54,"roiRank":228,"roiBucket":"medium"},{"handle":"nordsecurity","name":"Nord Security","averageBountyUpperAmount":250,"topBountyUpperAmount":30000,"minimumBounty":100,"resolvedReportCount":244,"reportsReceivedLast90Days":80,"responseEfficiencyPercentage":83,"participantsCount":281,"roiScore":9.44,"roiRank":229,"roiBucket":"medium"},{"handle":"zerobounce","name":"ZeroBounce","averageBountyUpperAmount":150,"topBountyUpperAmount":1500,"minimumBounty":50,"resolvedReportCount":39,"reportsReceivedLast90Days":39,"responseEfficiencyPercentage":98,"participantsCount":63,"roiScore":9.26,"roiRank":230,"roiBucket":"medium"},{"handle":"syfe_bbp","name":"Syfe","averageBountyUpperAmount":150,"topBountyUpperAmount":1500,"minimumBounty":50,"resolvedReportCount":15,"reportsReceivedLast90Days":713,"responseEfficiencyPercentage":99,"participantsCount":70,"roiScore":8.87,"roiRank":231,"roiBucket":"medium"},{"handle":"notion","name":"Notion Labs, Inc.","averageBountyUpperAmount":250,"topBountyUpperAmount":5000,"minimumBounty":50,"resolvedReportCount":162,"reportsReceivedLast90Days":683,"responseEfficiencyPercentage":91,"participantsCount":165,"roiScore":8.86,"roiRank":232,"roiBucket":"medium"},{"handle":"23andme_bbp","name":"23andMe Bug Bounty","averageBountyUpperAmount":200,"topBountyUpperAmount":2276,"minimumBounty":50,"resolvedReportCount":63,"reportsReceivedLast90Days":165,"responseEfficiencyPercentage":100,"participantsCount":131,"roiScore":8.74,"roiRank":233,"roiBucket":"medium"},{"handle":"nodejs","name":"Node.js","averageBountyUpperAmount":250,"topBountyUpperAmount":500,"minimumBounty":500,"resolvedReportCount":135,"reportsReceivedLast90Days":161,"responseEfficiencyPercentage":87,"participantsCount":156,"roiScore":8.71,"roiRank":234,"roiBucket":"medium"},{"handle":"trip_com","name":"Trip.com","averageBountyUpperAmount":200,"topBountyUpperAmount":2500,"minimumBounty":50,"resolvedReportCount":93,"reportsReceivedLast90Days":355,"responseEfficiencyPercentage":99,"participantsCount":135,"roiScore":8.52,"roiRank":235,"roiBucket":"medium"},{"handle":"airtable","name":"Airtable","averageBountyUpperAmount":150,"topBountyUpperAmount":5000,"minimumBounty":50,"resolvedReportCount":256,"reportsReceivedLast90Days":73,"responseEfficiencyPercentage":92,"participantsCount":202,"roiScore":8.51,"roiRank":236,"roiBucket":"medium"},{"handle":"security","name":"HackerOne","averageBountyUpperAmount":500,"topBountyUpperAmount":25000,"minimumBounty":200,"resolvedReportCount":984,"reportsReceivedLast90Days":561,"responseEfficiencyPercentage":100,"participantsCount":881,"roiScore":8.42,"roiRank":237,"roiBucket":"medium"},{"handle":"faraday_inc","name":"Faraday, Inc.","averageBountyUpperAmount":100,"topBountyUpperAmount":1550,"minimumBounty":50,"resolvedReportCount":40,"reportsReceivedLast90Days":38,"responseEfficiencyPercentage":100,"participantsCount":38,"roiScore":8.11,"roiRank":238,"roiBucket":"medium"},{"handle":"goldmansachs","name":"Goldman Sachs","averageBountyUpperAmount":250,"topBountyUpperAmount":17000,"minimumBounty":0,"resolvedReportCount":498,"reportsReceivedLast90Days":176,"responseEfficiencyPercentage":99,"participantsCount":481,"roiScore":7.98,"roiRank":239,"roiBucket":"medium"},{"handle":"remitly","name":"Remitly","averageBountyUpperAmount":250,"topBountyUpperAmount":9000,"minimumBounty":50,"resolvedReportCount":153,"reportsReceivedLast90Days":82,"responseEfficiencyPercentage":96,"participantsCount":229,"roiScore":7.93,"roiRank":240,"roiBucket":"medium"},{"handle":"unikrn","name":"Unikrn","averageBountyUpperAmount":50,"topBountyUpperAmount":3000,"minimumBounty":50,"resolvedReportCount":208,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":100,"participantsCount":164,"roiScore":7.81,"roiRank":241,"roiBucket":"medium"},{"handle":"basecamp","name":"Basecamp","averageBountyUpperAmount":250,"topBountyUpperAmount":9337,"minimumBounty":100,"resolvedReportCount":428,"reportsReceivedLast90Days":191,"responseEfficiencyPercentage":99,"participantsCount":320,"roiScore":7.75,"roiRank":243,"roiBucket":"medium"},{"handle":"netlify","name":"Netlify","averageBountyUpperAmount":250,"topBountyUpperAmount":6000,"minimumBounty":100,"resolvedReportCount":198,"reportsReceivedLast90Days":104,"responseEfficiencyPercentage":82,"participantsCount":175,"roiScore":7.75,"roiRank":244,"roiBucket":"medium"},{"handle":"elastic","name":"Elastic","averageBountyUpperAmount":432,"topBountyUpperAmount":13200,"minimumBounty":100,"resolvedReportCount":792,"reportsReceivedLast90Days":507,"responseEfficiencyPercentage":89,"participantsCount":616,"roiScore":7.75,"roiRank":242,"roiBucket":"medium"},{"handle":"x","name":"X / xAI","averageBountyUpperAmount":560,"topBountyUpperAmount":20160,"minimumBounty":100,"resolvedReportCount":1647,"reportsReceivedLast90Days":1028,"responseEfficiencyPercentage":98,"participantsCount":1276,"roiScore":7.68,"roiRank":245,"roiBucket":"medium"},{"handle":"crowdstrike","name":"Crowdstrike","averageBountyUpperAmount":250,"topBountyUpperAmount":3000,"minimumBounty":100,"resolvedReportCount":0,"reportsReceivedLast90Days":83,"responseEfficiencyPercentage":100,"participantsCount":281,"roiScore":7.46,"roiRank":246,"roiBucket":"medium"},{"handle":"omise","name":"Omise","averageBountyUpperAmount":100,"topBountyUpperAmount":700,"minimumBounty":100,"resolvedReportCount":288,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":57,"participantsCount":236,"roiScore":7.42,"roiRank":247,"roiBucket":"medium"},{"handle":"snapchat","name":"Snapchat","averageBountyUpperAmount":375,"topBountyUpperAmount":30000,"minimumBounty":250,"resolvedReportCount":718,"reportsReceivedLast90Days":468,"responseEfficiencyPercentage":96,"participantsCount":603,"roiScore":7.33,"roiRank":248,"roiBucket":"medium"},{"handle":"razorpay","name":"Razorpay","averageBountyUpperAmount":200,"topBountyUpperAmount":1700,"minimumBounty":250,"resolvedReportCount":0,"reportsReceivedLast90Days":47,"responseEfficiencyPercentage":83,"participantsCount":136,"roiScore":7.12,"roiRank":249,"roiBucket":"medium"},{"handle":"kiwicom","name":"Kiwi.com","averageBountyUpperAmount":256,"topBountyUpperAmount":5000,"minimumBounty":100,"resolvedReportCount":254,"reportsReceivedLast90Days":182,"responseEfficiencyPercentage":94,"participantsCount":286,"roiScore":7.11,"roiRank":250,"roiBucket":"medium"},{"handle":"acronis","name":"Acronis","averageBountyUpperAmount":250,"topBountyUpperAmount":6000,"minimumBounty":100,"resolvedReportCount":1427,"reportsReceivedLast90Days":271,"responseEfficiencyPercentage":63,"participantsCount":885,"roiScore":6.97,"roiRank":251,"roiBucket":"low"},{"handle":"instacart","name":"Instacart","averageBountyUpperAmount":250,"topBountyUpperAmount":20000,"minimumBounty":50,"resolvedReportCount":498,"reportsReceivedLast90Days":190,"responseEfficiencyPercentage":93,"participantsCount":480,"roiScore":6.95,"roiRank":252,"roiBucket":"low"},{"handle":"cloudflare","name":"Cloudflare Public Bug Bounty","averageBountyUpperAmount":350,"topBountyUpperAmount":10000,"minimumBounty":0,"resolvedReportCount":350,"reportsReceivedLast90Days":580,"responseEfficiencyPercentage":92,"participantsCount":583,"roiScore":6.67,"roiRank":253,"roiBucket":"low"},{"handle":"ripio","name":"Ripio","averageBountyUpperAmount":100,"topBountyUpperAmount":3000,"minimumBounty":100,"resolvedReportCount":55,"reportsReceivedLast90Days":121,"responseEfficiencyPercentage":100,"participantsCount":57,"roiScore":6.62,"roiRank":254,"roiBucket":"low"},{"handle":"csg-public","name":"Cloud Software Group","averageBountyUpperAmount":200,"topBountyUpperAmount":10000,"minimumBounty":50,"resolvedReportCount":0,"reportsReceivedLast90Days":17,"responseEfficiencyPercentage":94,"participantsCount":207,"roiScore":6.53,"roiRank":255,"roiBucket":"low"},{"handle":"localizejs","name":"Localize","averageBountyUpperAmount":50,"topBountyUpperAmount":500,"minimumBounty":50,"resolvedReportCount":117,"reportsReceivedLast90Days":5,"responseEfficiencyPercentage":83,"participantsCount":166,"roiScore":6.44,"roiRank":256,"roiBucket":"low"},{"handle":"udemy","name":"Udemy","averageBountyUpperAmount":150,"topBountyUpperAmount":2000,"minimumBounty":50,"resolvedReportCount":500,"reportsReceivedLast90Days":125,"responseEfficiencyPercentage":89,"participantsCount":448,"roiScore":6.31,"roiRank":257,"roiBucket":"low"},{"handle":"kubernetes","name":"Kubernetes","averageBountyUpperAmount":250,"topBountyUpperAmount":5000,"minimumBounty":50,"resolvedReportCount":134,"reportsReceivedLast90Days":275,"responseEfficiencyPercentage":84,"participantsCount":278,"roiScore":6.3,"roiRank":258,"roiBucket":"low"},{"handle":"wordpress","name":"WordPress","averageBountyUpperAmount":325,"topBountyUpperAmount":2350,"minimumBounty":10,"resolvedReportCount":0,"reportsReceivedLast90Days":249,"responseEfficiencyPercentage":63,"participantsCount":272,"roiScore":6.21,"roiRank":259,"roiBucket":"low"},{"handle":"fronthq","name":"Front","averageBountyUpperAmount":200,"topBountyUpperAmount":7500,"minimumBounty":100,"resolvedReportCount":229,"reportsReceivedLast90Days":132,"responseEfficiencyPercentage":86,"participantsCount":192,"roiScore":6.21,"roiRank":260,"roiBucket":"low"},{"handle":"urbancompany","name":"Urban Company","averageBountyUpperAmount":250,"topBountyUpperAmount":3000,"minimumBounty":200,"resolvedReportCount":207,"reportsReceivedLast90Days":55,"responseEfficiencyPercentage":36,"participantsCount":208,"roiScore":5.87,"roiRank":261,"roiBucket":"low"},{"handle":"bykea","name":"Bykea","averageBountyUpperAmount":100,"topBountyUpperAmount":2000,"minimumBounty":50,"resolvedReportCount":111,"reportsReceivedLast90Days":235,"responseEfficiencyPercentage":100,"participantsCount":74,"roiScore":5.81,"roiRank":262,"roiBucket":"low"},{"handle":"amazonvrp","name":"Amazon Vulnerability Research Program","averageBountyUpperAmount":400,"topBountyUpperAmount":20000,"minimumBounty":100,"resolvedReportCount":2075,"reportsReceivedLast90Days":1134,"responseEfficiencyPercentage":98,"participantsCount":1186,"roiScore":5.69,"roiRank":263,"roiBucket":"low"},{"handle":"inspectorio","name":"Inspectorio","averageBountyUpperAmount":150,"topBountyUpperAmount":1875,"minimumBounty":50,"resolvedReportCount":115,"reportsReceivedLast90Days":81,"responseEfficiencyPercentage":88,"participantsCount":138,"roiScore":5.62,"roiRank":264,"roiBucket":"low"},{"handle":"trendyol","name":"Trendyol","averageBountyUpperAmount":200,"topBountyUpperAmount":2000,"minimumBounty":50,"resolvedReportCount":246,"reportsReceivedLast90Days":96,"responseEfficiencyPercentage":100,"participantsCount":521,"roiScore":5.61,"roiRank":265,"roiBucket":"low"},{"handle":"databricks","name":"Databricks","averageBountyUpperAmount":200,"topBountyUpperAmount":10000,"minimumBounty":100,"resolvedReportCount":345,"reportsReceivedLast90Days":196,"responseEfficiencyPercentage":92,"participantsCount":289,"roiScore":5.41,"roiRank":266,"roiBucket":"low"},{"handle":"verily_life_sciences","name":"Verily Life Sciences","averageBountyUpperAmount":150,"topBountyUpperAmount":7000,"minimumBounty":50,"resolvedReportCount":118,"reportsReceivedLast90Days":144,"responseEfficiencyPercentage":92,"participantsCount":165,"roiScore":5.37,"roiRank":267,"roiBucket":"low"},{"handle":"moneybird","name":"Moneybird","averageBountyUpperAmount":50,"topBountyUpperAmount":500,"minimumBounty":50,"resolvedReportCount":183,"reportsReceivedLast90Days":16,"responseEfficiencyPercentage":80,"participantsCount":271,"roiScore":4.86,"roiRank":268,"roiBucket":"low"},{"handle":"playtika","name":"Playtika","averageBountyUpperAmount":150,"topBountyUpperAmount":10000,"minimumBounty":50,"resolvedReportCount":295,"reportsReceivedLast90Days":858,"responseEfficiencyPercentage":100,"participantsCount":246,"roiScore":4.78,"roiRank":269,"roiBucket":"low"},{"handle":"krisp","name":"Krisp","averageBountyUpperAmount":100,"topBountyUpperAmount":5000,"minimumBounty":50,"resolvedReportCount":84,"reportsReceivedLast90Days":81,"responseEfficiencyPercentage":100,"participantsCount":110,"roiScore":4.77,"roiRank":270,"roiBucket":"low"},{"handle":"bcm","name":"BCM Messenger","averageBountyUpperAmount":100,"topBountyUpperAmount":1337,"minimumBounty":50,"resolvedReportCount":13,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":10,"participantsCount":18,"roiScore":4.71,"roiRank":271,"roiBucket":"low"},{"handle":"eternal","name":"Eternal","averageBountyUpperAmount":250,"topBountyUpperAmount":5000,"minimumBounty":50,"resolvedReportCount":1216,"reportsReceivedLast90Days":711,"responseEfficiencyPercentage":100,"participantsCount":738,"roiScore":4.6,"roiRank":272,"roiBucket":"low"},{"handle":"brave","name":"Brave Software","averageBountyUpperAmount":150,"topBountyUpperAmount":5300,"minimumBounty":50,"resolvedReportCount":451,"reportsReceivedLast90Days":214,"responseEfficiencyPercentage":100,"participantsCount":313,"roiScore":4.47,"roiRank":273,"roiBucket":"low"},{"handle":"ips","name":"Invision Power Services, Inc.","averageBountyUpperAmount":50,"topBountyUpperAmount":200,"minimumBounty":0,"resolvedReportCount":0,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":88,"participantsCount":33,"roiScore":3.83,"roiRank":274,"roiBucket":"low"},{"handle":"coinbase","name":"Coinbase","averageBountyUpperAmount":200,"topBountyUpperAmount":500000,"minimumBounty":200,"resolvedReportCount":1094,"reportsReceivedLast90Days":1069,"responseEfficiencyPercentage":97,"participantsCount":771,"roiScore":3.49,"roiRank":275,"roiBucket":"low"},{"handle":"deriv","name":"Deriv.com","averageBountyUpperAmount":100,"topBountyUpperAmount":5000,"minimumBounty":100,"resolvedReportCount":234,"reportsReceivedLast90Days":135,"responseEfficiencyPercentage":100,"participantsCount":213,"roiScore":3.43,"roiRank":276,"roiBucket":"low"},{"handle":"irccloud","name":"IRCCloud","averageBountyUpperAmount":100,"topBountyUpperAmount":1000,"minimumBounty":50,"resolvedReportCount":226,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":20,"participantsCount":148,"roiScore":3.29,"roiRank":277,"roiBucket":"low"},{"handle":"indrive","name":"inDrive","averageBountyUpperAmount":150,"topBountyUpperAmount":8000,"minimumBounty":50,"resolvedReportCount":371,"reportsReceivedLast90Days":347,"responseEfficiencyPercentage":100,"participantsCount":525,"roiScore":3.27,"roiRank":278,"roiBucket":"low"},{"handle":"insightly","name":"Insightly","averageBountyUpperAmount":100,"topBountyUpperAmount":3000,"minimumBounty":100,"resolvedReportCount":158,"reportsReceivedLast90Days":342,"responseEfficiencyPercentage":83,"participantsCount":166,"roiScore":3.22,"roiRank":279,"roiBucket":"low"},{"handle":"freshworks","name":"Freshworks ","averageBountyUpperAmount":100,"topBountyUpperAmount":3500,"minimumBounty":100,"resolvedReportCount":0,"reportsReceivedLast90Days":134,"responseEfficiencyPercentage":84,"participantsCount":189,"roiScore":3.06,"roiRank":280,"roiBucket":"low"},{"handle":"nextcloud","name":"Nextcloud","averageBountyUpperAmount":150,"topBountyUpperAmount":5000,"minimumBounty":100,"resolvedReportCount":863,"reportsReceivedLast90Days":922,"responseEfficiencyPercentage":100,"participantsCount":853,"roiScore":2.57,"roiRank":281,"roiBucket":"low"},{"handle":"bime","name":"Bime","averageBountyUpperAmount":100,"topBountyUpperAmount":1000,"minimumBounty":50,"resolvedReportCount":0,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":50,"participantsCount":129,"roiScore":2.2,"roiRank":282,"roiBucket":"low"},{"handle":"xiaomi","name":"Xiaomi","averageBountyUpperAmount":100,"topBountyUpperAmount":13000,"minimumBounty":50,"resolvedReportCount":1143,"reportsReceivedLast90Days":409,"responseEfficiencyPercentage":85,"participantsCount":763,"roiScore":2.15,"roiRank":283,"roiBucket":"low"},{"handle":"oppo_bbp","name":"OPPO","averageBountyUpperAmount":45,"topBountyUpperAmount":3100,"minimumBounty":10,"resolvedReportCount":131,"reportsReceivedLast90Days":958,"responseEfficiencyPercentage":100,"participantsCount":112,"roiScore":2.13,"roiRank":284,"roiBucket":"low"},{"handle":"automattic","name":"Automattic","averageBountyUpperAmount":150,"topBountyUpperAmount":3000,"minimumBounty":0,"resolvedReportCount":0,"reportsReceivedLast90Days":282,"responseEfficiencyPercentage":69,"participantsCount":696,"roiScore":1.96,"roiRank":285,"roiBucket":"low"},{"handle":"bitaccess","name":"bitaccess","averageBountyUpperAmount":50,"topBountyUpperAmount":200,"minimumBounty":100,"resolvedReportCount":0,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":25,"participantsCount":58,"roiScore":0.82,"roiRank":286,"roiBucket":"low"},{"handle":"mavenlink","name":"Mavenlink","averageBountyUpperAmount":100,"topBountyUpperAmount":2752,"minimumBounty":0,"resolvedReportCount":199,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":null,"participantsCount":163,"roiScore":0,"roiRank":323,"roiBucket":"low"},{"handle":"relateiq","name":"RelateIQ","averageBountyUpperAmount":100,"topBountyUpperAmount":5000,"minimumBounty":0,"resolvedReportCount":110,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":null,"participantsCount":68,"roiScore":0,"roiRank":325,"roiBucket":"low"},{"handle":"msdos","name":"MS-DOS","averageBountyUpperAmount":0,"topBountyUpperAmount":0,"minimumBounty":500,"resolvedReportCount":13,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":null,"participantsCount":13,"roiScore":0,"roiRank":355,"roiBucket":"low"},{"handle":"iandunn-projects","name":"Ian Dunn","averageBountyUpperAmount":50,"topBountyUpperAmount":300,"minimumBounty":0,"resolvedReportCount":19,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":null,"participantsCount":14,"roiScore":0,"roiRank":340,"roiBucket":"low"},{"handle":"urbandictionary","name":"Urban Dictionary","averageBountyUpperAmount":300,"topBountyUpperAmount":300,"minimumBounty":0,"resolvedReportCount":124,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":null,"participantsCount":129,"roiScore":0,"roiRank":306,"roiBucket":"low"},{"handle":"uzbey","name":"Uzbey","averageBountyUpperAmount":0,"topBountyUpperAmount":0,"minimumBounty":0,"resolvedReportCount":27,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":null,"participantsCount":30,"roiScore":0,"roiRank":353,"roiBucket":"low"},{"handle":"wp-api","name":"WP API","averageBountyUpperAmount":100,"topBountyUpperAmount":500,"minimumBounty":50,"resolvedReportCount":4,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":null,"participantsCount":4,"roiScore":0,"roiRank":334,"roiBucket":"low"},{"handle":"glasswire","name":"GlassWire","averageBountyUpperAmount":100,"topBountyUpperAmount":750,"minimumBounty":50,"resolvedReportCount":65,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":null,"participantsCount":49,"roiScore":0,"roiRank":327,"roiBucket":"low"},{"handle":"bookfresh","name":"Bookfresh","averageBountyUpperAmount":200,"topBountyUpperAmount":500,"minimumBounty":0,"resolvedReportCount":39,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":null,"participantsCount":36,"roiScore":0,"roiRank":317,"roiBucket":"low"},{"handle":"openfolio","name":"Openfolio","averageBountyUpperAmount":100,"topBountyUpperAmount":500,"minimumBounty":50,"resolvedReportCount":45,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":null,"participantsCount":92,"roiScore":0,"roiRank":328,"roiBucket":"low"},{"handle":"blockio","name":"Block.io","averageBountyUpperAmount":25,"topBountyUpperAmount":250,"minimumBounty":10,"resolvedReportCount":42,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":null,"participantsCount":31,"roiScore":0,"roiRank":345,"roiBucket":"low"},{"handle":"enter","name":"Enter","averageBountyUpperAmount":50,"topBountyUpperAmount":513,"minimumBounty":250,"resolvedReportCount":74,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":null,"participantsCount":103,"roiScore":0,"roiRank":337,"roiBucket":"low"},{"handle":"whisper","name":"Whisper","averageBountyUpperAmount":30,"topBountyUpperAmount":500,"minimumBounty":30,"resolvedReportCount":51,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":null,"participantsCount":61,"roiScore":0,"roiRank":344,"roiBucket":"low"},{"handle":"imgur","name":"Imgur","averageBountyUpperAmount":100,"topBountyUpperAmount":5000,"minimumBounty":50,"resolvedReportCount":196,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":null,"participantsCount":286,"roiScore":0,"roiRank":324,"roiBucket":"low"},{"handle":"nearby","name":"Nearby Live","averageBountyUpperAmount":20,"topBountyUpperAmount":20,"minimumBounty":0,"resolvedReportCount":18,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":null,"participantsCount":13,"roiScore":0,"roiRank":349,"roiBucket":"low"},{"handle":"certly","name":"Certly","averageBountyUpperAmount":0,"topBountyUpperAmount":0,"minimumBounty":0,"resolvedReportCount":27,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":null,"participantsCount":26,"roiScore":0,"roiRank":354,"roiBucket":"low"},{"handle":"vhx","name":"VHX","averageBountyUpperAmount":0,"topBountyUpperAmount":0,"minimumBounty":100,"resolvedReportCount":0,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":91,"participantsCount":0,"roiScore":0,"roiRank":358,"roiBucket":"low"},{"handle":"drchrono","name":"drchrono","averageBountyUpperAmount":50,"topBountyUpperAmount":1000,"minimumBounty":50,"resolvedReportCount":343,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":null,"participantsCount":117,"roiScore":0,"roiRank":336,"roiBucket":"low"},{"handle":"coinspace","name":"Coin.Space","averageBountyUpperAmount":25,"topBountyUpperAmount":25,"minimumBounty":25,"resolvedReportCount":9,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":null,"participantsCount":8,"roiScore":0,"roiRank":347,"roiBucket":"low"},{"handle":"zopim","name":"Zopim","averageBountyUpperAmount":0,"topBountyUpperAmount":0,"minimumBounty":100,"resolvedReportCount":0,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":100,"participantsCount":0,"roiScore":0,"roiRank":359,"roiBucket":"low"},{"handle":"legalrobot","name":"Legal Robot","averageBountyUpperAmount":20,"topBountyUpperAmount":400,"minimumBounty":20,"resolvedReportCount":183,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":null,"participantsCount":124,"roiScore":0,"roiRank":348,"roiBucket":"low"},{"handle":"square-open-source","name":"Square Open Source","averageBountyUpperAmount":1000,"topBountyUpperAmount":2500,"minimumBounty":500,"resolvedReportCount":10,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":null,"participantsCount":5,"roiScore":0,"roiRank":291,"roiBucket":"low"},{"handle":"gratipay","name":"Gratipay","averageBountyUpperAmount":5,"topBountyUpperAmount":40,"minimumBounty":100,"resolvedReportCount":76,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":null,"participantsCount":119,"roiScore":0,"roiRank":350,"roiBucket":"low"},{"handle":"badoo","name":"Badoo","averageBountyUpperAmount":0,"topBountyUpperAmount":0,"minimumBounty":140,"resolvedReportCount":0,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":96,"participantsCount":0,"roiScore":0,"roiRank":360,"roiBucket":"low"},{"handle":"inflection","name":"Inflection","averageBountyUpperAmount":100,"topBountyUpperAmount":2000,"minimumBounty":0,"resolvedReportCount":92,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":null,"participantsCount":88,"roiScore":0,"roiRank":326,"roiBucket":"low"},{"handle":"flox","name":"Flox","averageBountyUpperAmount":25,"topBountyUpperAmount":100,"minimumBounty":25,"resolvedReportCount":16,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":null,"participantsCount":38,"roiScore":0,"roiRank":346,"roiBucket":"low"},{"handle":"kiwi-ki","name":"KIWI.KI GmbH","averageBountyUpperAmount":100,"topBountyUpperAmount":150,"minimumBounty":100,"resolvedReportCount":26,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":null,"participantsCount":41,"roiScore":0,"roiRank":329,"roiBucket":"low"},{"handle":"owncloud","name":"ownCloud","averageBountyUpperAmount":250,"topBountyUpperAmount":2500,"minimumBounty":50,"resolvedReportCount":294,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":null,"participantsCount":229,"roiScore":0,"roiRank":311,"roiBucket":"low"},{"handle":"anghami","name":"Anghami","averageBountyUpperAmount":100,"topBountyUpperAmount":300,"minimumBounty":50,"resolvedReportCount":24,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":null,"participantsCount":139,"roiScore":0,"roiRank":330,"roiBucket":"low"},{"handle":"munzee","name":"Munzee","averageBountyUpperAmount":5,"topBountyUpperAmount":10,"minimumBounty":5,"resolvedReportCount":38,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":null,"participantsCount":12,"roiScore":0,"roiRank":351,"roiBucket":"low"},{"handle":"withinsecurity","name":"withinsecurity","averageBountyUpperAmount":250,"topBountyUpperAmount":250,"minimumBounty":250,"resolvedReportCount":8,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":null,"participantsCount":10,"roiScore":0,"roiRank":314,"roiBucket":"low"},{"handle":"binary_cashier","name":"Binary.com Cashier","averageBountyUpperAmount":50,"topBountyUpperAmount":75,"minimumBounty":10,"resolvedReportCount":5,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":null,"participantsCount":3,"roiScore":0,"roiRank":342,"roiBucket":"low"},{"handle":"bullionexchanges","name":"Bullion Exchanges","averageBountyUpperAmount":50,"topBountyUpperAmount":100,"minimumBounty":50,"resolvedReportCount":12,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":null,"participantsCount":8,"roiScore":0,"roiRank":341,"roiBucket":"low"},{"handle":"leaseweb","name":"LeaseWeb","averageBountyUpperAmount":50,"topBountyUpperAmount":150,"minimumBounty":50,"resolvedReportCount":71,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":null,"participantsCount":65,"roiScore":0,"roiRank":338,"roiBucket":"low"},{"handle":"livestream","name":"Livestream","averageBountyUpperAmount":0,"topBountyUpperAmount":0,"minimumBounty":100,"resolvedReportCount":0,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":94,"participantsCount":0,"roiScore":0,"roiRank":361,"roiBucket":"low"},{"handle":"powerdns","name":"PowerDNS","averageBountyUpperAmount":0,"topBountyUpperAmount":0,"minimumBounty":0,"resolvedReportCount":0,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":null,"participantsCount":0,"roiScore":0,"roiRank":362,"roiBucket":"low"},{"handle":"dyson","name":"Dyson","averageBountyUpperAmount":400,"topBountyUpperAmount":10000,"minimumBounty":100,"resolvedReportCount":824,"reportsReceivedLast90Days":218,"responseEfficiencyPercentage":null,"participantsCount":402,"roiScore":0,"roiRank":301,"roiBucket":"low"},{"handle":"websummit","name":"WebSummit","averageBountyUpperAmount":40,"topBountyUpperAmount":100,"minimumBounty":10,"resolvedReportCount":28,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":null,"participantsCount":27,"roiScore":0,"roiRank":343,"roiBucket":"low"},{"handle":"line","name":"LY Corporation","averageBountyUpperAmount":500,"topBountyUpperAmount":12500,"minimumBounty":100,"resolvedReportCount":665,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":null,"participantsCount":388,"roiScore":0,"roiRank":296,"roiBucket":"low"},{"handle":"secnews","name":"SecNews","averageBountyUpperAmount":250,"topBountyUpperAmount":300,"minimumBounty":50,"resolvedReportCount":12,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":null,"participantsCount":9,"roiScore":0,"roiRank":313,"roiBucket":"low"},{"handle":"quantopian","name":"Quantopian","averageBountyUpperAmount":450,"topBountyUpperAmount":10000,"minimumBounty":100,"resolvedReportCount":170,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":null,"participantsCount":84,"roiScore":0,"roiRank":300,"roiBucket":"low"},{"handle":"shopify-scripts","name":"shopify-scripts","averageBountyUpperAmount":800,"topBountyUpperAmount":20000,"minimumBounty":100,"resolvedReportCount":353,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":null,"participantsCount":61,"roiScore":0,"roiRank":293,"roiBucket":"low"},{"handle":"alvosec","name":"Alvosec","averageBountyUpperAmount":5,"topBountyUpperAmount":5,"minimumBounty":50,"resolvedReportCount":16,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":null,"participantsCount":15,"roiScore":0,"roiRank":352,"roiBucket":"low"},{"handle":"youporn","name":"YouPorn","averageBountyUpperAmount":0,"topBountyUpperAmount":0,"minimumBounty":50,"resolvedReportCount":0,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":null,"participantsCount":0,"roiScore":0,"roiRank":363,"roiBucket":"low"},{"handle":"bohemia","name":"BOHEMIA INTERACTIVE a.s.","averageBountyUpperAmount":80,"topBountyUpperAmount":200,"minimumBounty":50,"resolvedReportCount":163,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":null,"participantsCount":116,"roiScore":0,"roiRank":335,"roiBucket":"low"},{"handle":"mixmax","name":"Mixmax","averageBountyUpperAmount":1000,"topBountyUpperAmount":1000,"minimumBounty":100,"resolvedReportCount":85,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":null,"participantsCount":77,"roiScore":0,"roiRank":290,"roiBucket":"low"},{"handle":"gatecoin","name":"Gatecoin","averageBountyUpperAmount":50,"topBountyUpperAmount":500,"minimumBounty":100,"resolvedReportCount":28,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":null,"participantsCount":27,"roiScore":0,"roiRank":339,"roiBucket":"low"},{"handle":"redtube","name":"Redtube","averageBountyUpperAmount":0,"topBountyUpperAmount":0,"minimumBounty":50,"resolvedReportCount":0,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":null,"participantsCount":0,"roiScore":0,"roiRank":364,"roiBucket":"low"},{"handle":"hyperledger","name":"Linux Foundation Decentralized Trust","averageBountyUpperAmount":300,"topBountyUpperAmount":2000,"minimumBounty":200,"resolvedReportCount":74,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":null,"participantsCount":68,"roiScore":0,"roiRank":307,"roiBucket":"low"},{"handle":"nodejs-ecosystem","name":"Node.js third-party modules","averageBountyUpperAmount":250,"topBountyUpperAmount":500,"minimumBounty":100,"resolvedReportCount":306,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":null,"participantsCount":122,"roiScore":0,"roiRank":310,"roiBucket":"low"},{"handle":"tube8","name":"Tube8","averageBountyUpperAmount":0,"topBountyUpperAmount":0,"minimumBounty":50,"resolvedReportCount":0,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":null,"participantsCount":0,"roiScore":0,"roiRank":365,"roiBucket":"low"},{"handle":"tumblr","name":"Tumblr","averageBountyUpperAmount":0,"topBountyUpperAmount":0,"minimumBounty":100,"resolvedReportCount":0,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":100,"participantsCount":0,"roiScore":0,"roiRank":366,"roiBucket":"low"},{"handle":"cobinhood","name":"Cobinhood","averageBountyUpperAmount":100,"topBountyUpperAmount":1000,"minimumBounty":100,"resolvedReportCount":16,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":null,"participantsCount":29,"roiScore":0,"roiRank":332,"roiBucket":"low"},{"handle":"blockimmo","name":"blockimmo","averageBountyUpperAmount":250,"topBountyUpperAmount":250,"minimumBounty":250,"resolvedReportCount":1,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":null,"participantsCount":3,"roiScore":0,"roiRank":316,"roiBucket":"low"},{"handle":"aaf","name":"Alliance of American Football ","averageBountyUpperAmount":325,"topBountyUpperAmount":2000,"minimumBounty":50,"resolvedReportCount":23,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":null,"participantsCount":12,"roiScore":0,"roiRank":303,"roiBucket":"low"},{"handle":"vlc_h1c","name":"VLC (European Commission - DIGIT)","averageBountyUpperAmount":1120,"topBountyUpperAmount":2817,"minimumBounty":50,"resolvedReportCount":41,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":null,"participantsCount":15,"roiScore":0,"roiRank":289,"roiBucket":"low"},{"handle":"putty_h1c","name":"PuTTY (European Commission - DIGIT)","averageBountyUpperAmount":286,"topBountyUpperAmount":6772,"minimumBounty":50,"resolvedReportCount":34,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":null,"participantsCount":20,"roiScore":0,"roiRank":308,"roiBucket":"low"},{"handle":"notepad_h1c","name":"Notepad++ (European Commission - DIGIT)","averageBountyUpperAmount":0,"topBountyUpperAmount":0,"minimumBounty":50,"resolvedReportCount":0,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":91,"participantsCount":0,"roiScore":0,"roiRank":367,"roiBucket":"low"},{"handle":"filezilla_h1c","name":"FileZilla (European Commission - DIGIT)","averageBountyUpperAmount":0,"topBountyUpperAmount":0,"minimumBounty":50,"resolvedReportCount":0,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":100,"participantsCount":0,"roiScore":0,"roiRank":368,"roiBucket":"low"},{"handle":"apache_kafka_h1c","name":"Apache Kafka (European Commission - DIGIT)","averageBountyUpperAmount":0,"topBountyUpperAmount":0,"minimumBounty":50,"resolvedReportCount":0,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":null,"participantsCount":1,"roiScore":0,"roiRank":369,"roiBucket":"low"},{"handle":"midpoint_h1c","name":"Midpoint (European Commission - DIGIT)","averageBountyUpperAmount":562,"topBountyUpperAmount":2016,"minimumBounty":50,"resolvedReportCount":14,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":null,"participantsCount":12,"roiScore":0,"roiRank":295,"roiBucket":"low"},{"handle":"uma_project","name":"UMA Project","averageBountyUpperAmount":0,"topBountyUpperAmount":0,"minimumBounty":100,"resolvedReportCount":0,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":null,"participantsCount":0,"roiScore":0,"roiRank":370,"roiBucket":"low"},{"handle":"datastax","name":"DataStax","averageBountyUpperAmount":250,"topBountyUpperAmount":3300,"minimumBounty":100,"resolvedReportCount":354,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":null,"participantsCount":235,"roiScore":0,"roiRank":309,"roiBucket":"low"},{"handle":"diem","name":"Diem","averageBountyUpperAmount":500,"topBountyUpperAmount":1500,"minimumBounty":100,"resolvedReportCount":12,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":null,"participantsCount":18,"roiScore":0,"roiRank":298,"roiBucket":"low"},{"handle":"magisto","name":"Magisto","averageBountyUpperAmount":0,"topBountyUpperAmount":0,"minimumBounty":100,"resolvedReportCount":0,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":92,"participantsCount":0,"roiScore":0,"roiRank":371,"roiBucket":"low"},{"handle":"clario","name":"Clario","averageBountyUpperAmount":150,"topBountyUpperAmount":4000,"minimumBounty":100,"resolvedReportCount":148,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":null,"participantsCount":214,"roiScore":0,"roiRank":321,"roiBucket":"low"},{"handle":"aiven_ltd","name":"Aiven Ltd","averageBountyUpperAmount":500,"topBountyUpperAmount":5000,"minimumBounty":50,"resolvedReportCount":78,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":null,"participantsCount":75,"roiScore":0,"roiRank":297,"roiBucket":"low"},{"handle":"btfs","name":"BTFS","averageBountyUpperAmount":100,"topBountyUpperAmount":300,"minimumBounty":50,"resolvedReportCount":5,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":null,"participantsCount":5,"roiScore":0,"roiRank":333,"roiBucket":"low"},{"handle":"alibaba","name":"Alibaba BBP","averageBountyUpperAmount":150,"topBountyUpperAmount":5300,"minimumBounty":50,"resolvedReportCount":320,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":null,"participantsCount":520,"roiScore":0,"roiRank":320,"roiBucket":"low"},{"handle":"blockfi","name":"BlockFi","averageBountyUpperAmount":250,"topBountyUpperAmount":3000,"minimumBounty":50,"resolvedReportCount":34,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":null,"participantsCount":53,"roiScore":0,"roiRank":312,"roiBucket":"low"},{"handle":"gsa_bbp","name":"GSA Bounty","averageBountyUpperAmount":300,"topBountyUpperAmount":2000,"minimumBounty":50,"resolvedReportCount":201,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":null,"participantsCount":232,"roiScore":0,"roiRank":305,"roiBucket":"low"},{"handle":"ninja-kiwi","name":"Ninja Kiwi","averageBountyUpperAmount":200,"topBountyUpperAmount":3000,"minimumBounty":50,"resolvedReportCount":19,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":null,"participantsCount":14,"roiScore":0,"roiRank":319,"roiBucket":"low"},{"handle":"gojek","name":"Gojek","averageBountyUpperAmount":315,"topBountyUpperAmount":5000,"minimumBounty":300,"resolvedReportCount":63,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":null,"participantsCount":66,"roiScore":0,"roiRank":304,"roiBucket":"low"},{"handle":"horizen","name":"Horizen","averageBountyUpperAmount":0,"topBountyUpperAmount":0,"minimumBounty":300,"resolvedReportCount":2,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":100,"participantsCount":2,"roiScore":0,"roiRank":357,"roiBucket":"low"},{"handle":"agoric","name":"Agoric","averageBountyUpperAmount":500,"topBountyUpperAmount":5000,"minimumBounty":250,"resolvedReportCount":9,"reportsReceivedLast90Days":3,"responseEfficiencyPercentage":0,"participantsCount":13,"roiScore":0,"roiRank":299,"roiBucket":"low"},{"handle":"wickr","name":"Wickr","averageBountyUpperAmount":0,"topBountyUpperAmount":50000,"minimumBounty":0,"resolvedReportCount":9,"reportsReceivedLast90Days":92,"responseEfficiencyPercentage":92,"participantsCount":23,"roiScore":0,"roiRank":356,"roiBucket":"low"},{"handle":"skinport","name":"Skinport","averageBountyUpperAmount":350,"topBountyUpperAmount":3000,"minimumBounty":50,"resolvedReportCount":15,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":null,"participantsCount":13,"roiScore":0,"roiRank":302,"roiBucket":"low"},{"handle":"fireblocks","name":"Fireblocks","averageBountyUpperAmount":150,"topBountyUpperAmount":3350,"minimumBounty":50,"resolvedReportCount":10,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":null,"participantsCount":19,"roiScore":0,"roiRank":322,"roiBucket":"low"},{"handle":"hack-us-h1c","name":"Hack U.S.","averageBountyUpperAmount":0,"topBountyUpperAmount":0,"minimumBounty":50,"resolvedReportCount":0,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":100,"participantsCount":0,"roiScore":0,"roiRank":372,"roiBucket":"low"},{"handle":"gsa-h1c3","name":"GSA H1C3","averageBountyUpperAmount":2000,"topBountyUpperAmount":2000,"minimumBounty":50,"resolvedReportCount":1,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":null,"participantsCount":2,"roiScore":0,"roiRank":288,"roiBucket":"low"},{"handle":"iron_fish_bbp","name":"Iron Fish ","averageBountyUpperAmount":1000,"topBountyUpperAmount":1000,"minimumBounty":50,"resolvedReportCount":4,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":0,"participantsCount":4,"roiScore":0,"roiRank":292,"roiBucket":"low"},{"handle":"fireblocks_mpc","name":"Fireblocks MPC","averageBountyUpperAmount":700,"topBountyUpperAmount":75000,"minimumBounty":50,"resolvedReportCount":3,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":null,"participantsCount":26,"roiScore":0,"roiRank":294,"roiBucket":"low"},{"handle":"leather_wallet","name":"Leather Wallet","averageBountyUpperAmount":100,"topBountyUpperAmount":1000,"minimumBounty":50,"resolvedReportCount":23,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":null,"participantsCount":26,"roiScore":0,"roiRank":331,"roiBucket":"low"},{"handle":"nimiq","name":"Nimiq","averageBountyUpperAmount":250,"topBountyUpperAmount":6316,"minimumBounty":50,"resolvedReportCount":5,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":null,"participantsCount":8,"roiScore":0,"roiRank":315,"roiBucket":"low"},{"handle":"1password_ctf","name":"1Password - CTF","averageBountyUpperAmount":0,"topBountyUpperAmount":0,"minimumBounty":50,"resolvedReportCount":0,"reportsReceivedLast90Days":16,"responseEfficiencyPercentage":61,"participantsCount":0,"roiScore":0,"roiRank":373,"roiBucket":"low"},{"handle":"northerntechhq","name":"Northern.tech","averageBountyUpperAmount":200,"topBountyUpperAmount":3000,"minimumBounty":200,"resolvedReportCount":26,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":null,"participantsCount":56,"roiScore":0,"roiRank":318,"roiBucket":"low"},{"handle":"netscaler_public_program","name":"NetScaler Public Program","averageBountyUpperAmount":0,"topBountyUpperAmount":600,"minimumBounty":50,"resolvedReportCount":0,"reportsReceivedLast90Days":140,"responseEfficiencyPercentage":98,"participantsCount":5,"roiScore":0,"roiRank":374,"roiBucket":"low"},{"handle":"vercel_platform_protection","name":"Vercel Platform Protection","averageBountyUpperAmount":50000,"topBountyUpperAmount":150000,"minimumBounty":100,"resolvedReportCount":21,"reportsReceivedLast90Days":0,"responseEfficiencyPercentage":null,"participantsCount":34,"roiScore":0,"roiRank":287,"roiBucket":"low"}];
+    const totalPrograms = programs.length;
+    const state = {
+      search: '',
+      sortKey: 'roiScore',
+      sortDir: 'desc'
+    };
+
+    const tableBody = document.getElementById('tableBody');
+    const searchInput = document.getElementById('searchInput');
+    const clearSearch = document.getElementById('clearSearch');
+    const resultsSummary = document.getElementById('resultsSummary');
+    const sortReadout = document.getElementById('sortReadout');
+    const sortButtons = Array.from(document.querySelectorAll('.sort-button'));
+
+    const formatters = {
+      currency(value) {
+        return new Intl.NumberFormat('en-US', {
+          style: 'currency', currency: 'USD', maximumFractionDigits: 0
+        }).format(Number(value || 0));
+      },
+      number(value) {
+        return new Intl.NumberFormat('en-US').format(Number(value || 0));
+      },
+      percent(value) {
+        return value === null || value === undefined ? '—' : `${Number(value)}%`;
+      },
+      roi(value) {
+        return Number(value || 0).toFixed(2);
+      }
+    };
+
+    function safeText(value) {
+      return String(value ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function compareValues(a, b, key) {
+      const av = a[key];
+      const bv = b[key];
+      if (typeof av === 'string' || typeof bv === 'string') {
+        return String(av ?? '').localeCompare(String(bv ?? ''), undefined, { sensitivity: 'base' });
+      }
+      return Number(av ?? 0) - Number(bv ?? 0);
+    }
+
+    function filteredPrograms() {
+      const q = state.search.trim().toLowerCase();
+      const filtered = q
+        ? programs.filter(program =>
+            program.name.toLowerCase().includes(q) ||
+            program.handle.toLowerCase().includes(q)
+          )
+        : programs.slice();
+
+      filtered.sort((a, b) => {
+        const base = compareValues(a, b, state.sortKey);
+        if (base !== 0) return state.sortDir === 'asc' ? base : -base;
+        return a.roiRank - b.roiRank;
+      });
+
+      return filtered;
+    }
+
+    function sortLabel(key) {
+      const labels = {
+        roiRank: 'ROI rank',
+        name: 'program',
+        roiScore: 'ROI score',
+        averageBountyUpperAmount: 'average bounty',
+        topBountyUpperAmount: 'top bounty',
+        minimumBounty: 'minimum bounty',
+        resolvedReportCount: 'resolved reports',
+        reportsReceivedLast90Days: 'reports (90d)',
+        responseEfficiencyPercentage: 'response efficiency',
+        participantsCount: 'participants'
+      };
+      return labels[key] || key;
+    }
+
+    function rowHtml(program) {
+      return `
+        <tr class="roi-${program.roiBucket}">
+          <td class="rank num">#${formatters.number(program.roiRank)}</td>
+          <td class="program">
+            <a class="program-link" href="https://hackerone.com/${encodeURIComponent(program.handle)}" target="_blank" rel="noreferrer">${safeText(program.name)}</a>
+            <span class="handle">@${safeText(program.handle)}</span>
+          </td>
+          <td class="num"><span class="roi-badge ${program.roiBucket}">${formatters.roi(program.roiScore)}</span></td>
+          <td class="num">${formatters.currency(program.averageBountyUpperAmount)}</td>
+          <td class="num">${formatters.currency(program.topBountyUpperAmount)}</td>
+          <td class="num">${formatters.currency(program.minimumBounty)}</td>
+          <td class="num">${formatters.number(program.resolvedReportCount)}</td>
+          <td class="num">${formatters.number(program.reportsReceivedLast90Days)}</td>
+          <td class="num">${formatters.percent(program.responseEfficiencyPercentage)}</td>
+          <td class="num">${formatters.number(program.participantsCount)}</td>
+        </tr>`;
+    }
+
+    function updateSortIndicators() {
+      sortButtons.forEach(button => {
+        const active = button.dataset.key === state.sortKey;
+        button.classList.toggle('active', active);
+        const arrow = active ? (state.sortDir === 'asc' ? '↑' : '↓') : '↕';
+        button.querySelector('.sort-indicator').textContent = arrow;
+        button.setAttribute('aria-sort', active ? (state.sortDir === 'asc' ? 'ascending' : 'descending') : 'none');
+      });
+      sortReadout.textContent = `Sort: ${sortLabel(state.sortKey)} ${state.sortDir === 'asc' ? '↑' : '↓'}`;
+    }
+
+    function render() {
+      const rows = filteredPrograms();
+      tableBody.innerHTML = rows.map(rowHtml).join('');
+      resultsSummary.textContent = `Showing ${rows.length.toLocaleString()} of ${totalPrograms.toLocaleString()} programs`;
+      updateSortIndicators();
+      if (!rows.length) {
+        tableBody.innerHTML = `<tr><td colspan="10" style="padding:24px;color:var(--text-dim);font-family:var(--mono);">No programs match that filter.</td></tr>`;
+      }
+    }
+
+    sortButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const key = button.dataset.key;
+        if (state.sortKey === key) {
+          state.sortDir = state.sortDir === 'asc' ? 'desc' : 'asc';
+        } else {
+          state.sortKey = key;
+          state.sortDir = key === 'name' ? 'asc' : 'desc';
+        }
+        render();
+      });
+    });
+
+    searchInput.addEventListener('input', (event) => {
+      state.search = event.target.value;
+      render();
+    });
+
+    clearSearch.addEventListener('click', () => {
+      state.search = '';
+      searchInput.value = '';
+      searchInput.focus();
+      render();
+    });
+
+    render();
+  </script>
+</body>
+</html>
