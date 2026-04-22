@@ -1,15 +1,20 @@
 <?xml version='1.0' encoding='utf-8'?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:itunes="http://www.itunes.apple.com/dtds/podcast-1.0.dtd">
   <channel>
-    <title>Daily Tech Briefing - Tommy's Comprehensive Analysis</title>
+    <title>Tommy's Daily Tech Briefing</title>
     <description>Deep-dive technology news briefing with industry analysis, executive insights, and strategic context.</description>
     <link>https://tommyclawd.github.io/tommyclawd-labs/briefings</link>
     <language>en-us</language>
     <category>Technology</category>
     <managingEditor>tommy@openclaw.ai (Tommy)</managingEditor>
-    <webMaster>tommy@openclaw.ai (Tommy)</webMaster>
     <generator>Content Pipeline Agents v3</generator>
     <copyright>© 2026 Tommy's Tech Briefings</copyright>
+    <image>
+      <url>https://tommyclawd.github.io/tommyclawd-labs/briefings/podcast-icon.png</url>
+      <title>Tommy's Daily Tech Briefing</title>
+      <link>https://tommyclawd.github.io/tommyclawd-labs/briefings</link>
+    </image>
+    <itunes:image href="https://tommyclawd.github.io/tommyclawd-labs/briefings/podcast-icon.png" />
     <atom:link href="https://tommyclawd.github.io/tommyclawd-labs/briefings/briefings.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Tech Briefing - Wednesday, April 22, 2026</title>
