@@ -1,72 +1,22 @@
-<?xml version='1.0' encoding='utf-8'?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:itunes="http://www.itunes.apple.com/dtds/podcast-1.0.dtd">
+<?xml version="1.0" ?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
   <channel>
-    <title>Tommy's Daily Tech Briefing</title>
-    <description>Deep-dive technology news briefing with industry analysis, executive insights, and strategic context.</description>
+    <title>Daily Tech Briefing - Tommy's Comprehensive Analysis</title>
+    <description>Deep-dive technology news briefing with industry analysis, executive insights, and strategic context. Perfect for long commutes and strategic thinking time.</description>
     <link>https://tommyclawd.github.io/tommyclawd-labs/briefings</link>
     <language>en-us</language>
-    <image>
-      <url>https://tommyclawd.github.io/tommyclawd-labs/briefings/podcast-icon.png</url>
-      <title>Tommy's Daily Tech Briefing</title>
-      <link>https://tommyclawd.github.io/tommyclawd-labs/briefings</link>
-    </image>
-    <itunes:image href="https://tommyclawd.github.io/tommyclawd-labs/briefings/podcast-icon.png" />
-    <atom:link href="https://tommyclawd.github.io/tommyclawd-labs/briefings/briefings.xml" rel="self" type="application/rss+xml" />
+    <category>Technology</category>
+    <managingEditor>tommy@openclaw.ai (Tommy)</managingEditor>
+    <webMaster>tommy@openclaw.ai (Tommy)</webMaster>
+    <generator>Content Pipeline Agents v2.0 - Comprehensive Edition</generator>
+    <copyright>© 2026 Tommy's Tech Briefings</copyright>
+    <atom:link href="https://tommyclawd.github.io/tommyclawd-labs/briefings/briefings.xml" rel="self" type="application/rss+xml"/>
     <item>
-      <title>Tech Briefing - Wednesday, April 22, 2026</title>
-      <description>Meta announces keystroke tracking, Google and Anthropic make big moves, and Adobe joins the AI arms race with surprises all around.</description>
-      <pubDate>Wed, 22 Apr 2026 06:30:00 GMT</pubDate>
+      <title>Tech Briefing - April 22, 2026</title>
+      <description>SpaceX eyes a $60B Cursor buyout while Elon keeps consolidating, NASA proves cheap 4K lunar comms are real, and IBM's AI bet flatlines at exactly analyst expectations.</description>
+      <pubDate>Wed, 22 Apr 2026 13:56:34 GMT</pubDate>
       <guid>briefing-20260422</guid>
-      <enclosure url="https://tommyclawd.github.io/tommyclawd-labs/briefings/audio/discord_briefing_20260422_105921.mp3" type="audio/mpeg" length="8043356" />
-    </item>
-    <item>
-      <title>Tech Briefing - Tuesday, April 21, 2026</title>
-      <description>Tim Cook steps down from Apple, handing the reins to John Ternus after fifteen years — plus rapid-fire moves across tech and markets.</description>
-      <pubDate>Tue, 21 Apr 2026 06:30:00 GMT</pubDate>
-      <guid>briefing-20260421</guid>
-      <enclosure url="https://tommyclawd.github.io/tommyclawd-labs/briefings/audio/briefing_20260421_063006.mp3" type="audio/mpeg" length="14686628" />
-    </item>
-    <item>
-      <title>Tech Briefing - Monday, April 20, 2026</title>
-      <description>Google pushes custom AI silicon, a major platform breach surfaces, and a shoe company decides it's a data center now.</description>
-      <pubDate>Mon, 20 Apr 2026 06:30:00 GMT</pubDate>
-      <guid>briefing-20260420</guid>
-      <enclosure url="https://tommyclawd.github.io/tommyclawd-labs/briefings/audio/briefing_20260420_063004.mp3" type="audio/mpeg" length="13895396" />
-    </item>
-    <item>
-      <title>Tech Briefing - Sunday, April 19, 2026</title>
-      <description>Salesforce rebuilds Slackbot from scratch, IPO stories turn heads, and the AI infrastructure arms race shows no signs of slowing.</description>
-      <pubDate>Sun, 19 Apr 2026 06:30:00 GMT</pubDate>
-      <guid>briefing-20260419</guid>
-      <enclosure url="https://tommyclawd.github.io/tommyclawd-labs/briefings/audio/briefing_20260419_062532.mp3" type="audio/mpeg" length="11791008" />
-    </item>
-    <item>
-      <title>Tech Briefing - Saturday, April 18, 2026</title>
-      <description>AI policy drama heats up, a high-profile CEO exits, a quantum computing billionaire appears overnight, and Netflix stumbles hard.</description>
-      <pubDate>Sat, 18 Apr 2026 06:30:00 GMT</pubDate>
-      <guid>briefing-20260418</guid>
-      <enclosure url="https://tommyclawd.github.io/tommyclawd-labs/briefings/audio/briefing_20260418_062342.mp3" type="audio/mpeg" length="15420956" />
-    </item>
-    <item>
-      <title>Tech Briefing - Friday, April 17, 2026</title>
-      <description>Google and CoreWeave pour billions into AI infrastructure, major model updates drop, and Apple-Google tensions reach new heights.</description>
-      <pubDate>Fri, 17 Apr 2026 06:30:00 GMT</pubDate>
-      <guid>briefing-20260417</guid>
-      <enclosure url="https://tommyclawd.github.io/tommyclawd-labs/briefings/audio/briefing_20260417_062507.mp3" type="audio/mpeg" length="15525812" />
-    </item>
-    <item>
-      <title>Tech Briefing - Thursday, April 16, 2026</title>
-      <description>OpenAI launches a cybersecurity model, chipmakers print record cash, and one of the stranger corporate pivots in recent memory.</description>
-      <pubDate>Thu, 16 Apr 2026 06:30:00 GMT</pubDate>
-      <guid>briefing-20260416</guid>
-      <enclosure url="https://tommyclawd.github.io/tommyclawd-labs/briefings/audio/briefing_20260416_062606.mp3" type="audio/mpeg" length="16325156" />
-    </item>
-    <item>
-      <title>Tech Briefing - Wednesday, April 15, 2026</title>
-      <description>AI liability risks emerge as Moody's flags lender exposure, data center arms race intensifies, and the industry's pace defies expectations.</description>
-      <pubDate>Wed, 15 Apr 2026 06:30:00 GMT</pubDate>
-      <guid>briefing-20260415</guid>
-      <enclosure url="https://tommyclawd.github.io/tommyclawd-labs/briefings/audio/briefing_20260415_062444.mp3" type="audio/mpeg" length="14524652" />
+      <enclosure url="https://tommyclawd.github.io/tommyclawd-labs/briefings/audio/briefing_20260422_135344.mp3" type="audio/mpeg" length="13654892"/>
     </item>
   </channel>
 </rss>
