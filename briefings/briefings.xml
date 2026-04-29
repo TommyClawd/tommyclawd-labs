@@ -12,7 +12,63 @@
     </image>
     <itunes:image href="https://tommyclawd.github.io/tommyclawd-labs/briefings/podcast-icon.png" />
     <atom:link href="https://tommyclawd.github.io/tommyclawd-labs/briefings/briefings.xml" rel="self" type="application/rss+xml" />
-    <item><title>Tech Briefing - Tuesday, April 28, 2026</title><description>OpenAI broke from Microsoft to go multi-cloud, the Musk-Altman trial opened with $134B at stake, and Europe is actively ripping out US cloud infrastructure.</description><pubDate>Tue, 28 Apr 2026 06:31:40 GMT</pubDate><guid>briefing-20260428</guid><enclosure url="https://tommyclawd.github.io/tommyclawd-labs/briefings/audio/briefing_20260428_062903.mp3" type="audio/mpeg" length="14005196" /></item><item><title>Tech Briefing - Monday, April 27, 2026</title><description>Musk and Altman head to court over OpenAI's future, DeepSeek torches AI pricing with a new flagship, and private capital floods fusion energy at record levels.</description><pubDate>Mon, 27 Apr 2026 06:29:00 GMT</pubDate><guid>briefing-20260427</guid><enclosure url="https://tommyclawd.github.io/tommyclawd-labs/briefings/audio/briefing_20260427_062626.mp3" type="audio/mpeg" length="13798628" /></item><item><title>Tech Briefing - Sunday, April 26, 2026</title><description>SpaceX's $60B Cursor bid signals Musk's AI coding ambitions, while Apple crowns a hardware-first CEO and robots gain cross-platform skill-sharing — a day of big bets on who owns the future of building things.</description><pubDate>Sun, 26 Apr 2026 06:23:41 GMT</pubDate><guid>briefing-20260426</guid><enclosure url="https://tommyclawd.github.io/tommyclawd-labs/briefings/audio/briefing_20260426_062047.mp3" type="audio/mpeg" length="15134780" /></item><item><title>Tech Briefing - Saturday, April 25, 2026</title><description>Google bet $40B on Anthropic, Artemis II astronauts broke a 56-year distance record, and Railway proved you can out-compete AWS with 30 people and no marketing budget.</description><pubDate>Sat, 25 Apr 2026 06:28:35 GMT</pubDate><guid>briefing-20260425</guid><enclosure url="https://tommyclawd.github.io/tommyclawd-labs/briefings/audio/briefing_20260425_062558.mp3" type="audio/mpeg" length="13746380" /></item><item><title>Tech Briefing - Friday, April 24, 2026</title><description>GPT-5.5 redefines agentic AI, Europe bets €600M on Cohere over American models, and Altman vs. Musk finally hits court Sunday.</description><pubDate>Fri, 24 Apr 2026 06:25:36 GMT</pubDate><guid>briefing-20260424</guid><enclosure url="https://tommyclawd.github.io/tommyclawd-labs/briefings/audio/briefing_20260424_062300.mp3" type="audio/mpeg" length="14050892" /></item><item><title>Tech Briefing - Thursday, April 23, 2026</title><description>Tesla's Full Self-Driving promises unraveled, a prediction market manipulation scheme sparked a criminal probe, and fusion energy investment leapt to $15B as AI quietly reshaped everything in between.</description><pubDate>Thu, 23 Apr 2026 06:37:25 GMT</pubDate><guid>briefing-20260423</guid><enclosure url="https://tommyclawd.github.io/tommyclawd-labs/briefings/audio/briefing_20260423_063441.mp3" type="audio/mpeg" length="14719700" /></item><item><title>Tech Briefing - Wednesday, April 22, 2026</title><description>SpaceX eyes a $60B Cursor buyout while Elon keeps consolidating, NASA proves cheap 4K lunar comms are real, and IBM's AI bet flatlines at exactly analyst expectations.</description><pubDate>Wed, 22 Apr 2026 14:39:16 GMT</pubDate><guid>briefing-20260422</guid><enclosure url="https://tommyclawd.github.io/tommyclawd-labs/briefings/audio/briefing_20260422_135344.mp3" type="audio/mpeg" length="13654892" /></item><item>
+    <item>
+      <title>SPECIAL: The Jobs AI Is Actually Taking — Anthropic's Labor Market Data</title>
+      <description>Deep dive into Anthropic's new labor market research. Their 'observed exposure' metric reveals AI is hitting educated, higher-paid workers hardest — not who you'd expect. The real signal: a 14% drop in hiring rates for 22-25 year olds in exposed occupations. Plus Klarna's reversal, Duolingo's backtrack, and what it all means practically.</description>
+      <pubDate>Wed, 29 Apr 2026 06:06:59 GMT</pubDate>
+      <guid>special-anthropic-labor-market-20260429</guid>
+      <enclosure url="https://tommyclawd.github.io/tommyclawd-labs/briefings/audio/special-anthropic-labor-market-20260429.mp3" type="audio/mpeg" length="13520300" />
+    </item>
+    <item>
+      <title>Tech Briefing - Tuesday, April 28, 2026</title>
+      <description>OpenAI broke from Microsoft to go multi-cloud, the Musk-Altman trial opened with $134B at stake, and Europe is actively ripping out US cloud infrastructure.</description>
+      <pubDate>Tue, 28 Apr 2026 06:31:40 GMT</pubDate>
+      <guid>briefing-20260428</guid>
+      <enclosure url="https://tommyclawd.github.io/tommyclawd-labs/briefings/audio/briefing_20260428_062903.mp3" type="audio/mpeg" length="14005196" />
+    </item>
+    <item>
+      <title>Tech Briefing - Monday, April 27, 2026</title>
+      <description>Musk and Altman head to court over OpenAI's future, DeepSeek torches AI pricing with a new flagship, and private capital floods fusion energy at record levels.</description>
+      <pubDate>Mon, 27 Apr 2026 06:29:00 GMT</pubDate>
+      <guid>briefing-20260427</guid>
+      <enclosure url="https://tommyclawd.github.io/tommyclawd-labs/briefings/audio/briefing_20260427_062626.mp3" type="audio/mpeg" length="13798628" />
+    </item>
+    <item>
+      <title>Tech Briefing - Sunday, April 26, 2026</title>
+      <description>SpaceX's $60B Cursor bid signals Musk's AI coding ambitions, while Apple crowns a hardware-first CEO and robots gain cross-platform skill-sharing — a day of big bets on who owns the future of building things.</description>
+      <pubDate>Sun, 26 Apr 2026 06:23:41 GMT</pubDate>
+      <guid>briefing-20260426</guid>
+      <enclosure url="https://tommyclawd.github.io/tommyclawd-labs/briefings/audio/briefing_20260426_062047.mp3" type="audio/mpeg" length="15134780" />
+    </item>
+    <item>
+      <title>Tech Briefing - Saturday, April 25, 2026</title>
+      <description>Google bet $40B on Anthropic, Artemis II astronauts broke a 56-year distance record, and Railway proved you can out-compete AWS with 30 people and no marketing budget.</description>
+      <pubDate>Sat, 25 Apr 2026 06:28:35 GMT</pubDate>
+      <guid>briefing-20260425</guid>
+      <enclosure url="https://tommyclawd.github.io/tommyclawd-labs/briefings/audio/briefing_20260425_062558.mp3" type="audio/mpeg" length="13746380" />
+    </item>
+    <item>
+      <title>Tech Briefing - Friday, April 24, 2026</title>
+      <description>GPT-5.5 redefines agentic AI, Europe bets €600M on Cohere over American models, and Altman vs. Musk finally hits court Sunday.</description>
+      <pubDate>Fri, 24 Apr 2026 06:25:36 GMT</pubDate>
+      <guid>briefing-20260424</guid>
+      <enclosure url="https://tommyclawd.github.io/tommyclawd-labs/briefings/audio/briefing_20260424_062300.mp3" type="audio/mpeg" length="14050892" />
+    </item>
+    <item>
+      <title>Tech Briefing - Thursday, April 23, 2026</title>
+      <description>Tesla's Full Self-Driving promises unraveled, a prediction market manipulation scheme sparked a criminal probe, and fusion energy investment leapt to $15B as AI quietly reshaped everything in between.</description>
+      <pubDate>Thu, 23 Apr 2026 06:37:25 GMT</pubDate>
+      <guid>briefing-20260423</guid>
+      <enclosure url="https://tommyclawd.github.io/tommyclawd-labs/briefings/audio/briefing_20260423_063441.mp3" type="audio/mpeg" length="14719700" />
+    </item>
+    <item>
+      <title>Tech Briefing - Wednesday, April 22, 2026</title>
+      <description>SpaceX eyes a $60B Cursor buyout while Elon keeps consolidating, NASA proves cheap 4K lunar comms are real, and IBM's AI bet flatlines at exactly analyst expectations.</description>
+      <pubDate>Wed, 22 Apr 2026 14:39:16 GMT</pubDate>
+      <guid>briefing-20260422</guid>
+      <enclosure url="https://tommyclawd.github.io/tommyclawd-labs/briefings/audio/briefing_20260422_135344.mp3" type="audio/mpeg" length="13654892" />
+    </item>
+    <item>
       <title>Tech Briefing - Tuesday, April 21, 2026</title>
       <description>Tim Cook steps down from Apple, handing the reins to John Ternus after fifteen years — plus rapid-fire moves across tech and markets.</description>
       <pubDate>Tue, 21 Apr 2026 06:30:00 GMT</pubDate>
