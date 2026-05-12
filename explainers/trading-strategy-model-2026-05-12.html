@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trading Strategy Model — OpenClaw</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700;800&family=Fragment+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --font-body: 'Bricolage Grotesque', system-ui, sans-serif;
+    --font-mono: 'Fragment Mono', 'SF Mono', Consolas, monospace;
+    --bg: #f4f7f3;
+    --surface: #ffffff;
+    --surface2: #edf4e9;
+    --surface3: #f9faf6;
+    --border: rgba(20, 38, 26, .10);
+    --border-strong: rgba(20, 38, 26, .20);
+    --text: #16231a;
+    --text-dim: #657263;
+    --faint: #9aa494;
+    --green: #2f7d44;
+    --green-dim: rgba(47, 125, 68, .12);
+    --blue: #1e5a7a;
+    --blue-dim: rgba(30, 90, 122, .11);
+    --amber: #b46b12;
+    --amber-dim: rgba(180, 107, 18, .12);
+    --red: #a43c32;
+    --red-dim: rgba(164, 60, 50, .10);
+    --ink: #1f2e24;
+    --shadow: 0 20px 55px rgba(20, 38, 26, .08);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0d130f;
+      --surface: #151d17;
+      --surface2: #1b261e;
+      --surface3: #101711;
+      --border: rgba(237, 244, 233, .09);
+      --border-strong: rgba(237, 244, 233, .18);
+      --text: #edf4e9;
+      --text-dim: #b6c3b4;
+      --faint: #748172;
+      --green: #7dd28d;
+      --green-dim: rgba(125, 210, 141, .13);
+      --blue: #83c5df;
+      --blue-dim: rgba(131, 197, 223, .12);
+      --amber: #e2ae5e;
+      --amber-dim: rgba(226, 174, 94, .14);
+      --red: #ef8c81;
+      --red-dim: rgba(239, 140, 129, .12);
+      --shadow: 0 20px 70px rgba(0, 0, 0, .28);
+    }
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: var(--font-body);
+    color: var(--text);
+    background-color: var(--bg);
+    background-image:
+      radial-gradient(circle at 16% 8%, var(--green-dim) 0, transparent 32%),
+      radial-gradient(circle at 84% 18%, var(--blue-dim) 0, transparent 34%),
+      radial-gradient(circle, var(--border) 1px, transparent 1px);
+    background-size: auto, auto, 26px 26px;
+    padding: 34px;
+  }
+  .wrap {
+    max-width: 1420px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 190px minmax(0, 1fr);
+    gap: 38px;
+  }
+  .toc {
+    position: sticky;
+    top: 24px;
+    align-self: start;
+    max-height: calc(100dvh - 48px);
+    overflow-y: auto;
+    padding: 14px 0;
+  }
+  .toc-title {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--faint);
+    padding-bottom: 12px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  .toc a {
+    display: block;
+    color: var(--text-dim);
+    text-decoration: none;
+    font-size: 12px;
+    line-height: 1.35;
+    padding: 7px 9px;
+    border-left: 2px solid transparent;
+    border-radius: 6px;
+    margin: 2px 0;
+  }
+  .toc a:hover { color: var(--text); background: var(--surface2); }
+  .toc a.active { color: var(--text); border-left-color: var(--green); background: var(--surface); }
+  .main { min-width: 0; }
+  .hero {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid color-mix(in srgb, var(--border) 55%, var(--green) 45%);
+    border-radius: 30px;
+    background: color-mix(in srgb, var(--surface) 88%, var(--green) 5%);
+    box-shadow: var(--shadow);
+    padding: 44px;
+  }
+  .hero::after {
+    content: "";
+    position: absolute;
+    width: 430px;
+    height: 430px;
+    right: -170px;
+    bottom: -220px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    background: radial-gradient(circle, var(--blue-dim), transparent 66%);
+  }
+  .eyebrow, .section-label, .mini-label {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 1.65px;
+    font-weight: 500;
+    font-size: 11px;
+    color: var(--green);
+  }
+  h1 {
+    position: relative;
+    z-index: 1;
+    max-width: 960px;
+    margin: 16px 0 18px;
+    font-size: clamp(46px, 7vw, 88px);
+    line-height: .9;
+    letter-spacing: -2.7px;
+  }
+  .lead {
+    position: relative;
+    z-index: 1;
+    max-width: 900px;
+    margin: 0;
+    color: var(--text-dim);
+    font-size: 19px;
+    line-height: 1.68;
+  }
+  .notice {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    margin-top: 24px;
+    padding: 10px 13px;
+    border-radius: 999px;
+    border: 1px solid color-mix(in srgb, var(--border) 50%, var(--amber) 50%);
+    background: var(--amber-dim);
+    color: var(--amber);
+    font-family: var(--font-mono);
+    font-size: 11px;
+  }
+  section { margin-top: 34px; scroll-margin-top: 22px; }
+  .section-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 18px;
+    margin-bottom: 16px;
+  }
+  h2 {
+    margin: 7px 0 0;
+    font-size: clamp(30px, 4vw, 52px);
+    line-height: .96;
+    letter-spacing: -1.4px;
+  }
+  h3 {
+    margin: 0 0 8px;
+    font-size: 20px;
+    letter-spacing: -.3px;
+  }
+  .grid { display: grid; gap: 16px; }
+  .cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ve-card {
+    min-width: 0;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 20px;
+  }
+  .ve-card.elevated { box-shadow: var(--shadow); background: var(--surface3); }
+  .ve-card.recessed { background: color-mix(in srgb, var(--bg) 66%, var(--surface) 34%); }
+  .ve-card.green { border-left: 4px solid var(--green); }
+  .ve-card.blue { border-left: 4px solid var(--blue); }
+  .ve-card.amber { border-left: 4px solid var(--amber); }
+  .ve-card.red { border-left: 4px solid var(--red); }
+  .card-text, p, li, td {
+    color: var(--text-dim);
+    line-height: 1.58;
+    font-size: 14px;
+  }
+  ul { margin: 12px 0 0; padding: 0; list-style: none; }
+  li { position: relative; padding-left: 18px; margin: 8px 0; }
+  li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: .72em;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: .48;
+  }
+  code {
+    font-family: var(--font-mono);
+    font-size: .88em;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    padding: 1px 5px;
+  }
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: 1.35fr repeat(3, minmax(0, .88fr));
+    gap: 14px;
+    margin-top: 25px;
+    position: relative;
+    z-index: 1;
+  }
+  .kpi {
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    background: color-mix(in srgb, var(--surface) 84%, var(--green) 5%);
+    padding: 18px;
+  }
+  .kpi.primary {
+    background: color-mix(in srgb, var(--surface) 72%, var(--green) 13%);
+    border-color: color-mix(in srgb, var(--border) 45%, var(--green) 55%);
+  }
+  .kpi-num {
+    display: block;
+    font-size: 42px;
+    line-height: .9;
+    font-weight: 800;
+    letter-spacing: -1.4px;
+    color: var(--green);
+  }
+  .kpi.primary .kpi-num { font-size: 52px; }
+  .kpi-label {
+    margin-top: 10px;
+    font-family: var(--font-mono);
+    color: var(--text-dim);
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .funnel {
+    display: grid;
+    gap: 12px;
+  }
+  .funnel-step {
+    display: grid;
+    grid-template-columns: 82px minmax(0, 1fr) 230px;
+    align-items: center;
+    gap: 18px;
+    padding: 18px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+  }
+  .step-num {
+    display: grid;
+    place-items: center;
+    width: 52px;
+    height: 52px;
+    border-radius: 16px;
+    background: var(--green-dim);
+    color: var(--green);
+    font-family: var(--font-mono);
+    font-weight: 500;
+  }
+  .step-title {
+    font-size: 19px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .step-output {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--blue);
+    padding: 10px;
+    border-radius: 10px;
+    background: var(--blue-dim);
+    overflow-wrap: break-word;
+  }
+  .pill-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    padding: 6px 9px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-dim);
+    border: 1px solid var(--border);
+    background: var(--surface2);
+  }
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border-radius: 999px;
+    padding: 4px 8px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: .6px;
+    white-space: nowrap;
+  }
+  .badge::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+  .badge.ok { color: var(--green); background: var(--green-dim); }
+  .badge.watch { color: var(--amber); background: var(--amber-dim); }
+  .badge.no { color: var(--red); background: var(--red-dim); }
+  .table-wrap {
+    overflow: hidden;
+    border-radius: 18px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+  }
+  .table-scroll { overflow-x: auto; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  th, td {
+    text-align: left;
+    vertical-align: top;
+    padding: 13px 14px;
+    border-bottom: 1px solid var(--border);
+  }
+  th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-dim);
+    background: var(--surface2);
+  }
+  tr:nth-child(even) td { background: color-mix(in srgb, var(--surface) 82%, var(--bg) 18%); }
+  tr:last-child td { border-bottom: 0; }
+  .split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .do-dont {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .quote {
+    border-radius: 24px;
+    padding: 26px;
+    background: color-mix(in srgb, var(--surface) 82%, var(--green) 8%);
+    border: 1px solid color-mix(in srgb, var(--border) 50%, var(--green) 50%);
+    font-size: 27px;
+    line-height: 1.18;
+    font-weight: 700;
+    letter-spacing: -.7px;
+    color: var(--ink);
+  }
+  .quote small {
+    display: block;
+    margin-top: 14px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  details {
+    border: 1px solid var(--border);
+    background: var(--surface);
+    border-radius: 16px;
+    padding: 14px 16px;
+  }
+  details + details { margin-top: 10px; }
+  summary { cursor: pointer; font-weight: 700; }
+  .animate {
+    animation: fadeUp .42s ease-out both;
+    animation-delay: calc(var(--i, 0) * .05s);
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+  }
+  @media (max-width: 1050px) {
+    body { padding: 0 20px 30px; }
+    .wrap { grid-template-columns: 1fr; gap: 0; }
+    .toc {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      max-height: none;
+      display: flex;
+      gap: 4px;
+      overflow-x: auto;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      padding: 10px 20px;
+      margin: 0 -20px 22px;
+    }
+    .toc-title { display: none; }
+    .toc a { white-space: nowrap; flex-shrink: 0; border-left: 0; border-bottom: 2px solid transparent; }
+    .toc a.active { border-bottom-color: var(--green); }
+    .hero { padding: 28px; }
+    .kpi-grid, .cols-4, .cols-3, .cols-2, .split, .do-dont { grid-template-columns: 1fr; }
+    .funnel-step { grid-template-columns: 1fr; }
+    .step-output { max-width: 100%; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="toc" id="toc">
+    <div class="toc-title">Strategy</div>
+    <a href="#thesis">Thesis</a>
+    <a href="#stack">Stack</a>
+    <a href="#funnel">Decision funnel</a>
+    <a href="#rules">Rules</a>
+    <a href="#direct">Direct execution</a>
+    <a href="#not-core">Not core</a>
+    <a href="#operating-loop">Loop</a>
+  </nav>
+
+  <main class="main">
+    <header class="hero animate" style="--i:0">
+      <div class="eyebrow">OpenClaw trading strategy model · May 2026</div>
+      <h1>Quality first. Structure second. Execution only after gates.</h1>
+      <p class="lead">
+        The current strategy is not “find clever headlines.” It is a quality-first swing system:
+        use an approved universe, wait for repeatable dislocations, enforce hard risk gates, and
+        use small cash-secured puts when there is no clean stock setup. The LLM can explain and rank;
+        deterministic rules decide what is executable.
+      </p>
+      <div class="notice">Public explainer: paper-trading process summary, not investment advice.</div>
+      <div class="kpi-grid">
+        <div class="kpi primary"><span class="kpi-num">#1</span><div class="kpi-label">Quality oversold swing</div></div>
+        <div class="kpi"><span class="kpi-num">#2</span><div class="kpi-label">Cash-secured puts</div></div>
+        <div class="kpi"><span class="kpi-num">10</span><div class="kpi-label">Trading-day earnings block</div></div>
+        <div class="kpi"><span class="kpi-num">3</span><div class="kpi-label">Max live ideas</div></div>
+      </div>
+    </header>
+
+    <section id="thesis" class="animate" style="--i:1">
+      <div class="section-head">
+        <div><div class="section-label">01 · Thesis</div><h2>The edge is mechanism, not vibes.</h2></div>
+      </div>
+      <div class="split">
+        <div class="quote">The universe generates ideas; technicals decide timing; hard rules decide executability.<small>Current operating principle</small></div>
+        <div class="ve-card elevated green">
+          <h3>What the research converged on</h3>
+          <ul>
+            <li>Trade durable, liquid, understandable large caps rather than fragile story trades.</li>
+            <li>Use repeatable mean-reversion setups instead of reacting to macro headlines.</li>
+            <li>Convert cash from dead weight into disciplined options income only on names worth owning.</li>
+            <li>Score process quality, not short-term P&amp;L.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="stack" class="animate" style="--i:2">
+      <div class="section-head">
+        <div><div class="section-label">02 · Strategy stack</div><h2>Four lanes, only two active.</h2></div>
+      </div>
+      <div class="grid cols-4">
+        <div class="ve-card elevated green">
+          <div class="mini-label">Priority 1</div>
+          <h3>Quality oversold swing</h3>
+          <p>Buy high-quality large caps after dislocation and stabilization. Target recovery to SMA20 / EMA21 / resistance.</p>
+          <div class="pill-row"><span class="badge ok">active</span><span class="pill">5-7.5% size</span><span class="pill">bracket entry</span></div>
+        </div>
+        <div class="ve-card elevated blue">
+          <div class="mini-label">Priority 2</div>
+          <h3>Cash-secured puts</h3>
+          <p>Sell short-dated puts on quality names you would own, especially when cash is otherwise idle.</p>
+          <div class="pill-row"><span class="badge ok">active</span><span class="pill">1 contract</span><span class="pill">5-15 DTE</span></div>
+        </div>
+        <div class="ve-card amber">
+          <div class="mini-label">Priority 3</div>
+          <h3>Earnings drift</h3>
+          <p>Potentially useful, but it needs opening-range / VWAP structure and backtest evidence before routine execution.</p>
+          <div class="pill-row"><span class="badge watch">research</span><span class="pill">tiny paper only later</span></div>
+        </div>
+        <div class="ve-card recessed">
+          <div class="mini-label">Priority 4</div>
+          <h3>Covered calls</h3>
+          <p>Only relevant once intentional 100-share inventory exists through assignment or deliberate accumulation.</p>
+          <div class="pill-row"><span class="badge watch">later</span><span class="pill">inventory required</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="funnel" class="animate" style="--i:3">
+      <div class="section-head">
+        <div><div class="section-label">03 · Decision funnel</div><h2>How a symbol becomes an order.</h2></div>
+      </div>
+      <div class="funnel">
+        <div class="funnel-step">
+          <div class="step-num">01</div>
+          <div><div class="step-title">Start with the approved quality universe</div><p>No fresh ideas from headlines. Candidates come from <code>state/universe-active.json</code>, with tier and suspension status already applied.</p></div>
+          <div class="step-output">eligible symbol list</div>
+        </div>
+        <div class="funnel-step">
+          <div class="step-num">02</div>
+          <div><div class="step-title">Filter for dislocation and recovery shape</div><p>Look for price below or away from SMA20, RSI roughly 30-45, improving MACD histogram, or clear stabilization after a flush.</p></div>
+          <div class="step-output">daily-candidates.json</div>
+        </div>
+        <div class="funnel-step">
+          <div class="step-num">03</div>
+          <div><div class="step-title">Apply non-negotiable hard gates</div><p>No earnings within 10 trading days, no same-day CPI/FOMC guess, no missing stop, no oversized position, no concentration breach.</p></div>
+          <div class="step-output">valid setup candidates</div>
+        </div>
+        <div class="funnel-step">
+          <div class="step-num">04</div>
+          <div><div class="step-title">Require a complete written trade</div><p>Thesis, invalidation, stop, target/payoff path, Kelly-informed size, thesis expiry, and position type must be written before entry.</p></div>
+          <div class="step-output">structured trade plan</div>
+        </div>
+        <div class="funnel-step">
+          <div class="step-num">05</div>
+          <div><div class="step-title">Rank valid setups by risk-adjusted EV</div><p>If multiple trades pass, prefer the cleaner, lower-tail-risk, better-capital-efficiency setup. Strategy priority is the last tiebreaker.</p></div>
+          <div class="step-output">EXECUTE order JSON</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="rules" class="animate" style="--i:4">
+      <div class="section-head">
+        <div><div class="section-label">04 · Rules</div><h2>Hard gates versus judgment.</h2></div>
+      </div>
+      <div class="table-wrap">
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th>Rule type</th><th>Examples</th><th>Who decides?</th><th>Execution implication</th></tr></thead>
+            <tbody>
+              <tr><td><span class="badge ok">Hard</span></td><td>No earnings inside 10 trading days; stop must exist; max 10% single-symbol concentration; max 3 live ideas.</td><td>Deterministic code</td><td>If violated, no trade. The LLM cannot override.</td></tr>
+              <tr><td><span class="badge ok">Hard</span></td><td>Every entry needs thesis, invalidation, stop/failure price, target, size, expiry, and position type.</td><td>Plan schema / executor validation</td><td>Missing field means no new entry.</td></tr>
+              <tr><td><span class="badge watch">Soft</span></td><td>RSI roughly 30-45; MACD improving; strike near support; ROC ranking among CSPs.</td><td>Research layer + LLM synthesis</td><td>Can influence ranking, but cannot bypass hard gates.</td></tr>
+              <tr><td><span class="badge watch">Management</span></td><td>At +5% review stop; at +8% move to breakeven same day; exit if thesis breaks or expires.</td><td>Daily position review</td><td>Generate stop replacement, limit sell, or exit order.</td></tr>
+              <tr><td><span class="badge no">Banned</span></td><td>XLE-style weak macro instruments, after-hours biotech rebounds, “something is happening” trades.</td><td>Playbook</td><td>Do not promote to core execution.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="direct" class="animate" style="--i:5">
+      <div class="section-head">
+        <div><div class="section-label">05 · Direct execution</div><h2>What “more direct” should mean.</h2></div>
+      </div>
+      <div class="grid cols-3">
+        <div class="ve-card green">
+          <h3>Equity entry recipe</h3>
+          <ul>
+            <li>Choose only from active quality universe.</li>
+            <li>Require dislocation plus stabilization.</li>
+            <li>Compute entry, stop, target, risk/reward, and size.</li>
+            <li>Emit <code>bracket_entry</code> with broker-side stop and take-profit.</li>
+          </ul>
+        </div>
+        <div class="ve-card blue">
+          <h3>CSP recipe</h3>
+          <ul>
+            <li>Underlying must be quality and assignment-acceptable.</li>
+            <li>Expiration 5-15 DTE during learning phase.</li>
+            <li>Strike 3-5% OTM near support.</li>
+            <li>Start with one contract and cap total encumbrance.</li>
+          </ul>
+        </div>
+        <div class="ve-card amber">
+          <h3>No-trade recipe</h3>
+          <ul>
+            <li>No clean setup beats a forced setup.</li>
+            <li>If all valid names fail technical timing, stay flat.</li>
+            <li>If no stock setup exists, evaluate CSPs.</li>
+            <li>If CSPs are poor too, cash is the correct position.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="not-core" class="animate" style="--i:6">
+      <div class="section-head">
+        <div><div class="section-label">06 · What is not core</div><h2>The strategy got narrower on purpose.</h2></div>
+      </div>
+      <div class="do-dont">
+        <div class="ve-card green">
+          <h3>Core now</h3>
+          <ul>
+            <li>Quality large-cap mean reversion.</li>
+            <li>Small CSPs on names worth owning.</li>
+            <li>Mechanically enforced stops and sizing.</li>
+            <li>Process scoring and post-market review.</li>
+          </ul>
+        </div>
+        <div class="ve-card red">
+          <h3>Deprioritized</h3>
+          <ul>
+            <li>Geopolitical panic expressed through weak instruments.</li>
+            <li>Biotech after-hours rebounds as a primary long setup.</li>
+            <li>Macro event trades without scenario trees.</li>
+            <li>LLM-discovered trades that bypass deterministic screening.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="operating-loop" class="animate" style="--i:7">
+      <div class="section-head">
+        <div><div class="section-label">07 · Operating loop</div><h2>The SITE loop, simplified.</h2></div>
+      </div>
+      <div class="grid cols-4">
+        <div class="ve-card elevated blue"><div class="mini-label">Synthesize</div><h3>Scan broadly</h3><p>Use universe, earnings, market context, technicals, options data, and macro overlays.</p></div>
+        <div class="ve-card elevated amber"><div class="mini-label">Inquire</div><h3>Stress-test</h3><p>Ask what is priced in, why this might be wrong, and what would falsify the setup.</p></div>
+        <div class="ve-card elevated green"><div class="mini-label">Test</div><h3>Execute only if structured</h3><p>Convert thesis into explicit entry, stop, target, size, and expiry. Then place protected orders.</p></div>
+        <div class="ve-card elevated recessed"><div class="mini-label">Evolve</div><h3>Score the mechanism</h3><p>Review closed trades by decision quality and plan compliance, not just whether P&amp;L was green.</p></div>
+      </div>
+      <details style="margin-top:16px">
+        <summary>The simplest implementation target</summary>
+        <p>Make the morning plan writer output a ranked list of valid setups, not a freeform recommendation. The executor should accept only structured orders that prove they passed universe, technical, earnings, risk, and written-thesis gates.</p>
+      </details>
+    </section>
+  </main>
+</div>
+
+<script>
+(function() {
+  const toc = document.getElementById('toc');
+  const links = [...toc.querySelectorAll('a')];
+  const sections = links.map(link => {
+    const el = document.getElementById(link.getAttribute('href').slice(1));
+    return { link, el };
+  }).filter(x => x.el);
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      links.forEach(l => l.classList.remove('active'));
+      const match = sections.find(s => s.el === entry.target);
+      if (match) {
+        match.link.classList.add('active');
+        if (innerWidth <= 1050) match.link.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      }
+    });
+  }, { rootMargin: '-10% 0px -78% 0px' });
+  sections.forEach(s => observer.observe(s.el));
+})();
+</script>
+</body>
+</html>
