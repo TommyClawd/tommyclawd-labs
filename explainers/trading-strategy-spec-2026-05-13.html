@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trading Strategy Spec - Visual Companion</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --font-body: 'DM Sans', system-ui, sans-serif;
+    --font-mono: 'Fira Code', 'SF Mono', Consolas, monospace;
+    --bg: #f3f8f5;
+    --surface: #ffffff;
+    --surface2: #e8f1ec;
+    --surface3: #f9fcfa;
+    --border: rgba(18, 43, 31, .10);
+    --border-strong: rgba(18, 43, 31, .20);
+    --text: #122b1f;
+    --dim: #617168;
+    --faint: #95a39b;
+    --emerald: #059669;
+    --emerald-dim: rgba(5, 150, 105, .12);
+    --amber: #d97706;
+    --amber-dim: rgba(217, 119, 6, .13);
+    --blue: #0369a1;
+    --blue-dim: rgba(3, 105, 161, .12);
+    --red: #be123c;
+    --red-dim: rgba(190, 18, 60, .10);
+    --slate: #475569;
+    --slate-dim: rgba(71, 85, 105, .12);
+    --shadow: 0 22px 70px rgba(18, 43, 31, .09);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0c1510;
+      --surface: #141f19;
+      --surface2: #1b2a22;
+      --surface3: #101a14;
+      --border: rgba(234, 250, 241, .09);
+      --border-strong: rgba(234, 250, 241, .18);
+      --text: #eafaf1;
+      --dim: #aebfb5;
+      --faint: #718178;
+      --emerald: #34d399;
+      --emerald-dim: rgba(52, 211, 153, .13);
+      --amber: #fbbf24;
+      --amber-dim: rgba(251, 191, 36, .14);
+      --blue: #60c5ee;
+      --blue-dim: rgba(96, 197, 238, .13);
+      --red: #fb7185;
+      --red-dim: rgba(251, 113, 133, .13);
+      --slate: #cbd5e1;
+      --slate-dim: rgba(203, 213, 225, .12);
+      --shadow: 0 22px 80px rgba(0, 0, 0, .30);
+    }
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    color: var(--text);
+    font-family: var(--font-body);
+    background:
+      radial-gradient(circle at 12% 0%, var(--emerald-dim), transparent 33%),
+      radial-gradient(circle at 82% 10%, var(--blue-dim), transparent 30%),
+      repeating-linear-gradient(135deg, transparent 0, transparent 34px, var(--border) 35px),
+      var(--bg);
+    padding: 34px;
+    overflow-wrap: break-word;
+  }
+  .wrap {
+    max-width: 1440px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 195px minmax(0, 1fr);
+    gap: 38px;
+  }
+  .toc {
+    position: sticky;
+    top: 24px;
+    align-self: start;
+    max-height: calc(100dvh - 48px);
+    overflow-y: auto;
+    padding: 14px 0;
+  }
+  .toc-title {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--faint);
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+    padding-bottom: 12px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  .toc a {
+    display: block;
+    color: var(--dim);
+    text-decoration: none;
+    font-size: 12px;
+    line-height: 1.35;
+    padding: 7px 9px;
+    border-left: 2px solid transparent;
+    border-radius: 6px;
+    margin: 2px 0;
+  }
+  .toc a:hover { color: var(--text); background: var(--surface2); }
+  .toc a.active { color: var(--text); background: var(--surface); border-left-color: var(--emerald); }
+  .main { min-width: 0; }
+  .hero {
+    position: relative;
+    overflow: hidden;
+    padding: 44px;
+    border-radius: 30px;
+    background: color-mix(in srgb, var(--surface) 88%, var(--emerald) 5%);
+    border: 1px solid color-mix(in srgb, var(--border) 55%, var(--emerald) 45%);
+    box-shadow: var(--shadow);
+  }
+  .hero::after {
+    content: "";
+    position: absolute;
+    right: -180px;
+    bottom: -220px;
+    width: 430px;
+    height: 430px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    background: radial-gradient(circle, var(--blue-dim), transparent 65%);
+  }
+  .eyebrow, .section-label, .label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.55px;
+    color: var(--emerald);
+  }
+  h1 {
+    position: relative;
+    z-index: 1;
+    max-width: 970px;
+    margin: 15px 0 18px;
+    font-size: clamp(48px, 8vw, 96px);
+    line-height: .88;
+    letter-spacing: -3px;
+  }
+  .lead {
+    position: relative;
+    z-index: 1;
+    max-width: 910px;
+    margin: 0;
+    color: var(--dim);
+    font-size: 19px;
+    line-height: 1.68;
+  }
+  .notice {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    margin-top: 24px;
+    padding: 10px 13px;
+    border-radius: 999px;
+    border: 1px solid color-mix(in srgb, var(--border) 55%, var(--amber) 45%);
+    background: var(--amber-dim);
+    color: var(--amber);
+    font-family: var(--font-mono);
+    font-size: 11px;
+  }
+  .kpis {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1.35fr repeat(3, minmax(0, .9fr));
+    gap: 14px;
+    margin-top: 26px;
+  }
+  .kpi {
+    min-width: 0;
+    padding: 18px;
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    background: var(--surface);
+  }
+  .kpi.primary {
+    background: color-mix(in srgb, var(--surface) 76%, var(--emerald) 10%);
+    border-color: color-mix(in srgb, var(--border) 45%, var(--emerald) 55%);
+  }
+  .kpi-num {
+    display: block;
+    color: var(--emerald);
+    font-size: 46px;
+    font-weight: 800;
+    line-height: .9;
+    letter-spacing: -1.5px;
+  }
+  .kpi.primary .kpi-num { font-size: 56px; }
+  .kpi-label {
+    margin-top: 10px;
+    color: var(--dim);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: .9px;
+    text-transform: uppercase;
+  }
+  section { margin-top: 34px; scroll-margin-top: 22px; }
+  .section-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 18px;
+    margin-bottom: 16px;
+  }
+  h2 {
+    margin: 7px 0 0;
+    font-size: clamp(32px, 4.8vw, 58px);
+    line-height: .95;
+    letter-spacing: -1.8px;
+  }
+  h3 {
+    margin: 0 0 8px;
+    font-size: 20px;
+    letter-spacing: -.3px;
+  }
+  p, li, td {
+    color: var(--dim);
+    font-size: 14px;
+    line-height: 1.58;
+  }
+  code {
+    font-family: var(--font-mono);
+    font-size: .88em;
+    padding: 1px 5px;
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    background: var(--surface2);
+  }
+  .grid { display: grid; gap: 16px; }
+  .cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ve-card {
+    min-width: 0;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 20px;
+  }
+  .ve-card.elevated { box-shadow: var(--shadow); background: var(--surface3); }
+  .ve-card.recessed { background: color-mix(in srgb, var(--bg) 64%, var(--surface) 36%); }
+  .ve-card.emerald { border-left: 4px solid var(--emerald); }
+  .ve-card.blue { border-left: 4px solid var(--blue); }
+  .ve-card.amber { border-left: 4px solid var(--amber); }
+  .ve-card.red { border-left: 4px solid var(--red); }
+  .pill-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  .pill {
+    display: inline-flex;
+    border-radius: 999px;
+    padding: 5px 8px;
+    border: 1px solid var(--border);
+    background: var(--surface2);
+    color: var(--dim);
+    font-family: var(--font-mono);
+    font-size: 10px;
+  }
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+    border-radius: 999px;
+    padding: 5px 8px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: .6px;
+    text-transform: uppercase;
+  }
+  .badge::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+  .badge.ok { color: var(--emerald); background: var(--emerald-dim); }
+  .badge.warn { color: var(--amber); background: var(--amber-dim); }
+  .badge.no { color: var(--red); background: var(--red-dim); }
+  .split {
+    display: grid;
+    grid-template-columns: 1.1fr .9fr;
+    gap: 16px;
+  }
+  .chart-card {
+    min-width: 0;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 22px;
+    padding: 22px;
+    box-shadow: var(--shadow);
+  }
+  .allocation {
+    display: grid;
+    grid-template-columns: 230px minmax(0, 1fr);
+    gap: 24px;
+    align-items: center;
+  }
+  .donut {
+    width: 210px;
+    height: 210px;
+    border-radius: 50%;
+    background: conic-gradient(var(--emerald) 0 35%, var(--blue) 35% 60%, var(--amber) 60% 70%, var(--slate) 70% 100%);
+    position: relative;
+    box-shadow: inset 0 0 0 1px var(--border), var(--shadow);
+  }
+  .donut::after {
+    content: "NAV";
+    position: absolute;
+    inset: 38px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--surface);
+    color: var(--dim);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 1px;
+  }
+  .legend { display: grid; gap: 10px; }
+  .legend-row {
+    display: grid;
+    grid-template-columns: 16px minmax(0, 1fr) auto;
+    gap: 10px;
+    align-items: center;
+    color: var(--dim);
+    font-size: 14px;
+  }
+  .swatch { width: 13px; height: 13px; border-radius: 4px; }
+  .swatch.emerald { background: var(--emerald); }
+  .swatch.blue { background: var(--blue); }
+  .swatch.amber { background: var(--amber); }
+  .swatch.slate { background: var(--slate); }
+  .bar-chart { display: grid; gap: 13px; margin-top: 15px; }
+  .bar {
+    display: grid;
+    grid-template-columns: 150px minmax(0, 1fr) 50px;
+    gap: 12px;
+    align-items: center;
+    font-size: 13px;
+    color: var(--dim);
+  }
+  .bar-track {
+    height: 12px;
+    border-radius: 999px;
+    background: var(--surface2);
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  .bar-fill { height: 100%; border-radius: inherit; background: var(--emerald); }
+  .bar-fill.blue { background: var(--blue); }
+  .bar-fill.amber { background: var(--amber); }
+  .bar-fill.red { background: var(--red); }
+  .line-chart {
+    width: 100%;
+    height: 210px;
+    margin-top: 12px;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    background: linear-gradient(to bottom, transparent 0 32%, var(--border) 33%, transparent 34% 65%, var(--border) 66%, transparent 67%);
+  }
+  .line-chart text { font-family: var(--font-mono); font-size: 10px; fill: var(--dim); }
+  .line-chart .target { stroke: var(--emerald); stroke-width: 4; fill: none; }
+  .line-chart .spy { stroke: var(--slate); stroke-width: 3; fill: none; stroke-dasharray: 6 6; }
+  ul { margin: 12px 0 0; padding: 0; list-style: none; }
+  li { position: relative; padding-left: 18px; margin: 8px 0; }
+  li::before { content: ""; position: absolute; left: 0; top: .72em; width: 6px; height: 6px; border-radius: 50%; background: currentColor; opacity: .5; }
+  .flow {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 12px;
+  }
+  .flow-step {
+    position: relative;
+    min-width: 0;
+    padding: 18px;
+    border-radius: 18px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+  }
+  .flow-step:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    right: -8px;
+    top: 50%;
+    width: 14px;
+    height: 2px;
+    background: var(--border-strong);
+  }
+  .step-num {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--emerald);
+    margin-bottom: 8px;
+  }
+  .window-timeline {
+    display: grid;
+    gap: 13px;
+  }
+  .window {
+    display: grid;
+    grid-template-columns: 150px minmax(0, 1fr) 180px;
+    gap: 16px;
+    align-items: stretch;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    background: var(--surface);
+  }
+  .time {
+    display: grid;
+    place-items: center;
+    padding: 16px;
+    color: #fff;
+    background: var(--blue);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    text-align: center;
+  }
+  .window-body { padding: 16px 0; min-width: 0; }
+  .window-action {
+    display: grid;
+    place-items: center;
+    padding: 16px;
+    color: var(--dim);
+    background: var(--surface2);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-align: center;
+  }
+  .table-wrap {
+    overflow: hidden;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+  }
+  .table-scroll { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th, td { padding: 13px 14px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--border); }
+  th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background: var(--surface2);
+    color: var(--dim);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  tr:nth-child(even) td { background: color-mix(in srgb, var(--surface) 82%, var(--bg) 18%); }
+  tr:last-child td { border-bottom: 0; }
+  .roadmap {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+  }
+  .phase {
+    min-width: 0;
+    border: 1px solid var(--border);
+    border-radius: 19px;
+    padding: 18px;
+    background: var(--surface);
+  }
+  .phase-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+  .phase-tag {
+    color: var(--blue);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: .8px;
+  }
+  details {
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    background: var(--surface);
+    padding: 14px 16px;
+  }
+  details + details { margin-top: 10px; }
+  summary { cursor: pointer; font-weight: 700; }
+  .animate {
+    animation: fadeUp .42s ease-out both;
+    animation-delay: calc(var(--i, 0) * .045s);
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+  }
+  @media (max-width: 1100px) {
+    body { padding: 0 20px 30px; }
+    .wrap { grid-template-columns: 1fr; gap: 0; }
+    .toc {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      max-height: none;
+      display: flex;
+      gap: 4px;
+      overflow-x: auto;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      padding: 10px 20px;
+      margin: 0 -20px 22px;
+    }
+    .toc-title { display: none; }
+    .toc a { white-space: nowrap; flex-shrink: 0; border-left: 0; border-bottom: 2px solid transparent; }
+    .toc a.active { border-bottom-color: var(--emerald); }
+    .hero { padding: 28px; }
+    .kpis, .cols-4, .cols-3, .cols-2, .split, .flow, .roadmap, .allocation { grid-template-columns: 1fr; }
+    .donut { margin: 0 auto; }
+    .window { grid-template-columns: 1fr; }
+    .window-body { padding: 16px; }
+    .bar { grid-template-columns: 1fr; gap: 6px; }
+    .flow-step:not(:last-child)::after { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="toc" id="toc">
+    <div class="toc-title">Spec Map</div>
+    <a href="#summary">Summary</a>
+    <a href="#stack">Strategy stack</a>
+    <a href="#allocation">Risk envelope</a>
+    <a href="#windows">Execution windows</a>
+    <a href="#trust">Trust model</a>
+    <a href="#lifecycle">Lifecycle</a>
+    <a href="#metrics">Metrics</a>
+    <a href="#roadmap">Roadmap</a>
+  </nav>
+
+  <main class="main">
+    <header class="hero animate" style="--i:0" id="summary">
+      <div class="eyebrow">Trading Strategy Specification - Visual Companion</div>
+      <h1>A wheel-anchored system for steady SPY-beating growth.</h1>
+      <p class="lead">The Senior PM spec reframes OpenClaw trading around fixed-time, dependable execution: cash-secured puts and covered calls become the core income engine, quality oversold swings become a capped satellite, and the executor becomes the hard-rule firewall between LLM recommendations and Alpaca orders.</p>
+      <div class="notice">Public-safe companion: operational account identifiers and secrets are intentionally omitted. Not investment advice.</div>
+      <div class="kpis">
+        <div class="kpi primary"><span class="kpi-num">SPY+</span><div class="kpi-label">Benchmark requirement</div></div>
+        <div class="kpi"><span class="kpi-num">35%</span><div class="kpi-label">PM-proposed CSP live cap</div></div>
+        <div class="kpi"><span class="kpi-num">25%</span><div class="kpi-label">PM-proposed equity swing cap</div></div>
+        <div class="kpi"><span class="kpi-num">99%</span><div class="kpi-label">Execution-window success target</div></div>
+      </div>
+    </header>
+
+    <section id="stack" class="animate" style="--i:1">
+      <div class="section-head">
+        <div><div class="section-label">01 - Strategy stack</div><h2>The PM flips the center of gravity.</h2></div>
+      </div>
+      <div class="grid cols-4">
+        <div class="ve-card elevated emerald">
+          <div class="label">Core / primary</div>
+          <h3>Cash-secured puts to wheel</h3>
+          <p>Sell puts on quality names Ric would own. If assigned, convert inventory into covered calls. This creates the steady premium profile the objective asks for.</p>
+          <div class="pill-row"><span class="badge ok">Always evaluated</span><span class="pill">Quality names</span><span class="pill">Assignment acceptable</span></div>
+        </div>
+        <div class="ve-card elevated blue">
+          <div class="label">Satellite</div>
+          <h3>Quality oversold swings</h3>
+          <p>Buy high-quality dislocations only when technical timing, earnings clearance, stop distance, reward/risk, and portfolio caps all pass.</p>
+          <div class="pill-row"><span class="badge warn">Capped upside lane</span><span class="pill">Bracket entry</span><span class="pill">Broker stop</span></div>
+        </div>
+        <div class="ve-card amber">
+          <div class="label">Activates on inventory</div>
+          <h3>Covered calls</h3>
+          <p>Not a separate idea source. It activates naturally after assignment or intentional 100-share inventory.</p>
+          <div class="pill-row"><span class="badge ok">Wheel continuation</span><span class="pill">No naked calls</span></div>
+        </div>
+        <div class="ve-card recessed">
+          <div class="label">Research gated</div>
+          <h3>Earnings drift</h3>
+          <p>Potential edge, but not on the live-money path until backtests and an intraday structure prove the setup.</p>
+          <div class="pill-row"><span class="badge no">No live capital</span><span class="pill">Backtest first</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="allocation" class="animate" style="--i:2">
+      <div class="section-head">
+        <div><div class="section-label">02 - Risk envelope</div><h2>Medium risk, medium-high aggression, no hero leverage.</h2></div>
+      </div>
+      <div class="split">
+        <div class="chart-card">
+          <h3>PM-proposed live allocation caps</h3>
+          <div class="allocation">
+            <div class="donut" aria-label="Allocation cap donut chart"></div>
+            <div class="legend">
+              <div class="legend-row"><span class="swatch emerald"></span><span>CSP / covered-call wheel</span><strong>35%</strong></div>
+              <div class="legend-row"><span class="swatch blue"></span><span>Quality equity swings</span><strong>25%</strong></div>
+              <div class="legend-row"><span class="swatch amber"></span><span>Backtest-gated / research lane</span><strong>10%</strong></div>
+              <div class="legend-row"><span class="swatch slate"></span><span>Cash, buffer, dry powder</span><strong>30%</strong></div>
+            </div>
+          </div>
+        </div>
+        <div class="chart-card">
+          <h3>Hard guardrails to add or verify</h3>
+          <div class="bar-chart">
+            <div class="bar"><span>Per-name cap</span><div class="bar-track"><div class="bar-fill" style="width:10%"></div></div><strong>10%</strong></div>
+            <div class="bar"><span>Per-trade risk</span><div class="bar-track"><div class="bar-fill blue" style="width:15%"></div></div><strong>1.5%</strong></div>
+            <div class="bar"><span>Drawdown freeze</span><div class="bar-track"><div class="bar-fill red" style="width:30%"></div></div><strong>3%</strong></div>
+            <div class="bar"><span>Weekly breaker</span><div class="bar-track"><div class="bar-fill red" style="width:50%"></div></div><strong>5%</strong></div>
+            <div class="bar"><span>Margin in v1</span><div class="bar-track"><div class="bar-fill amber" style="width:0%"></div></div><strong>0%</strong></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="windows" class="animate" style="--i:3">
+      <div class="section-head">
+        <div><div class="section-label">03 - Fixed windows</div><h2>Trade without watching the market all day.</h2></div>
+      </div>
+      <div class="window-timeline">
+        <div class="window">
+          <div class="time">06:45-07:00 PT<br>09:45-10:00 ET</div>
+          <div class="window-body"><h3>Primary entry window</h3><p>Post-open volatility has settled enough to execute CSPs and qualifying swing entries. LLM may tag EXECUTE; executor validates every hard rule before Alpaca.</p></div>
+          <div class="window-action">new entries allowed</div>
+        </div>
+        <div class="window">
+          <div class="time">12:30-12:45 PT<br>15:30-15:45 ET</div>
+          <div class="window-body"><h3>Late-day management window</h3><p>Manage-only mode: rolls, closes, stop moves, covered-call actions, +5%/+8% protection checks. No fresh speculative entries.</p></div>
+          <div class="window-action">manage only</div>
+        </div>
+        <div class="window">
+          <div class="time">13:15 PT<br>16:15 ET</div>
+          <div class="window-body"><h3>Post-close analysis package</h3><p>No trading. Generate next-day candidates, reconcile state, score behavior, and reduce morning latency.</p></div>
+          <div class="window-action">analysis only</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="trust" class="animate" style="--i:4">
+      <div class="section-head">
+        <div><div class="section-label">04 - Trust model</div><h2>LLM proposes. Executor disposes.</h2></div>
+      </div>
+      <div class="flow">
+        <div class="flow-step"><div class="step-num">01</div><h3>Universe</h3><p>Only active, quality-approved symbols are eligible.</p></div>
+        <div class="flow-step"><div class="step-num">02</div><h3>Research</h3><p>Scripts produce candidates, earnings, options, and market context.</p></div>
+        <div class="flow-step"><div class="step-num">03</div><h3>LLM tags</h3><p>LLM may choose EXECUTE and explain why.</p></div>
+        <div class="flow-step"><div class="step-num">04</div><h3>Executor gates</h3><p>Deterministic code blocks violations before broker contact.</p></div>
+        <div class="flow-step"><div class="step-num">05</div><h3>Alpaca</h3><p>Orders go out only after preflight, validation, and idempotency checks.</p></div>
+      </div>
+      <div class="grid cols-3" style="margin-top:16px">
+        <div class="ve-card emerald"><h3>Already in the executor</h3><p>Stale plan block, earnings file requirement, duplicate plan symbols, idempotency lock, duplicate pending order check, concentration including pending exposure, stop/risk checks.</p></div>
+        <div class="ve-card amber"><h3>PM-proposed additions</h3><p>Universe firewall, drawdown freeze, no-margin v1, throughput-floor alert, late-day manage-only mode, and explicit live-money ramp.</p></div>
+        <div class="ve-card red"><h3>Never allowed</h3><p>LLM limit widening, silent validation bypasses, naked calls, margin in v1, entries outside windows, or trades lacking assignment/exit logic.</p></div>
+      </div>
+    </section>
+
+    <section id="lifecycle" class="animate" style="--i:5">
+      <div class="section-head">
+        <div><div class="section-label">05 - Position lifecycle</div><h2>The wheel becomes the default operating loop.</h2></div>
+      </div>
+      <div class="table-wrap">
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th>State</th><th>System action</th><th>Hard constraints</th><th>Exit / next state</th></tr></thead>
+            <tbody>
+              <tr><td><span class="badge ok">Cash</span></td><td>Scan quality universe for CSP candidates.</td><td>Underlying must be assignment-acceptable, earnings-clear, liquid, and within caps.</td><td>Sell CSP or stay cash.</td></tr>
+              <tr><td><span class="badge ok">Short put</span></td><td>Collect premium and monitor profit capture / assignment risk.</td><td>No earnings danger window, no correlated pile-up, no exceeding encumbrance cap.</td><td>Buy back near 50% capture, expire, roll, or accept assignment.</td></tr>
+              <tr><td><span class="badge warn">Assigned shares</span></td><td>Convert to covered-call inventory.</td><td>CC strike floor should not lock in loss below original CSP strike unless explicitly approved.</td><td>Sell covered call, hold with stop plan, or exit.</td></tr>
+              <tr><td><span class="badge ok">Covered call</span></td><td>Earn premium while defining upside exit.</td><td>No naked calls; one contract per covered 100 shares.</td><td>Called away, roll, or repeat wheel.</td></tr>
+              <tr><td><span class="badge warn">Equity swing</span></td><td>Bracket entry with stop and target; daily stop management.</td><td>Stop exists, risk <= cap, no earnings block, concentration OK.</td><td>Target, stop, thesis break, or expiry.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="metrics" class="animate" style="--i:6">
+      <div class="section-head">
+        <div><div class="section-label">06 - Success metrics</div><h2>The active book has to justify itself against SPY.</h2></div>
+      </div>
+      <div class="split">
+        <div class="chart-card">
+          <h3>Target curve: smoother than SPY, above SPY</h3>
+          <svg class="line-chart" viewBox="0 0 640 210" role="img" aria-label="Conceptual performance target against SPY">
+            <text x="22" y="28">portfolio value</text>
+            <text x="22" y="190">rolling 6-12 month view</text>
+            <polyline class="spy" points="30,156 95,132 160,148 225,98 290,116 355,84 420,102 485,68 550,82 610,52"></polyline>
+            <polyline class="target" points="30,150 95,136 160,124 225,110 290,96 355,84 420,72 485,60 550,47 610,35"></polyline>
+            <text x="500" y="34">OpenClaw target</text>
+            <text x="510" y="88">SPY</text>
+          </svg>
+        </div>
+        <div class="ve-card elevated blue">
+          <h3>KPI hierarchy</h3>
+          <ul>
+            <li><strong>Primary:</strong> rolling total return versus SPY total return.</li>
+            <li><strong>Steady-uphill test:</strong> drawdown should be no worse than SPY over the same window.</li>
+            <li><strong>Reliability:</strong> execution windows should run successfully at or above 99%.</li>
+            <li><strong>Honesty:</strong> count blocked LLM EXECUTE tags and make the trend decline.</li>
+            <li><strong>Activity:</strong> no seven-day silent drift without a valid no-trade explanation.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="roadmap" class="animate" style="--i:7">
+      <div class="section-head">
+        <div><div class="section-label">07 - Implementation roadmap</div><h2>Preserve entrypoints; harden behavior.</h2></div>
+      </div>
+      <div class="roadmap">
+        <div class="phase"><div class="phase-head"><span class="phase-tag">P0</span><span class="badge ok">now</span></div><h3>Publish spec + config</h3><p>Keep current paths stable. Add explicit config for strategy caps, windows, and live/paper mode.</p></div>
+        <div class="phase"><div class="phase-head"><span class="phase-tag">P0</span><span class="badge warn">executor</span></div><h3>Add hard gates</h3><p>Universe firewall, drawdown freeze, no-margin v1, manage-only mode, and blocked-tag reporting.</p></div>
+        <div class="phase"><div class="phase-head"><span class="phase-tag">P1</span><span class="badge warn">pipeline</span></div><h3>Wheel candidate flow</h3><p>Rank CSP candidates using quality, premium/support, options liquidity, and assignment acceptability.</p></div>
+        <div class="phase"><div class="phase-head"><span class="phase-tag">P2</span><span class="badge no">later</span></div><h3>Strategy 3 pilot</h3><p>Backtest earnings drift before any live-money path. Keep it out of core execution until proven.</p></div>
+      </div>
+      <details style="margin-top:16px">
+        <summary>Implementation surfaces to preserve</summary>
+        <p>Current scheduled paths should remain stable: <code>trading/scripts/run-morning-pipeline.py</code>, <code>trading/lumibot_executor.py</code>, <code>trading/scripts/run-postmarket-pipeline.py</code>, <code>trading/scripts/build-quality-universe.py</code>, <code>trading/scripts/recalculate-universe-tiers.py</code>, and the <code>trade-plan-today.md</code> orders contract.</p>
+      </details>
+    </section>
+  </main>
+</div>
+
+<script>
+(function() {
+  const toc = document.getElementById('toc');
+  const links = [...toc.querySelectorAll('a')];
+  const sections = links.map(link => ({ link, el: document.getElementById(link.getAttribute('href').slice(1)) })).filter(x => x.el);
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      links.forEach(l => l.classList.remove('active'));
+      const match = sections.find(s => s.el === entry.target);
+      if (match) {
+        match.link.classList.add('active');
+        if (innerWidth <= 1100) match.link.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      }
+    });
+  }, { rootMargin: '-10% 0px -78% 0px' });
+  sections.forEach(s => observer.observe(s.el));
+})();
+</script>
+</body>
+</html>
