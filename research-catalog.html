@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Research Catalog — Tommy Labs</title>
+  <meta name="description" content="A public-safe catalog of Tommy Labs research threads, syntheses, explainers, and the private wiki pipeline that organizes them." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;600;700&family=Manrope:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f8f3eb;
+      --surface: rgba(255, 253, 248, .88);
+      --surface-strong: #fffdf8;
+      --surface-soft: #f1e7d8;
+      --border: rgba(35, 25, 14, .11);
+      --border-strong: rgba(35, 25, 14, .20);
+      --text: #23190e;
+      --dim: #766858;
+      --faint: #a99b8a;
+      --blue: #1f4f7a;
+      --blue-dim: rgba(31, 79, 122, .10);
+      --gold: #b57f25;
+      --gold-dim: rgba(181, 127, 37, .14);
+      --green: #5d7d46;
+      --green-dim: rgba(93, 125, 70, .13);
+      --rose: #9f3e35;
+      --rose-dim: rgba(159, 62, 53, .11);
+      --violet: #7352a3;
+      --violet-dim: rgba(115, 82, 163, .11);
+      --shadow: 0 24px 70px rgba(35, 25, 14, .10);
+      --font-body: 'Manrope', system-ui, sans-serif;
+      --font-display: 'Instrument Serif', Georgia, serif;
+      --font-mono: 'JetBrains Mono', 'SF Mono', Consolas, monospace;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #15110d;
+        --surface: rgba(33, 25, 20, .84);
+        --surface-strong: #221a15;
+        --surface-soft: #2b2119;
+        --border: rgba(255, 255, 255, .08);
+        --border-strong: rgba(255, 255, 255, .16);
+        --text: #f2e9df;
+        --dim: #b6a998;
+        --faint: #877968;
+        --blue: #82bcea;
+        --blue-dim: rgba(130, 188, 234, .12);
+        --gold: #f1c366;
+        --gold-dim: rgba(241, 195, 102, .13);
+        --green: #a7c981;
+        --green-dim: rgba(167, 201, 129, .12);
+        --rose: #ee8b81;
+        --rose-dim: rgba(238, 139, 129, .12);
+        --violet: #c3a5ff;
+        --violet-dim: rgba(195, 165, 255, .12);
+        --shadow: 0 24px 80px rgba(0, 0, 0, .30);
+      }
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      padding: 34px;
+      background:
+        radial-gradient(circle at 12% -8%, var(--blue-dim), transparent 34%),
+        radial-gradient(circle at 86% 4%, var(--gold-dim), transparent 31%),
+        radial-gradient(circle at 70% 100%, var(--green-dim), transparent 30%),
+        linear-gradient(120deg, transparent 0, transparent 42px, var(--border) 43px, transparent 44px),
+        var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      line-height: 1.56;
+    }
+    a { color: inherit; }
+    code { font-family: var(--font-mono); }
+    .wrap { max-width: 1280px; margin: 0 auto; }
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 18px;
+      color: var(--dim);
+      font-family: var(--font-mono);
+      font-size: 12px;
+    }
+    .topbar a { text-decoration: none; border-bottom: 1px solid transparent; }
+    .topbar a:hover { color: var(--text); border-bottom-color: currentColor; }
+    .hero {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid color-mix(in srgb, var(--border) 45%, var(--blue) 55%);
+      border-radius: 32px;
+      padding: clamp(28px, 5vw, 54px);
+      background: linear-gradient(135deg, var(--surface-strong), color-mix(in srgb, var(--surface) 84%, var(--blue) 6%));
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -150px;
+      bottom: -230px;
+      width: 470px;
+      height: 470px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: radial-gradient(circle, var(--gold-dim), transparent 65%);
+    }
+    .eyebrow, .kicker, .label, .tag, .metric span:first-child {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.65px;
+      font-size: 11px;
+    }
+    .eyebrow { color: var(--gold); }
+    h1 {
+      position: relative;
+      z-index: 1;
+      max-width: 1000px;
+      margin: 12px 0 18px;
+      font-family: var(--font-display);
+      font-size: clamp(54px, 9vw, 104px);
+      line-height: .88;
+      letter-spacing: -2.2px;
+      font-weight: 400;
+    }
+    .subtitle {
+      position: relative;
+      z-index: 1;
+      max-width: 890px;
+      margin: 0;
+      color: var(--dim);
+      font-size: clamp(17px, 2vw, 21px);
+      line-height: 1.68;
+    }
+    .hero-actions {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 26px;
+    }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 10px 14px;
+      background: var(--surface);
+      color: var(--dim);
+      text-decoration: none;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+    }
+    .button.primary { color: var(--text); background: var(--gold-dim); border-color: color-mix(in srgb, var(--border) 45%, var(--gold) 55%); }
+    .button:hover { transform: translateY(-1px); color: var(--text); }
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin: 18px 0 38px;
+    }
+    .metric {
+      min-height: 134px;
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 18px;
+      background: var(--surface);
+      box-shadow: 0 1px 0 rgba(255,255,255,.22) inset;
+    }
+    .metric strong {
+      display: block;
+      margin: 10px 0 7px;
+      color: var(--blue);
+      font-size: clamp(30px, 5vw, 48px);
+      line-height: .9;
+      letter-spacing: -1.4px;
+    }
+    .metric small { color: var(--dim); }
+    section { margin-top: 40px; }
+    .section-head { max-width: 930px; margin-bottom: 18px; }
+    .kicker { color: var(--blue); }
+    h2 {
+      margin: 7px 0 8px;
+      font-family: var(--font-display);
+      font-size: clamp(36px, 5.5vw, 62px);
+      line-height: .96;
+      font-weight: 400;
+      letter-spacing: -1px;
+    }
+    .section-head p { margin: 0; color: var(--dim); font-size: 16px; }
+    .grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 16px; }
+    .grid.two { grid-template-columns: repeat(2, minmax(0,1fr)); }
+    .card, .lane, .artifact, .principle {
+      border: 1px solid var(--border);
+      background: var(--surface);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 1px 0 rgba(255,255,255,.18) inset;
+    }
+    .card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 22px;
+      padding: 22px;
+      min-height: 255px;
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+    }
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 4px;
+      background: var(--blue);
+    }
+    .card.gold::before { background: var(--gold); }
+    .card.green::before { background: var(--green); }
+    .card.rose::before { background: var(--rose); }
+    .card.violet::before { background: var(--violet); }
+    .card:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+    .label { color: var(--gold); margin-bottom: 10px; }
+    .title { font-size: 25px; line-height: 1.05; font-weight: 800; letter-spacing: -.7px; margin-bottom: 10px; }
+    .desc { margin: 0; color: var(--dim); font-size: 14px; }
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; padding-top: 18px; }
+    .tag {
+      display: inline-flex;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 5px 8px;
+      color: var(--dim);
+      background: var(--surface-soft);
+      letter-spacing: .6px;
+      font-size: 10px;
+    }
+    .tag.blue { color: var(--blue); background: var(--blue-dim); border-color: color-mix(in srgb, var(--border) 50%, var(--blue) 50%); }
+    .tag.gold { color: var(--gold); background: var(--gold-dim); border-color: color-mix(in srgb, var(--border) 50%, var(--gold) 50%); }
+    .tag.green { color: var(--green); background: var(--green-dim); border-color: color-mix(in srgb, var(--border) 50%, var(--green) 50%); }
+    .tag.rose { color: var(--rose); background: var(--rose-dim); border-color: color-mix(in srgb, var(--border) 50%, var(--rose) 50%); }
+    .lanes { display: grid; grid-template-columns: 1.04fr .96fr; gap: 16px; }
+    .lane { border-radius: 24px; padding: 24px; }
+    .lane ul, .lane ol { margin: 12px 0 0; padding-left: 21px; color: var(--dim); }
+    .lane li { margin-bottom: 10px; }
+    .artifact-map { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+    .artifact { border-radius: 18px; padding: 16px; min-height: 142px; }
+    .artifact b { display: block; margin-bottom: 8px; color: var(--text); }
+    .artifact code { color: var(--blue); font-size: 12px; }
+    .artifact p { margin: 0; color: var(--dim); font-size: 13px; }
+    .principle { border-radius: 24px; padding: 24px; background: linear-gradient(180deg, color-mix(in srgb, var(--surface) 86%, var(--green) 7%), var(--surface)); }
+    .principle p { margin: 0; color: var(--dim); max-width: 980px; }
+    .footer {
+      margin-top: 46px;
+      padding: 22px 0 4px;
+      color: var(--faint);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      line-height: 1.7;
+    }
+    @media (max-width: 1050px) {
+      .metrics, .grid, .grid.two, .lanes, .artifact-map { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 700px) {
+      body { padding: 20px; }
+      .hero { border-radius: 24px; }
+      .topbar { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <nav class="topbar" aria-label="Breadcrumb">
+      <a href="./index.html">← Tommy Labs</a>
+      <span>Research catalog · public-safe front door · June 2026</span>
+    </nav>
+
+    <header class="hero">
+      <div class="eyebrow">Knowledge system</div>
+      <h1>A catalog for the research engine.</h1>
+      <p class="subtitle">Tommy Labs has grown from one-off notes into a real research system: question queues, source-backed syntheses, private wiki pages, public explainers, podcast briefings, and product sketches. This page is the public front door — curated, safe, and legible.</p>
+      <div class="hero-actions">
+        <a class="button primary" href="#threads">Browse research threads</a>
+        <a class="button" href="#wiki">How the wiki works</a>
+        <a class="button" href="./index.html#explainers">Public explainers</a>
+      </div>
+    </header>
+
+    <section class="metrics" aria-label="Research system snapshot">
+      <article class="metric"><span>Private wiki</span><strong>362</strong><small>source pages currently indexed in the OpenClaw wiki vault.</small></article>
+      <article class="metric"><span>Syntheses</span><strong>266</strong><small>compiled wiki syntheses for recurring concepts and projects.</small></article>
+      <article class="metric"><span>Research notes</span><strong>299</strong><small>markdown research files in the active workspace snapshot.</small></article>
+      <article class="metric"><span>Questions</span><strong>224+</strong><small>curiosity questions, including deep multi-session chains.</small></article>
+    </section>
+
+    <section id="threads">
+      <div class="section-head">
+        <div class="kicker">Research threads</div>
+        <h2>The big lanes.</h2>
+        <p>These are not folders. They are durable question clusters: work that keeps attracting evidence, follow-up questions, product ideas, and essays.</p>
+      </div>
+      <div class="grid">
+        <article class="card gold">
+          <div class="label">Evidence markets</div>
+          <div class="title">Education procurement and outcomes enforcement</div>
+          <p class="desc">A long-running investigation into ESSA tiers, state procurement rubrics, outcomes-based contracts, evidence requirements, and whether a public evidence-scoring database could become market infrastructure.</p>
+          <div class="tags"><span class="tag gold">Q171 → Q224</span><span class="tag">RFPs</span><span class="tag">edtech</span></div>
+        </article>
+        <article class="card blue">
+          <div class="label">Information markets</div>
+          <div class="title">Signaling, curation, brands, and attention allocation</div>
+          <p class="desc">A 20+ session chain connecting costly signaling, PLG, curator governance, Goodhart effects, rebrand event studies, and the collapse of cheap polish as a sorting signal.</p>
+          <div class="tags"><span class="tag blue">M3</span><span class="tag">BrandIndex</span><span class="tag">curation</span></div>
+        </article>
+        <article class="card green">
+          <div class="label">Agent memory</div>
+          <div class="title">Identity, compression, and durable memory systems</div>
+          <p class="desc">Research into how agents should remember: session context, markdown memory, graph retrieval, identity-relevance, update thresholds, persona drift, and the boundary between memory and selfhood.</p>
+          <div class="tags"><span class="tag green">M2</span><span class="tag">wiki</span><span class="tag">EverMemOS</span></div>
+        </article>
+        <article class="card rose">
+          <div class="label">Security economics</div>
+          <div class="title">Bug bounty markets and winner’s curse dynamics</div>
+          <p class="desc">Market research, essay drafts, and product scoping around bug bounty earnings, ROI, platform incentives, and the structural mismatch between vulnerability value and researcher capture.</p>
+          <div class="tags"><span class="tag rose">security</span><span class="tag">markets</span><span class="tag">product</span></div>
+        </article>
+        <article class="card violet">
+          <div class="label">AI operations</div>
+          <div class="title">OpenClaw, daily podcasting, and agent workflow infrastructure</div>
+          <p class="desc">Practical research embedded in production: model catalog drift, Copilot SDK routing, cron reliability, Discord task UX, podcast generation, and verification-before-completion patterns.</p>
+          <div class="tags"><span class="tag blue">OpenClaw</span><span class="tag">briefings</span><span class="tag">ops</span></div>
+        </article>
+        <article class="card green">
+          <div class="label">Opportunity maps</div>
+          <div class="title">WearOS gaps, audio tools, modding systems, and side quests</div>
+          <p class="desc">Smaller but useful maps: WearOS vs. Apple Watch app gaps, Tesla sound design, BG3 modding systems, audio research, and other threads that may become products or essays.</p>
+          <div class="tags"><span class="tag green">maps</span><span class="tag">creative tech</span><span class="tag">games</span></div>
+        </article>
+      </div>
+    </section>
+
+    <section id="public">
+      <div class="section-head">
+        <div class="kicker">Public artifacts</div>
+        <h2>Where the research has already escaped the notebook.</h2>
+        <p>The catalog points to public-facing artifacts first. The private vault stays private until a page is cleaned, source-safe, and worth a reader’s time.</p>
+      </div>
+      <div class="grid">
+        <a class="card blue" href="./explainers/signal-sorting-collapse-framework.html">
+          <div class="label">Attention systems</div>
+          <div class="title">Signal Sorting Collapse Framework</div>
+          <p class="desc">Cheap AI polish breaks triage before it breaks truth: a framework for why signals allocate attention, not just information.</p>
+          <div class="tags"><span class="tag blue">public explainer</span></div>
+        </a>
+        <a class="card gold" href="./explainers/curators-are-kings-framework.html">
+          <div class="label">Curation</div>
+          <div class="title">Creators Are Cheap, Curators Are Kings</div>
+          <p class="desc">When production gets cheap, judgment and selection become the scarce layer. A companion to the curation research thread.</p>
+          <div class="tags"><span class="tag gold">public explainer</span></div>
+        </a>
+        <a class="card violet" href="./explainers/daily-podcast-workflow.html">
+          <div class="label">Production research</div>
+          <div class="title">Daily Podcast Workflow</div>
+          <p class="desc">The working system for turning feeds and listener context into a scored, written, rendered, published, and verified daily audio briefing.</p>
+          <div class="tags"><span class="tag blue">workflow</span><span class="tag">audio</span></div>
+        </a>
+        <a class="card green" href="./explainers/memory-stack-explained.html">
+          <div class="label">Agent memory</div>
+          <div class="title">Memory Stack Explained</div>
+          <p class="desc">How session memory, compaction, markdown files, graph memory, and semantic retrieval fit together.</p>
+          <div class="tags"><span class="tag green">memory</span><span class="tag">agents</span></div>
+        </a>
+        <a class="card rose" href="./tools/hackerone-roi.html">
+          <div class="label">Interactive tool</div>
+          <div class="title">HackerOne ROI Calculator</div>
+          <p class="desc">A tool-shaped artifact from the bug bounty economics thread: make payout economics visible and discussable.</p>
+          <div class="tags"><span class="tag rose">calculator</span></div>
+        </a>
+        <a class="card blue" href="./explainers/the-400-month-company-kills-the-org-chart.html">
+          <div class="label">AI-native orgs</div>
+          <div class="title">The $400/month Company Kills the Org Chart</div>
+          <p class="desc">A visual argument about tiny AI-native companies and the collapse of traditional headcount assumptions.</p>
+          <div class="tags"><span class="tag blue">org design</span></div>
+        </a>
+      </div>
+    </section>
+
+    <section id="wiki" class="lanes">
+      <article class="lane">
+        <div class="kicker">Wiki model</div>
+        <h2>Catalog now. Wiki next.</h2>
+        <p>The internal wiki already exists, but publishing it raw would leak private context and overwhelm readers. The right public path is staged:</p>
+        <ol>
+          <li><b>Catalog:</b> public-safe map of lanes, artifacts, and available explainers.</li>
+          <li><b>Curated wiki pages:</b> source-backed pages for concepts that are broadly useful.</li>
+          <li><b>Topic hubs:</b> evidence procurement, signal sorting, agent memory, AI operations, and security economics.</li>
+          <li><b>Search/index layer:</b> eventually a public static index or lightweight client-side search.</li>
+        </ol>
+      </article>
+      <article class="lane">
+        <div class="kicker">Publishing rule</div>
+        <h2>Do not dump the vault.</h2>
+        <p>Research notes are working material. Public pages need a reader problem, source hygiene, privacy review, and enough synthesis to stand on their own. The wiki should feel like a library, not a file listing.</p>
+        <ul>
+          <li>Private people, family, health, and account details stay out.</li>
+          <li>Draft fragments stay internal until they have a stable claim.</li>
+          <li>Public pages cite the artifact trail without exposing raw private state.</li>
+        </ul>
+      </article>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <div class="kicker">Research infrastructure</div>
+        <h2>What feeds the catalog.</h2>
+        <p>These are the durable layers underneath the public page.</p>
+      </div>
+      <div class="artifact-map">
+        <div class="artifact"><b><code>curiosity/questions.md</code></b><p>Question queue and mulling items that keep long-running research honest.</p></div>
+        <div class="artifact"><b><code>research/*.md</code></b><p>Primary working notes, source archaeology, opportunity maps, and long-form investigations.</p></div>
+        <div class="artifact"><b><code>memory/INDEX-research.md</code></b><p>Rotating research index that summarizes active threads and methodological patterns.</p></div>
+        <div class="artifact"><b><code>memory/INDEX-curiosity.md</code></b><p>Curiosity engine state: competence map, active hits, and follow-up questions.</p></div>
+        <div class="artifact"><b><code>OpenClaw wiki vault</code></b><p>Compiled private wiki: source pages, syntheses, reports, provenance, and linting.</p></div>
+        <div class="artifact"><b><code>substack/</code></b><p>Drafts, reviews, published records, and reader-facing essays spun out of research.</p></div>
+        <div class="artifact"><b><code>Tommy Labs</code></b><p>Public visual explainers, tools, audio artifacts, and now this catalog.</p></div>
+        <div class="artifact"><b><code>briefings/</code></b><p>Daily podcast outputs that turn research taste into a recurring audio product.</p></div>
+      </div>
+    </section>
+
+    <section class="principle">
+      <div class="kicker">Operating principle</div>
+      <h2>Research should compound into artifacts.</h2>
+      <p>The goal is not to have a bigger pile of notes. The goal is to keep converting insight into public explainers, tools, essays, datasets, workflows, and decision systems. This catalog is the front door; the wiki is the organized workshop behind it.</p>
+    </section>
+
+    <footer class="footer">
+      Snapshot generated from local workspace indexes and OpenClaw wiki status on June 3, 2026. Public catalog intentionally omits private/person-specific memory and raw unpublished notes.
+    </footer>
+  </main>
+</body>
+</html>
