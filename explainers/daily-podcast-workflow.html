@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Daily Podcast Workflow — Tommy Labs</title>
+  <meta name="description" content="A visual explainer of the workflow behind Tommy's daily podcast: RSS curation, story scoring, LLM writing, TTS rendering, RSS publishing, and Discord delivery." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;600;700&family=Manrope:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f8f3eb;
+      --surface: rgba(255, 253, 248, .86);
+      --surface-strong: #fffdf8;
+      --surface-soft: #f0e6d8;
+      --border: rgba(35, 25, 14, .11);
+      --border-strong: rgba(35, 25, 14, .20);
+      --text: #23190e;
+      --dim: #746655;
+      --faint: #aa9b87;
+      --blue: #1f4f7a;
+      --blue-dim: rgba(31, 79, 122, .11);
+      --gold: #b57f25;
+      --gold-dim: rgba(181, 127, 37, .14);
+      --green: #5d7d46;
+      --green-dim: rgba(93, 125, 70, .13);
+      --rose: #9f3e35;
+      --rose-dim: rgba(159, 62, 53, .11);
+      --violet: #7352a3;
+      --violet-dim: rgba(115, 82, 163, .10);
+      --shadow: 0 24px 70px rgba(35, 25, 14, .10);
+      --font-body: 'Manrope', system-ui, sans-serif;
+      --font-display: 'Instrument Serif', Georgia, serif;
+      --font-mono: 'JetBrains Mono', 'SF Mono', Consolas, monospace;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #15110d;
+        --surface: rgba(33, 25, 20, .82);
+        --surface-strong: #221a15;
+        --surface-soft: #2b2119;
+        --border: rgba(255, 255, 255, .08);
+        --border-strong: rgba(255, 255, 255, .15);
+        --text: #f2e9df;
+        --dim: #b6a998;
+        --faint: #877968;
+        --blue: #82bcea;
+        --blue-dim: rgba(130, 188, 234, .13);
+        --gold: #f1c366;
+        --gold-dim: rgba(241, 195, 102, .14);
+        --green: #a7c981;
+        --green-dim: rgba(167, 201, 129, .12);
+        --rose: #ee8b81;
+        --rose-dim: rgba(238, 139, 129, .13);
+        --violet: #c3a5ff;
+        --violet-dim: rgba(195, 165, 255, .12);
+        --shadow: 0 24px 80px rgba(0, 0, 0, .30);
+      }
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      padding: 34px;
+      background:
+        radial-gradient(circle at 12% -8%, var(--blue-dim), transparent 32%),
+        radial-gradient(circle at 84% 3%, var(--gold-dim), transparent 32%),
+        radial-gradient(circle at 72% 96%, var(--green-dim), transparent 30%),
+        linear-gradient(120deg, transparent 0, transparent 42px, var(--border) 43px, transparent 44px),
+        var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      line-height: 1.56;
+    }
+    a { color: inherit; }
+    code { font-family: var(--font-mono); }
+    .wrap { max-width: 1320px; margin: 0 auto; }
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 18px;
+      color: var(--dim);
+      font-family: var(--font-mono);
+      font-size: 12px;
+    }
+    .topbar a { text-decoration: none; border-bottom: 1px solid transparent; }
+    .topbar a:hover { border-bottom-color: currentColor; color: var(--text); }
+    .hero {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid color-mix(in srgb, var(--border) 45%, var(--blue) 55%);
+      border-radius: 32px;
+      padding: clamp(28px, 5vw, 54px);
+      background: linear-gradient(135deg, var(--surface-strong), color-mix(in srgb, var(--surface) 84%, var(--blue) 6%));
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: auto -140px -210px auto;
+      width: 430px;
+      height: 430px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: radial-gradient(circle, var(--gold-dim), transparent 67%);
+    }
+    .eyebrow, .label, .kicker, .tag, .metric span:first-child {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.65px;
+      font-size: 11px;
+    }
+    .eyebrow { color: var(--gold); }
+    h1 {
+      position: relative;
+      z-index: 1;
+      margin: 12px 0 18px;
+      max-width: 1050px;
+      font-family: var(--font-display);
+      font-size: clamp(54px, 9vw, 106px);
+      line-height: .88;
+      letter-spacing: -2.2px;
+      font-weight: 400;
+    }
+    .subtitle {
+      position: relative;
+      z-index: 1;
+      max-width: 880px;
+      margin: 0;
+      color: var(--dim);
+      font-size: clamp(17px, 2vw, 21px);
+      line-height: 1.68;
+    }
+    .hero-actions {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 26px;
+    }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 10px 14px;
+      background: var(--surface);
+      color: var(--dim);
+      text-decoration: none;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+    }
+    .button.primary { color: var(--text); background: var(--gold-dim); border-color: color-mix(in srgb, var(--border) 45%, var(--gold) 55%); }
+    .button:hover { transform: translateY(-1px); color: var(--text); }
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin: 18px 0 34px;
+    }
+    .metric {
+      min-height: 132px;
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 18px;
+      background: var(--surface);
+      box-shadow: 0 1px 0 rgba(255,255,255,.22) inset;
+    }
+    .metric strong {
+      display: block;
+      margin: 10px 0 6px;
+      font-size: clamp(30px, 5vw, 48px);
+      line-height: .9;
+      letter-spacing: -1.4px;
+      color: var(--blue);
+    }
+    .metric small { color: var(--dim); }
+    section { margin-top: 40px; }
+    .section-head { max-width: 920px; margin-bottom: 18px; }
+    .kicker { color: var(--blue); }
+    h2 {
+      margin: 7px 0 8px;
+      font-family: var(--font-display);
+      font-size: clamp(36px, 5.5vw, 62px);
+      line-height: .96;
+      font-weight: 400;
+      letter-spacing: -1px;
+    }
+    .section-head p { margin: 0; color: var(--dim); font-size: 16px; }
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(170px, 1fr));
+      gap: 12px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+    }
+    .stage, .card, .lane, .artifact, .score-row, .check {
+      border: 1px solid var(--border);
+      background: var(--surface);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 1px 0 rgba(255,255,255,.18) inset;
+    }
+    .stage {
+      position: relative;
+      min-height: 260px;
+      border-radius: 22px;
+      padding: 18px;
+    }
+    .stage:not(:last-child)::after {
+      content: "→";
+      position: absolute;
+      right: -14px;
+      top: 28px;
+      z-index: 2;
+      width: 26px;
+      height: 26px;
+      display: grid;
+      place-items: center;
+      border-radius: 999px;
+      background: var(--surface-strong);
+      border: 1px solid var(--border);
+      color: var(--gold);
+      font-family: var(--font-mono);
+      font-weight: 700;
+    }
+    .num {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      color: var(--surface-strong);
+      background: var(--blue);
+      font-family: var(--font-mono);
+      font-weight: 800;
+      margin-bottom: 14px;
+    }
+    .stage:nth-child(2) .num, .stage:nth-child(5) .num { background: var(--gold); }
+    .stage:nth-child(3) .num, .stage:nth-child(7) .num { background: var(--green); }
+    .stage:nth-child(4) .num { background: var(--rose); }
+    .stage:nth-child(6) .num { background: var(--violet); }
+    h3 { margin: 0 0 8px; font-size: 19px; line-height: 1.15; letter-spacing: -.25px; }
+    .stage p, .card p, .lane p, .artifact p, .check p { margin: 0; color: var(--dim); font-size: 14px; }
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 5px 8px;
+      color: var(--dim);
+      background: var(--surface-soft);
+      letter-spacing: .6px;
+      font-size: 10px;
+    }
+    .tag.blue { color: var(--blue); background: var(--blue-dim); border-color: color-mix(in srgb, var(--border) 50%, var(--blue) 50%); }
+    .tag.gold { color: var(--gold); background: var(--gold-dim); border-color: color-mix(in srgb, var(--border) 50%, var(--gold) 50%); }
+    .tag.green { color: var(--green); background: var(--green-dim); border-color: color-mix(in srgb, var(--border) 50%, var(--green) 50%); }
+    .tag.rose { color: var(--rose); background: var(--rose-dim); border-color: color-mix(in srgb, var(--border) 50%, var(--rose) 50%); }
+    .grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 16px; }
+    .grid.two { grid-template-columns: repeat(2, minmax(0,1fr)); }
+    .card { border-radius: 22px; padding: 22px; min-height: 210px; }
+    .card.feature { background: linear-gradient(180deg, color-mix(in srgb, var(--surface) 88%, var(--blue) 6%), var(--surface)); border-color: color-mix(in srgb, var(--border) 50%, var(--blue) 50%); box-shadow: var(--shadow); }
+    .label { color: var(--gold); margin-bottom: 10px; }
+    .big { font-size: 28px; line-height: 1.04; font-weight: 800; letter-spacing: -.7px; margin-bottom: 10px; }
+    .lanes { display: grid; grid-template-columns: 1.12fr .88fr; gap: 16px; }
+    .lane { border-radius: 24px; padding: 24px; }
+    .lane ul, .lane ol { margin: 12px 0 0; padding-left: 21px; color: var(--dim); }
+    .lane li { margin-bottom: 9px; }
+    .score-table { display: grid; gap: 9px; }
+    .score-row {
+      display: grid;
+      grid-template-columns: 170px 42px minmax(120px, 1fr);
+      align-items: center;
+      gap: 13px;
+      border-radius: 15px;
+      padding: 11px 13px;
+      color: var(--dim);
+      font-size: 13px;
+    }
+    .score-row b { color: var(--text); }
+    .bar { height: 10px; border-radius: 999px; background: var(--surface-soft); overflow: hidden; border: 1px solid var(--border); }
+    .bar span { display: block; height: 100%; background: linear-gradient(90deg, var(--blue), var(--gold)); border-radius: 999px; }
+    .artifact-map { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+    .artifact { border-radius: 18px; padding: 16px; min-height: 132px; }
+    .artifact b { display: block; margin-bottom: 8px; color: var(--text); }
+    .artifact code { color: var(--blue); font-size: 12px; }
+    .checks { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 14px; }
+    .check { border-radius: 22px; padding: 20px; min-height: 172px; }
+    .check strong { display: block; margin-bottom: 7px; font-size: 18px; }
+    .footer {
+      margin-top: 46px;
+      padding: 22px 0 4px;
+      color: var(--faint);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      line-height: 1.7;
+    }
+    @media (max-width: 1100px) {
+      .metrics, .grid, .grid.two, .lanes, .artifact-map, .checks { grid-template-columns: 1fr; }
+      .flow { grid-template-columns: repeat(7, 78vw); }
+      .score-row { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 700px) {
+      body { padding: 20px; }
+      .hero { border-radius: 24px; }
+      .topbar { align-items: flex-start; flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <nav class="topbar" aria-label="Breadcrumb">
+      <a href="../index.html">← Tommy Labs</a>
+      <span>Daily podcast workflow · published June 2026</span>
+    </nav>
+
+    <header class="hero">
+      <div class="eyebrow">Audio briefing system</div>
+      <h1>How the daily podcast gets made.</h1>
+      <p class="subtitle">Every morning, a systemd timer turns a messy internet firehose into a podcast-style briefing: fetch the feeds, score what matters, write like a host, render the audio, publish the RSS enclosure, and verify the live GitHub Pages asset before Discord ever sees it.</p>
+      <div class="hero-actions">
+        <a class="button primary" href="#flow">See the workflow</a>
+        <a class="button" href="../briefings/briefings.xml">RSS feed</a>
+        <a class="button" href="../briefings/audio/briefing_20260603_061013.mp3">Latest verified audio</a>
+      </div>
+    </header>
+
+    <section class="metrics" aria-label="Pipeline snapshot">
+      <article class="metric"><span>Daily launch</span><strong>06:10</strong><small><code>openclaw-briefing.timer</code> starts the one-shot service.</small></article>
+      <article class="metric"><span>Feed sources</span><strong>85</strong><small>RSS inputs loaded from <code>config/feeds.json</code>.</small></article>
+      <article class="metric"><span>Story mix</span><strong>4 · 12 · 15</strong><small>Deep dives, quick hits, and rapid-fire items.</small></article>
+      <article class="metric"><span>Latest run</span><strong>34m</strong><small>June 3 episode: 5,170 words, rendered through the audio chain.</small></article>
+    </section>
+
+    <section id="flow">
+      <div class="section-head">
+        <div class="kicker">End-to-end flow</div>
+        <h2>One timer, seven gates.</h2>
+        <p>The wrapper is intentionally boring. The intelligence lives in scoring, research packets, role-routed model calls, and hard verification before publication is reported as done.</p>
+      </div>
+      <div class="flow" aria-label="Daily podcast production flow">
+        <article class="stage">
+          <div class="num">0</div>
+          <h3>Systemd kickoff</h3>
+          <p>A user timer launches <code>daily-briefing.sh</code> every morning.</p>
+          <div class="tags"><span class="tag blue">06:10</span><span class="tag">persistent timer</span></div>
+        </article>
+        <article class="stage">
+          <div class="num">1</div>
+          <h3>Shell wrapper</h3>
+          <p>Loads config, activates the virtualenv, emits progress, and allows one full retry.</p>
+          <div class="tags"><span class="tag gold">2 attempts</span><span class="tag">Discord progress</span></div>
+        </article>
+        <article class="stage">
+          <div class="num">2</div>
+          <h3>Prereq gate</h3>
+          <p>Fails early if core dependencies are missing: Python env, LLM backend, <code>ffmpeg</code>, <code>ffprobe</code>, or TTS.</p>
+          <div class="tags"><span class="tag rose">fatal if missing</span><span class="tag">no silent half-runs</span></div>
+        </article>
+        <article class="stage">
+          <div class="num">3</div>
+          <h3>Curate the firehose</h3>
+          <p>Fetches 85 feeds, pre-scores by category keywords, fetches article text, and filters stale repeats.</p>
+          <div class="tags"><span class="tag green">72h freshness</span><span class="tag">article extraction</span></div>
+        </article>
+        <article class="stage">
+          <div class="num">4</div>
+          <h3>Rank and bucket</h3>
+          <p>LLM scoring, category weights, dedupe, and mix targets decide what becomes deep, quick, rapid, or skipped.</p>
+          <div class="tags"><span class="tag blue">weighted score</span><span class="tag">category caps</span></div>
+        </article>
+        <article class="stage">
+          <div class="num">5</div>
+          <h3>Write like a host</h3>
+          <p>Role-routed models write intro, rapid-fire, quick hits, deep dives, synthesis, close, and editorial rewrites.</p>
+          <div class="tags"><span class="tag gold">gpt-5.5 writing</span><span class="tag">chunk review</span></div>
+        </article>
+        <article class="stage">
+          <div class="num">6</div>
+          <h3>Render and publish</h3>
+          <p>WeText normalizes text, Kokoro renders Puck at 1.3×, RSS is updated, assets are pushed, and the live URL is checked.</p>
+          <div class="tags"><span class="tag green">HAL rule</span><span class="tag rose">publish verify</span></div>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <div class="kicker">Why it works</div>
+        <h2>The pipeline separates judgment from production.</h2>
+        <p>Instead of asking one big model call to “make a podcast,” the system breaks the job into explicit stages. Each stage has a contract, an artifact, and a failure rule.</p>
+      </div>
+      <div class="grid">
+        <article class="card feature">
+          <div class="label">Curation before writing</div>
+          <div class="big">The show is selected, not summarized.</div>
+          <p>Feeds are bucketed by Ric-shaped interests — AI, markets, education, faith, space, cars, sports, audio, politics, and local Washington context. Stale stories are suppressed before they waste writing tokens.</p>
+          <div class="tags"><span class="tag blue">category weights</span><span class="tag">repeat ledger</span></div>
+        </article>
+        <article class="card">
+          <div class="label">Research packets</div>
+          <div class="big">Deep dives get evidence, not vibes.</div>
+          <p>For major stories, the research role builds a packet from the primary article, RSS metadata, related same-topic coverage, and optional local SearXNG research. The writer uses that packet instead of freelancing from a headline.</p>
+          <div class="tags"><span class="tag gold">SearXNG optional</span><span class="tag">primary text fallback</span></div>
+        </article>
+        <article class="card">
+          <div class="label">Audio-first writing</div>
+          <div class="big">Text is shaped for ears.</div>
+          <p>The writing prompt bans markdown-y prose, preserves intros and closings, and favors a smart host voice: clear, conversational, and paced for a commute rather than a screen.</p>
+          <div class="tags"><span class="tag green">spoken script</span><span class="tag">editorial pass</span></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="lanes">
+      <article class="lane">
+        <div class="kicker">Story ranking</div>
+        <h2>How a story earns airtime.</h2>
+        <ol>
+          <li>Load sources from <code>config/feeds.json</code>.</li>
+          <li>Apply keyword pre-score and category weighting from <code>config/scoring.json</code>.</li>
+          <li>Suppress stories that look too similar to the last 72 hours of coverage.</li>
+          <li>Fetch full article text with extraction fallbacks.</li>
+          <li>Ask the scoring model for a 0–100 score and exact category.</li>
+          <li>Deduplicate near-identical stories inside a category.</li>
+          <li>Reserve category diversity, then fill by weighted score.</li>
+          <li>Build research packets for the top deep-dive candidates.</li>
+        </ol>
+      </article>
+      <article class="lane">
+        <div class="kicker">Category weights</div>
+        <h2>The interest model is explicit.</h2>
+        <div class="score-table" aria-label="Category weights">
+          <div class="score-row"><b>AI / Tech</b><span>12</span><div class="bar"><span style="width:100%"></span></div></div>
+          <div class="score-row"><b>Markets / Finance</b><span>10</span><div class="bar"><span style="width:83%"></span></div></div>
+          <div class="score-row"><b>Science / Space</b><span>10</span><div class="bar"><span style="width:83%"></span></div></div>
+          <div class="score-row"><b>Politics / World</b><span>10</span><div class="bar"><span style="width:83%"></span></div></div>
+          <div class="score-row"><b>Faith / LDS</b><span>9</span><div class="bar"><span style="width:75%"></span></div></div>
+          <div class="score-row"><b>Education / K-12</b><span>9</span><div class="bar"><span style="width:75%"></span></div></div>
+          <div class="score-row"><b>Cars / EVs</b><span>9</span><div class="bar"><span style="width:75%"></span></div></div>
+          <div class="score-row"><b>Sports</b><span>9</span><div class="bar"><span style="width:75%"></span></div></div>
+          <div class="score-row"><b>Audio / Hi-Fi</b><span>9</span><div class="bar"><span style="width:75%"></span></div></div>
+          <div class="score-row"><b>Seattle / WA Local</b><span>9</span><div class="bar"><span style="width:75%"></span></div></div>
+        </div>
+      </article>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <div class="kicker">Writing architecture</div>
+        <h2>Multiple roles, smaller calls.</h2>
+        <p>The current production backend is the Copilot SDK. Scoring and summaries use a smaller model; research, writing, and editorial work use the stronger model with role-specific reasoning levels.</p>
+      </div>
+      <div class="grid">
+        <article class="card"><div class="label">Scoring</div><div class="big">gpt-5-mini · low reasoning</div><p>Cheap, repeatable classification and 0–100 ranking. The goal is consistency, not literary craft.</p></article>
+        <article class="card"><div class="label">Research</div><div class="big">gpt-5.5 · medium reasoning</div><p>Prepares reporter-assistant packets for deep stories, including related coverage and optional web research.</p></article>
+        <article class="card"><div class="label">Writing</div><div class="big">gpt-5.5 · medium reasoning</div><p>Writes intro, rapid fire, quick hits, deep dives, analysis, CFM bridge, and close as spoken copy.</p></article>
+        <article class="card"><div class="label">Editorial</div><div class="big">gpt-5.5 · high reasoning</div><p>Reviews chunks for repetition, missing transitions, flattened openings, abrupt endings, and audio awkwardness.</p></article>
+        <article class="card"><div class="label">Summary</div><div class="big">gpt-5-mini · low reasoning</div><p>Produces short episode summaries and manifest metadata for RSS and status reporting.</p></article>
+        <article class="card"><div class="label">Memory</div><div class="big">Story ledger + run manifest</div><p>State files keep cross-day coverage from repeating and make the shell wrapper read exact artifacts instead of guessing by timestamp.</p></article>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <div class="kicker">Audio chain</div>
+        <h2>The final artifact is a podcast episode, not a text file.</h2>
+        <p>The audio chain exists because good spoken copy still needs normalization, reliable rendering, compression, RSS metadata, and live verification.</p>
+      </div>
+      <div class="checks">
+        <article class="check"><strong>1. Normalize for speech</strong><p>WeText runs English text normalization before synthesis so numbers, punctuation, abbreviations, and symbols sound less awkward.</p><div class="tags"><span class="tag blue">wetext</span><span class="tag">tn</span></div></article>
+        <article class="check"><strong>2. Render with Kokoro</strong><p>Primary TTS is PyKokoro using the <code>am_puck</code> voice at <code>1.3×</code>. Edge TTS with Brian Neural is the fallback.</p><div class="tags"><span class="tag gold">pykokoro</span><span class="tag">edge fallback</span></div></article>
+        <article class="check"><strong>3. Publish and verify</strong><p>The full MP3 and RSS XML are copied into GitHub Pages, committed, pushed, and checked until the enclosure URL returns live.</p><div class="tags"><span class="tag green">GitHub Pages</span><span class="tag rose">600s verify</span></div></article>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <div class="kicker">Artifacts</div>
+        <h2>Every run leaves evidence.</h2>
+        <p>The pipeline is designed so a failure can be diagnosed from files. The wrapper does not need to infer which text or MP3 was “probably” latest.</p>
+      </div>
+      <div class="artifact-map">
+        <div class="artifact"><b><code>daily-briefing.sh</code></b><p>Production wrapper: env, retry, publish, verification, Discord upload.</p></div>
+        <div class="artifact"><b><code>src/content_pipeline.py</code></b><p>Core orchestration: fetch, rank, write, render, manifest.</p></div>
+        <div class="artifact"><b><code>src/llm_briefing.py</code></b><p>LLM stages: scoring, packets, sections, review, rewrites.</p></div>
+        <div class="artifact"><b><code>config/runtime.json</code></b><p>Backend, model routing, TTS, publishing, retention, channel knobs.</p></div>
+        <div class="artifact"><b><code>config/scoring.json</code></b><p>Freshness, category weights, bucket sizes, category mix.</p></div>
+        <div class="artifact"><b><code>var/runs/&lt;run_id&gt;/</code></b><p>Per-run text, audio, compressed Discord audio, and manifest.</p></div>
+        <div class="artifact"><b><code>rss/briefings.xml</code></b><p>Podcast feed with current enclosure URLs and run-based GUIDs.</p></div>
+        <div class="artifact"><b><code>TommyClawd/tommyclawd-labs</code></b><p>GitHub Pages repo that hosts the RSS feed and published audio.</p></div>
+      </div>
+    </section>
+
+    <section class="lanes">
+      <article class="lane">
+        <div class="kicker">Failure semantics</div>
+        <h2>Optional failures are allowed. Broken episodes are not.</h2>
+        <ul>
+          <li><b>Fatal:</b> no stories, LLM backend unavailable, required binaries missing, audio artifact missing, RSS invalid, published URL unreachable.</li>
+          <li><b>Optional:</b> one feed fails, one article extraction fails, open-web research misses, or the CFM snippet is absent.</li>
+          <li><b>Retry:</b> generic pipeline failure gets one full rerun before notifying the channel.</li>
+        </ul>
+      </article>
+      <article class="lane">
+        <div class="kicker">The principle</div>
+        <h2>Report success only from checked state.</h2>
+        <p>The workflow follows the HAL rule: the pipeline does not say the podcast is published because a command exited. It says the podcast is published after the RSS enclosure URL is reachable from GitHub Pages.</p>
+      </article>
+    </section>
+
+    <footer class="footer">
+      Source workflow: <code>content-pipeline-agents</code>. Published artifact: <code>TommyClawd/tommyclawd-labs/explainers/daily-podcast-workflow.html</code>.
+      Snapshot values reflect the live local configuration inspected on June 3, 2026.
+    </footer>
+  </main>
+</body>
+</html>
