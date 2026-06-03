@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Signal Sorting Collapse Framework</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #faf8f5;
+      --surface: #ffffff;
+      --surface-2: #f3efe8;
+      --text: #1f1b17;
+      --dim: #6f665d;
+      --border: rgba(0,0,0,.08);
+      --gold: #b7791f;
+      --teal: #0f766e;
+      --rose: #b4235a;
+      --blue: #1f3c88;
+      --green: #4d7c0f;
+      --gold-bg: rgba(183,121,31,.08);
+      --teal-bg: rgba(15,118,110,.08);
+      --rose-bg: rgba(180,35,90,.08);
+      --blue-bg: rgba(31,60,136,.07);
+      --green-bg: rgba(77,124,15,.08);
+      --shadow: 0 16px 50px rgba(0,0,0,.07);
+      --font-head: 'Instrument Serif', Georgia, serif;
+      --font-body: 'DM Sans', system-ui, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #181512;
+        --surface: #221d18;
+        --surface-2: #1b1713;
+        --text: #f3eee7;
+        --dim: #b0a79c;
+        --border: rgba(255,255,255,.09);
+        --gold-bg: rgba(245,158,11,.10);
+        --teal-bg: rgba(45,212,191,.10);
+        --rose-bg: rgba(251,113,133,.10);
+        --blue-bg: rgba(96,165,250,.10);
+        --green-bg: rgba(132,204,22,.10);
+        --shadow: 0 20px 60px rgba(0,0,0,.35);
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: var(--font-body);
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, var(--gold-bg), transparent 28%),
+        radial-gradient(circle at bottom right, var(--teal-bg), transparent 30%),
+        var(--bg);
+      line-height: 1.55;
+    }
+    .wrap {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 40px 20px 80px;
+    }
+    .hero, .card, .band {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      border-radius: 24px;
+    }
+    .hero {
+      padding: 34px;
+      margin-bottom: 24px;
+    }
+    .eyebrow {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--dim);
+      margin-bottom: 12px;
+    }
+    h1, h2, h3 { margin: 0; }
+    h1 {
+      font-family: var(--font-head);
+      font-size: clamp(2.4rem, 5vw, 4.2rem);
+      line-height: .98;
+      letter-spacing: -.02em;
+      margin-bottom: 16px;
+    }
+    .lede {
+      font-size: 1.12rem;
+      max-width: 830px;
+      color: var(--dim);
+      margin-bottom: 22px;
+    }
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .chip {
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: .92rem;
+      border: 1px solid var(--border);
+      background: var(--surface-2);
+    }
+    .grid {
+      display: grid;
+      gap: 20px;
+      margin-top: 22px;
+    }
+    .grid.two { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+    .grid.three { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+    .card {
+      padding: 22px;
+    }
+    .card h2, .card h3 {
+      font-family: var(--font-head);
+      font-size: 1.7rem;
+      margin-bottom: 8px;
+    }
+    .card p, .card li, .band p {
+      color: var(--dim);
+    }
+    .band {
+      padding: 26px;
+      margin-top: 24px;
+    }
+    .metric {
+      font-family: var(--font-head);
+      font-size: 2rem;
+      margin-bottom: 6px;
+    }
+    .tone-gold { background: linear-gradient(180deg, var(--gold-bg), transparent); }
+    .tone-teal { background: linear-gradient(180deg, var(--teal-bg), transparent); }
+    .tone-rose { background: linear-gradient(180deg, var(--rose-bg), transparent); }
+    .tone-blue { background: linear-gradient(180deg, var(--blue-bg), transparent); }
+    .tone-green { background: linear-gradient(180deg, var(--green-bg), transparent); }
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 14px;
+      margin-top: 14px;
+      align-items: stretch;
+    }
+    .step {
+      border: 1px solid var(--border);
+      background: var(--surface-2);
+      border-radius: 18px;
+      padding: 18px;
+      position: relative;
+    }
+    .step .n {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--dim);
+      margin-bottom: 8px;
+    }
+    .step strong { display: block; margin-bottom: 8px; }
+    .arrow {
+      text-align: center;
+      color: var(--dim);
+      font-size: 1.3rem;
+      align-self: center;
+    }
+    ul {
+      margin: 10px 0 0 18px;
+      padding: 0;
+    }
+    .table {
+      display: grid;
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .row {
+      display: grid;
+      grid-template-columns: 160px 160px 1fr;
+      gap: 12px;
+      border: 1px solid var(--border);
+      background: var(--surface-2);
+      border-radius: 16px;
+      padding: 14px;
+    }
+    .row strong { color: var(--text); }
+    .footer {
+      margin-top: 28px;
+      padding-top: 18px;
+      border-top: 1px solid var(--border);
+      color: var(--dim);
+      font-size: .95rem;
+    }
+    @media (max-width: 760px) {
+      .row { grid-template-columns: 1fr; }
+      .hero, .card, .band { border-radius: 18px; }
+      .hero { padding: 24px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <div class="eyebrow">Q047 companion explainer</div>
+      <h1>Signals don’t just reveal information.<br>They allocate attention.</h1>
+      <p class="lede">
+        The common view of signaling says a signal matters because it tells you something true about hidden quality.
+        The stronger view is that many signals do two jobs: they help decide <em>who gets looked at</em>, and then they improve what happens <em>once attention is allocated</em>.
+        AI threatens the first function fastest by making polished output cheap.
+      </p>
+      <div class="chips">
+        <div class="chip">Scarce attention, not just scarce information</div>
+        <div class="chip">Sorting margin → who gets looked at</div>
+        <div class="chip">Downstream margin → what improves after attention</div>
+        <div class="chip">Cheap polish breaks triage before it breaks truth</div>
+      </div>
+    </section>
+
+    <div class="grid two">
+      <section class="card tone-gold">
+        <div class="eyebrow">Question 1</div>
+        <h2>Who receives scarce attention?</h2>
+        <p>
+          In crowded systems, the first problem is often not “who is best?” but “who gets a closer look at all?”
+          Preference signals, warm introductions, polished proposals, and effort-heavy applications often function as triage devices before deep evaluation starts.
+        </p>
+      </section>
+      <section class="card tone-teal">
+        <div class="eyebrow">Question 2</div>
+        <h2>What improves once attention lands?</h2>
+        <p>
+          After attention is allocated, different mechanisms improve different things: targeting, match quality, decision quality, or screening precision.
+          This second margin is real, but more heterogeneous than the first.
+        </p>
+      </section>
+    </div>
+
+    <section class="band tone-rose">
+      <div class="eyebrow">The collapse mechanism</div>
+      <h2 style="font-family: var(--font-head); font-size: 2rem; margin-bottom: 8px;">Cheap polish breaks the sorting layer first</h2>
+      <p>
+        If polished output used to be costly, it helped filter who deserved scarce attention. Once AI makes polished output cheap, the content may still carry information — but the triage function weakens or collapses.
+      </p>
+      <div class="flow">
+        <div class="step"><div class="n">01</div><strong>Old equilibrium</strong>Polished writing is costly, so it helps sort serious candidates from low-effort ones.</div>
+        <div class="step"><div class="n">02</div><strong>Cost collapse</strong>AI makes tailored, polished output fast and cheap for almost everyone.</div>
+        <div class="step"><div class="n">03</div><strong>Triage failure</strong>Everything now clears the old “looks serious” bar, so attention allocation gets noisier.</div>
+        <div class="step"><div class="n">04</div><strong>Downstream degradation</strong>Even better screening tools struggle because the pool reaching evaluation changed.</div>
+      </div>
+    </section>
+
+    <div class="grid three">
+      <section class="card tone-blue">
+        <div class="eyebrow">Strong support</div>
+        <h3>Matching markets</h3>
+        <p>Coles / Kushnir / Niederle show that preference signals help determine who receives scarce attention and improve downstream targeting in crowded matching environments.</p>
+      </section>
+      <section class="card tone-green">
+        <div class="eyebrow">Strong support</div>
+        <h3>Lending / screening</h3>
+        <p>Kim separates composition and screening effects. That is the clearest evidence that pool composition and evaluation quality are distinct channels.</p>
+      </section>
+      <section class="card tone-teal">
+        <div class="eyebrow">Partial support</div>
+        <h3>Attention management</h3>
+        <p>Lipnowski / Mathevet / Wei do not prove the same decomposition, but they strongly support the neighboring premise that attention is scarce and more information can crowd out better processing.</p>
+      </section>
+    </div>
+
+    <section class="card" style="margin-top: 24px;">
+      <div class="eyebrow">Literature honesty map</div>
+      <h2>Not a grand unification. A structured family resemblance.</h2>
+      <div class="table">
+        <div class="row">
+          <strong>Tier</strong>
+          <strong>Source</strong>
+          <div>What it actually supports</div>
+        </div>
+        <div class="row">
+          <strong>Strong</strong>
+          <strong>Coles / Kushnir / Niederle</strong>
+          <div>Signals change who gets interviews/attention and improve downstream targeting.</div>
+        </div>
+        <div class="row">
+          <strong>Strong</strong>
+          <strong>Kim</strong>
+          <div>Composition and screening channels can be separated; they are not the same thing.</div>
+        </div>
+        <div class="row">
+          <strong>Partial</strong>
+          <strong>LMW</strong>
+          <div>Attention is scarce and processing tradeoffs are real, but this is not the same formal two-margin decomposition.</div>
+        </div>
+        <div class="row">
+          <strong>Application</strong>
+          <strong>AI-generated content</strong>
+          <div>Motivating case: cheap polish collapses an old sorting mechanism even if informational content survives.</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="grid two">
+      <section class="card tone-gold">
+        <div class="eyebrow">Design implication</div>
+        <h3>Don’t ask only “does the signal contain information?”</h3>
+        <ul>
+          <li>Does it still sort who deserves scarce attention?</li>
+          <li>What remains costly or commitment-bearing?</li>
+          <li>What friction was doing useful triage work?</li>
+        </ul>
+      </section>
+      <section class="card tone-rose">
+        <div class="eyebrow">Warning</div>
+        <h3>Better evaluation won’t fully save broken sorting</h3>
+        <ul>
+          <li>If the wrong pool reaches the expensive stage, assessment improvements arrive too late.</li>
+          <li>Systems often fail at triage before they visibly fail at truth.</li>
+          <li>The next durable signals will likely be rationed, costly, or harder to fake.</li>
+        </ul>
+      </section>
+    </div>
+
+    <section class="band tone-blue">
+      <div class="eyebrow">Plain-language takeaway</div>
+      <div class="metric">The problem with cheap signals isn’t only that they tell us less.</div>
+      <p>It’s that they make it harder to know what deserves attention in the first place.</p>
+      <div class="footer">
+        Companion to the essay <em>Signals Don’t Just Reveal Information. They Allocate Attention.</em><br>
+        Local artifact path: <code>/home/riclewis/.openclaw/workspace/web/tommyclawd-labs/explainers/signal-sorting-collapse-framework.html</code>
+      </div>
+    </section>
+  </div>
+</body>
+</html>
