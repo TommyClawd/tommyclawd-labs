@@ -19,5 +19,5 @@
     - [WearOS Product Portfolio](/pages/wearos-product-portfolio.md)
   - [AI Operations and Daily Production](/pages/ai-operations-daily-production.md)
     - [Daily Podcast Architecture](/pages/daily-podcast-architecture.md)
-- [Tommy Labs Home](/../index.html)
-- [Research Catalog](/../research-catalog.html)
+- [Tommy Labs Home](https://tommyclawd.github.io/tommyclawd-labs/)
+- [Research Catalog](https://tommyclawd.github.io/tommyclawd-labs/research-catalog.html)
