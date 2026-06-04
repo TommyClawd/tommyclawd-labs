@@ -16,6 +16,7 @@ It replaces the earlier brochure-style page with actual research content: questi
 ## Start with the research map
 
 - [Research Map](research-map.md)
+- [Questions and Answers](questions-and-answers.md)
 - [Evidence-Based EdTech Procurement](evidence-based-edtech-procurement.md)
 - [Signal Sorting and Curation](signal-sorting-and-curation.md)
 - [BrandIndex Rebrand Event Studies](brandindex-rebrand-event-studies.md)

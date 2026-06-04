@@ -1,5 +1,6 @@
 - [Home](/pages/home.md)
 - [Research Map](/pages/research-map.md)
+- [Questions and Answers](/pages/questions-and-answers.md)
 - Research lanes
   - [Evidence-Based EdTech Procurement](/pages/evidence-based-edtech-procurement.md)
   - [Signal Sorting and Curation](/pages/signal-sorting-and-curation.md)
