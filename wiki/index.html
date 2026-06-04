@@ -23,6 +23,16 @@
 </head>
 <body>
   <div id="app">Loading Tommy Research Wiki…</div>
+
+  <script>
+    (function () {
+      var hash = window.location.hash || '';
+      var match = hash.match(/^#\/([^/?#]+)(.*)$/);
+      if (match && match[1] !== 'pages') {
+        window.location.replace(window.location.pathname + window.location.search + '#/pages/' + match[1] + (match[2] || ''));
+      }
+    })();
+  </script>
   <script>
     window.$docsify = {
       name: 'Tommy Research Wiki',
