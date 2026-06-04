@@ -42,8 +42,8 @@ That rule also shaped later fixes to index rotations, OPS checks, and homepage c
 - Discord task UX trial
 - Dependency remediation and health follow-ups
 
-## Open next steps
+## Canonical pages and artifacts
 
-- Publish a technical architecture page from the pipeline source files.
-- Add run manifests and example outputs to the wiki.
-- Add a changelog for pipeline reliability improvements.
+- [Daily Podcast Architecture](daily-podcast-architecture.md) — technical architecture from the pipeline implementation.
+- [Daily Podcast Workflow](/../explainers/daily-podcast-workflow.html) — visual workflow overview.
+- [Briefings RSS](/../briefings/briefings.xml) — public podcast feed.

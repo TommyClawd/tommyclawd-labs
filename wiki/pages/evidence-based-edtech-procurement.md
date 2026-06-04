@@ -14,6 +14,11 @@ The strongest current read:
 - **Formal public rejection records are scarce**, which means the market is still pre-enforcement and largely driven by anticipated tightening.
 - The open product opportunity is a **public, searchable database of procurement outcomes by evidence tier**.
 
+## Canonical pages
+
+- [ESSA Evidence Tiers](essa-evidence-tiers.md)
+- [Causal Attribution Gap in EdTech](causal-attribution-gap-edtech.md)
+
 ## Full question pages
 
 - [Q200: What do actual Tennessee/Colorado education procurement RFP templates require regarding evidence?](questions/q200.md)

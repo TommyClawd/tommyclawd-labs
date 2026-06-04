@@ -11,8 +11,11 @@ The signal-sorting research argues that many signals do two jobs:
 
 AI attacks the sorting margin first by making polished surface output cheap. That does not eliminate judgment; it moves scarcity upward to curator reputation, trusted selection, and accountable taste.
 
-Public artifacts:
+Canonical pages and public artifacts:
 
+- [Curator Displacement](curator-displacement.md)
+- [Curator Surplus Capture](curator-surplus-capture.md)
+- [Middle-Market Demand for Human-Led Curation](middle-market-curation-demand.md)
 - [Signal Sorting Collapse Framework](/../explainers/signal-sorting-collapse-framework.html)
 - [Creators Are Cheap, Curators Are Kings](/../explainers/curators-are-kings-framework.html)
 
@@ -354,19 +357,10 @@ That is the real structural update to the M3 thread.
 - The full Q044-Q053 chain reproduces at the curator layer as a unified formal structure, not just an analogy.  
 - The long-run stable equilibrium is broadly "human accountability shell around machine search" across many domains, not just music/news.
 
-### Unknown / open
-- Exact half-life of curator disclosure penalty vs creator disclosure penalty  
-- Which domains allow independent curators to retain surplus versus being wrapped by platforms  
-- Whether a broad middle market exists for explicitly human-led curation, or only top-tail/status demand
-
----
-
-## New questions generated
-
-1. **Q112:** Do curator markets optimize for *balanced legitimacy* rather than maximum discernment, the way certification markets can prefer a hump-shaped reputation for accuracy?  
-2. **Q113 (not yet filed):** What is the optimal disclosure architecture for AI-assisted curation: generic label, process disclosure, or reputation-level policy page?  
-3. **Q110 remains live:** who captures the surplus when curator reputation becomes the scarce signal — curators themselves or the wrappers/platforms?  
-4. **Q111 remains live:** is there a true middle-market willingness to pay for human-led curation, or only top-tail/status demand?
+### Linked follow-up coverage
+- [Curator Surplus Capture](curator-surplus-capture.md) — who captures value when curator reputation becomes the scarce signal.
+- [Middle-Market Demand for Human-Led Curation](middle-market-curation-demand.md) — where explicit human curation can support paid demand outside the top tail.
+- [Q112](questions/q112.md), [Q113](questions/q113.md), and [Q114](questions/q114.md) — governance structures and evaluator assignment mechanisms for credible discernment.
 
 ---
 

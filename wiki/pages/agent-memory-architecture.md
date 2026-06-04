@@ -15,6 +15,11 @@ Public artifact:
 
 - [Memory Stack Explained](/../explainers/memory-stack-explained.html)
 
+## Canonical pages
+
+- [Identity as Compression](identity-as-compression.md)
+- [Memory Provider Comparison](memory-provider-comparison.md)
+
 ## Full question pages
 
 - [Q115: Identity as High-Level Compression of Memory](questions/q115.md)

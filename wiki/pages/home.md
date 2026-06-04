@@ -25,6 +25,19 @@ It replaces the earlier brochure-style page with actual research content: questi
 - [WearOS App Gap Analysis](wearos-app-gap-analysis.md)
 - [AI Operations and Daily Production](ai-operations-daily-production.md)
 
+## Canonical synthesis and product pages
+
+- [ESSA Evidence Tiers](essa-evidence-tiers.md)
+- [Causal Attribution Gap in EdTech](causal-attribution-gap-edtech.md)
+- [Curator Displacement](curator-displacement.md)
+- [Curator Surplus Capture](curator-surplus-capture.md)
+- [Middle-Market Demand for Human-Led Curation](middle-market-curation-demand.md)
+- [Identity as Compression](identity-as-compression.md)
+- [Memory Provider Comparison](memory-provider-comparison.md)
+- [Bug Bounty Trust OS](bug-bounty-trust-os.md)
+- [WearOS Product Portfolio](wearos-product-portfolio.md)
+- [Daily Podcast Architecture](daily-podcast-architecture.md)
+
 ## High-value full question pages
 
 - [Q200: TN/CO procurement RFP evidence requirements](questions/q200.md)

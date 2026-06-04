@@ -15,7 +15,7 @@ The organizing principle is deliberately simple:
 
 | Lane | Current synthesis | Best starting page | Public artifact |
 |---|---|---|---|
-| Evidence-Based EdTech Procurement | The procurement market is pre-enforcement: ESSA/evidence language matters, but the practical bar is often Tier III plus credible third-party validation, not Tier I. | [Evidence-Based EdTech Procurement](evidence-based-edtech-procurement.md) | Future evidence/outcomes database concept |
+| Evidence-Based EdTech Procurement | The procurement market is pre-enforcement: ESSA/evidence language matters, but the practical bar is often Tier III plus credible third-party validation, not Tier I. | [Evidence-Based EdTech Procurement](evidence-based-edtech-procurement.md) | [ESSA Evidence Tiers](essa-evidence-tiers.md), [Causal Attribution Gap in EdTech](causal-attribution-gap-edtech.md) |
 | Signal Sorting and Curation | Cheap AI polish breaks the attention-allocation layer first; value migrates from production to trusted selection and accountable curator judgment. | [Signal Sorting and Curation](signal-sorting-and-curation.md) | [Signal Sorting Collapse](/../explainers/signal-sorting-collapse-framework.html), [Curators Are Kings](/../explainers/curators-are-kings-framework.html) |
 | BrandIndex Rebrand Measurement | Published rebrand event studies mostly use stock returns; BrandIndex daily perception data plus synthetic control is a real methodological opening. | [BrandIndex Rebrand Event Studies](brandindex-rebrand-event-studies.md) | Research-method candidate / future paper |
 | Agent Memory and Identity | Identity is a compression/update policy, and most memory systems lack the identity-relevance, provenance, and graph/temporal structure this requires. | [Agent Memory Architecture](agent-memory-architecture.md) | [Memory Stack Explained](/../explainers/memory-stack-explained.html) |
@@ -231,24 +231,20 @@ The answer is not “better prompts.” It is operational structure: determinist
 - [Daily Podcast Workflow](/../explainers/daily-podcast-workflow.html)
 - [Daily Briefings RSS](/../briefings/briefings.xml)
 
-## Question index
+## Question index and canonical pages
 
-The full generated list of research questions and short answers now lives at:
+- [Questions and Answers](questions-and-answers.md) — public-safe topic-browsable index of 58 full Q-numbered research pages.
 
-- [Questions and Answers](questions-and-answers.md) — public-safe deduped index of 58 Q-numbered research questions with short answers and source paths.
+Canonical synthesis/product pages created from the map:
 
-## What should be populated next
-
-The wiki now has a real content base, but the highest-value next additions are full pages for:
-
-1. **ESSA Evidence Tiers** — policy primer plus enforcement reality.
-2. **Causal Attribution Gap in EdTech** — LearnPlatform/utilization vs. outcomes inference.
-3. **Curator Displacement** — standalone cleaned synthesis from the signal-sorting lane.
-4. **Identity as Compression** — standalone conceptual page.
-5. **Memory Provider Comparison** — full public comparison of Graphiti, Cognee, Mem0, EverMemOS, Letta, LangMem, OpenMemory.
-6. **Bug Bounty Trust OS** — product concept from the economics research.
-7. **WearOS Product Portfolio** — concrete porting roadmap.
-8. **Daily Podcast Architecture** — technical page from the pipeline implementation, not just workflow overview.
+- [ESSA Evidence Tiers](essa-evidence-tiers.md)
+- [Causal Attribution Gap in EdTech](causal-attribution-gap-edtech.md)
+- [Curator Displacement](curator-displacement.md)
+- [Identity as Compression](identity-as-compression.md)
+- [Memory Provider Comparison](memory-provider-comparison.md)
+- [Bug Bounty Trust OS](bug-bounty-trust-os.md)
+- [WearOS Product Portfolio](wearos-product-portfolio.md)
+- [Daily Podcast Architecture](daily-podcast-architecture.md)
 
 ## Publish rule
 

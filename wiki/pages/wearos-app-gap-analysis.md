@@ -6,6 +6,10 @@
 
 WearOS has improved as a platform, but the app ecosystem still lags Apple Watch in several high-value categories. The opportunity is not generic “make watch apps”; it is specific premium categories where watchOS users have polished third-party options and WearOS users have weak or no equivalents.
 
+## Canonical product page
+
+- [WearOS Product Portfolio](wearos-product-portfolio.md)
+
 ## Research note
 
 ## WearOS App Gap Analysis vs. Apple Watch (2025–2026)

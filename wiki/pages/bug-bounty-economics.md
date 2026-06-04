@@ -14,8 +14,9 @@ The high-signal whitespace is a researcher-side operating system for:
 - program trust scoring,
 - and reproducibility trails.
 
-Public artifact:
+Canonical page and public artifact:
 
+- [Bug Bounty Trust OS](bug-bounty-trust-os.md)
 - [HackerOne ROI Calculator](/../tools/hackerone-roi.html)
 
 ## Research note
