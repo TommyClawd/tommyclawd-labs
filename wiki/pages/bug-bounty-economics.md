@@ -16,7 +16,7 @@ The high-signal whitespace is a researcher-side operating system for:
 
 Public artifact:
 
-- [HackerOne ROI Calculator](../tools/hackerone-roi.html)
+- [HackerOne ROI Calculator](/../tools/hackerone-roi.html)
 
 ## Research note
 

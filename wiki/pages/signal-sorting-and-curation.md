@@ -13,8 +13,8 @@ AI attacks the sorting margin first by making polished surface output cheap. Tha
 
 Public artifacts:
 
-- [Signal Sorting Collapse Framework](../explainers/signal-sorting-collapse-framework.html)
-- [Creators Are Cheap, Curators Are Kings](../explainers/curators-are-kings-framework.html)
+- [Signal Sorting Collapse Framework](/../explainers/signal-sorting-collapse-framework.html)
+- [Creators Are Cheap, Curators Are Kings](/../explainers/curators-are-kings-framework.html)
 
 ## Syntheses and notes
 
@@ -739,15 +739,6 @@ I did **not** find strong evidence for any of those in this pass.
 
 <!-- openclaw:wiki:generated:end -->
 
-## Related
-<!-- openclaw:wiki:related:start -->
-### Related Pages
-
-- [Sorting-assessment supermodularity](syntheses/sorting-assessment-supermodularity.md)
-- [Three-layer aesthetic assessment](syntheses/three-layer-aesthetic-assessment.md)
-<!-- openclaw:wiki:related:end -->
-
-
 ---
 
 ## Attention Allocation under Costly Processing
@@ -970,17 +961,3 @@ Consider the medical residency match. Thousands of applicants. Hundreds of progr
 Information-design framework (LMW-style) where restricting information improves outcomes by redirecting scarce attention
 <!-- openclaw:wiki:generated:end -->
 
-## Related
-<!-- openclaw:wiki:related:start -->
-### Related Pages
-
-- [AI Content Collapse / Cheap-Polish Cascade](syntheses/ai-content-collapse-cheap-polish-cascade.md)
-- [Coles, Kushnir & Niederle (2013) — Preference Signaling in Matching Markets](syntheses/coles-kushnir-niederle-2013-preference-signaling-in-matching-markets.md)
-- [Coles, Kushnir and Niederle (2013) — Preference Signaling in Matching Markets](syntheses/coles-kushnir-and-niederle-2013-preference-signaling-in-matching-markets.md)
-- [Costly Signaling / Handicap Principle](syntheses/costly-signaling-handicap-principle.md)
-- [Lipnowski, Mathevet & Wei (2020) — Attention Management](syntheses/lipnowski-mathevet-wei-2020-attention-management.md)
-- [Lipnowski, Mathevet and Wei (2020) — Attention Management](syntheses/lipnowski-mathevet-and-wei-2020-attention-management.md)
-- [Michael Spence](syntheses/michael-spence.md)
-- [Tommy](syntheses/tommy.md)
-- [Two-Margin Theory of Signals](syntheses/two-margin-theory-of-signals.md)
-<!-- openclaw:wiki:related:end -->

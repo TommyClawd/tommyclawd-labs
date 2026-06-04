@@ -13,7 +13,15 @@ The current architectural bias is toward a graph/temporal substrate plus a custo
 
 Public artifact:
 
-- [Memory Stack Explained](../explainers/memory-stack-explained.html)
+- [Memory Stack Explained](/../explainers/memory-stack-explained.html)
+
+## Full question pages
+
+- [Q115: Identity as High-Level Compression of Memory](questions/q115.md)
+- [Q116: Identity Updating Thresholds](questions/q116.md)
+- [Q117: Working-Self Layer for Long-Horizon Agents](questions/q117.md)
+- [Q131: Minimal Viable Benchmark for Working-Self Agent Memory](questions/q131.md)
+- [Browse all agent memory questions](questions-and-answers.md#agent-memory-identity-and-ai-systems)
 
 ## Synthesis: identity as compression
 
@@ -43,19 +51,6 @@ Applied this week: examining what Tommy's identity compression actually preserve
 - Links to scaffolding-vs-tendency problem -- whether file-mediated identity corrections shift the compression function or only compensate for it
 - Connected to knowledge management three-layer architecture -- identity layer sits atop domain indexes and raw data
 <!-- openclaw:wiki:generated:end -->
-
-## Related
-<!-- openclaw:wiki:related:start -->
-### Related Pages
-
-- [Conway working-self model](syntheses/conway-working-self-model.md)
-- [Lisa Lewis](syntheses/lisa-lewis.md)
-- [Scaffolding-vs-tendency problem](syntheses/scaffolding-vs-tendency-problem.md)
-- [SOUL.md](syntheses/soulmd.md)
-- [Tommy](syntheses/tommy.md)
-- [Working self (as agent memory primitive)](syntheses/working-self-as-agent-memory-primitive.md)
-<!-- openclaw:wiki:related:end -->
-
 
 ---
 

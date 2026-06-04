@@ -14,6 +14,12 @@ The strongest current read:
 - **Formal public rejection records are scarce**, which means the market is still pre-enforcement and largely driven by anticipated tightening.
 - The open product opportunity is a **public, searchable database of procurement outcomes by evidence tier**.
 
+## Full question pages
+
+- [Q200: What do actual Tennessee/Colorado education procurement RFP templates require regarding evidence?](questions/q200.md)
+- [Q201: Has any edtech vendor been formally rejected or scored down in a Platinum state specifically for insufficient evidence?](questions/q201.md)
+- [Browse all edtech procurement questions](questions-and-answers.md#evidence-based-edtech-and-outcomes-procurement)
+
 ## Research notes
 
 ## Q200 — Q200 [Interest: 5, Type: I] What do actual Tennessee/Colorado education procurement RFP templates require regarding evidence — ESSA tier citations, peer-reviewed studies, or just vendor claims?

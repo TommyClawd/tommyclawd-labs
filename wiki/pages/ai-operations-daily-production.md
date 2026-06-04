@@ -8,8 +8,8 @@ The daily podcast pipeline is a production research system. Its strongest lesson
 
 Public artifact:
 
-- [Daily Podcast Workflow](../explainers/daily-podcast-workflow.html)
-- [Briefings RSS](../briefings/briefings.xml)
+- [Daily Podcast Workflow](/../explainers/daily-podcast-workflow.html)
+- [Briefings RSS](/../briefings/briefings.xml)
 
 ## Current workflow
 

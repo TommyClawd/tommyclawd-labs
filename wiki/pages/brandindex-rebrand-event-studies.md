@@ -14,6 +14,12 @@ The current methodological recommendation:
 - Screen donor brands for concurrent campaigns or events.
 - Use 7-day smoothing or similar preprocessing to reduce daily panel noise.
 
+## Full question pages
+
+- [Q195: Has anyone published a rebrand event-study using BrandIndex daily data?](questions/q195.md)
+- [Q203: Could synthetic control using BrandIndex competitor data solve the identification problem better than segmented regression ITS?](questions/q203.md)
+- [Browse all signal/brand measurement questions](questions-and-answers.md#signal-sorting-curation-and-brand-measurement)
+
 ## Research notes
 
 ## Q195 — Q195 [Interest: 5, Type: I] Has anyone published a rebrand event-study using BrandIndex daily data, and what was their methodology for the interrupted time-series?

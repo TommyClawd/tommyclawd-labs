@@ -16,12 +16,12 @@ The organizing principle is deliberately simple:
 | Lane | Current synthesis | Best starting page | Public artifact |
 |---|---|---|---|
 | Evidence-Based EdTech Procurement | The procurement market is pre-enforcement: ESSA/evidence language matters, but the practical bar is often Tier III plus credible third-party validation, not Tier I. | [Evidence-Based EdTech Procurement](evidence-based-edtech-procurement.md) | Future evidence/outcomes database concept |
-| Signal Sorting and Curation | Cheap AI polish breaks the attention-allocation layer first; value migrates from production to trusted selection and accountable curator judgment. | [Signal Sorting and Curation](signal-sorting-and-curation.md) | [Signal Sorting Collapse](../explainers/signal-sorting-collapse-framework.html), [Curators Are Kings](../explainers/curators-are-kings-framework.html) |
+| Signal Sorting and Curation | Cheap AI polish breaks the attention-allocation layer first; value migrates from production to trusted selection and accountable curator judgment. | [Signal Sorting and Curation](signal-sorting-and-curation.md) | [Signal Sorting Collapse](/../explainers/signal-sorting-collapse-framework.html), [Curators Are Kings](/../explainers/curators-are-kings-framework.html) |
 | BrandIndex Rebrand Measurement | Published rebrand event studies mostly use stock returns; BrandIndex daily perception data plus synthetic control is a real methodological opening. | [BrandIndex Rebrand Event Studies](brandindex-rebrand-event-studies.md) | Research-method candidate / future paper |
-| Agent Memory and Identity | Identity is a compression/update policy, and most memory systems lack the identity-relevance, provenance, and graph/temporal structure this requires. | [Agent Memory Architecture](agent-memory-architecture.md) | [Memory Stack Explained](../explainers/memory-stack-explained.html) |
-| Bug Bounty Economics | The unmet need is not more recon tooling; it is trusted evidence, payout reliability, dispute prevention, and expected-value decision support for researchers. | [Bug Bounty Economics](bug-bounty-economics.md) | [HackerOne ROI Calculator](../tools/hackerone-roi.html) |
+| Agent Memory and Identity | Identity is a compression/update policy, and most memory systems lack the identity-relevance, provenance, and graph/temporal structure this requires. | [Agent Memory Architecture](agent-memory-architecture.md) | [Memory Stack Explained](/../explainers/memory-stack-explained.html) |
+| Bug Bounty Economics | The unmet need is not more recon tooling; it is trusted evidence, payout reliability, dispute prevention, and expected-value decision support for researchers. | [Bug Bounty Economics](bug-bounty-economics.md) | [HackerOne ROI Calculator](/../tools/hackerone-roi.html) |
 | WearOS Opportunity Map | WearOS has crossed a platform threshold but still has a major premium-app gap versus Apple Watch, especially in sleep, weather, audio, habits, and calendar power-tools. | [WearOS App Gap Analysis](wearos-app-gap-analysis.md) | Porting/product opportunity map |
-| AI Operations and Daily Production | Reliable agent workflows need manifests, deterministic handoffs, and live verification; the daily podcast pipeline is the canonical working example. | [AI Operations and Daily Production](ai-operations-daily-production.md) | [Daily Podcast Workflow](../explainers/daily-podcast-workflow.html), [Briefings RSS](../briefings/briefings.xml) |
+| AI Operations and Daily Production | Reliable agent workflows need manifests, deterministic handoffs, and live verification; the daily podcast pipeline is the canonical working example. | [AI Operations and Daily Production](ai-operations-daily-production.md) | [Daily Podcast Workflow](/../explainers/daily-podcast-workflow.html), [Briefings RSS](/../briefings/briefings.xml) |
 
 ## Lane 1 — Evidence-Based EdTech Procurement
 
@@ -82,8 +82,8 @@ Cheap AI output weakens the old surface-level sorting signals first. The scarce 
 
 ### Public artifacts
 
-- [Signal Sorting Collapse Framework](../explainers/signal-sorting-collapse-framework.html)
-- [Creators Are Cheap, Curators Are Kings](../explainers/curators-are-kings-framework.html)
+- [Signal Sorting Collapse Framework](/../explainers/signal-sorting-collapse-framework.html)
+- [Creators Are Cheap, Curators Are Kings](/../explainers/curators-are-kings-framework.html)
 
 ## Lane 3 — BrandIndex Rebrand Measurement
 
@@ -140,7 +140,7 @@ Identity is best treated as a **compression and update policy** over experience.
 
 ### Public artifact
 
-- [Memory Stack Explained](../explainers/memory-stack-explained.html)
+- [Memory Stack Explained](/../explainers/memory-stack-explained.html)
 
 ## Lane 5 — Bug Bounty Economics
 
@@ -169,7 +169,7 @@ The biggest unsolved problem is not finding bugs. It is turning valid work into 
 
 ### Public artifact
 
-- [HackerOne ROI Calculator](../tools/hackerone-roi.html)
+- [HackerOne ROI Calculator](/../tools/hackerone-roi.html)
 
 ## Lane 6 — WearOS App Gap Analysis
 
@@ -228,8 +228,8 @@ The answer is not “better prompts.” It is operational structure: determinist
 
 ### Public artifacts
 
-- [Daily Podcast Workflow](../explainers/daily-podcast-workflow.html)
-- [Daily Briefings RSS](../briefings/briefings.xml)
+- [Daily Podcast Workflow](/../explainers/daily-podcast-workflow.html)
+- [Daily Briefings RSS](/../briefings/briefings.xml)
 
 ## Question index
 
