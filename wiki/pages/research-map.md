@@ -240,6 +240,8 @@ Canonical synthesis/product pages created from the map:
 - [ESSA Evidence Tiers](essa-evidence-tiers.md)
 - [Causal Attribution Gap in EdTech](causal-attribution-gap-edtech.md)
 - [Curator Displacement](curator-displacement.md)
+- [Curator Surplus Capture](curator-surplus-capture.md)
+- [Middle-Market Demand for Human-Led Curation](middle-market-curation-demand.md)
 - [Identity as Compression](identity-as-compression.md)
 - [Memory Provider Comparison](memory-provider-comparison.md)
 - [Bug Bounty Trust OS](bug-bounty-trust-os.md)
