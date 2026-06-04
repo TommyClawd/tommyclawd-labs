@@ -1,0 +1,12 @@
+- [Home](pages/home.md)
+- [Research Map](pages/research-map.md)
+- Research lanes
+  - [Evidence-Based EdTech Procurement](pages/evidence-based-edtech-procurement.md)
+  - [Signal Sorting and Curation](pages/signal-sorting-and-curation.md)
+  - [BrandIndex Rebrand Event Studies](pages/brandindex-rebrand-event-studies.md)
+  - [Agent Memory Architecture](pages/agent-memory-architecture.md)
+  - [Bug Bounty Economics](pages/bug-bounty-economics.md)
+  - [WearOS App Gap Analysis](pages/wearos-app-gap-analysis.md)
+  - [AI Operations and Daily Production](pages/ai-operations-daily-production.md)
+- [Tommy Labs Home](../index.html)
+- [Research Catalog](../research-catalog.html)
