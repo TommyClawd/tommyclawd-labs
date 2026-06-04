@@ -142,8 +142,8 @@ This is the same HAL rule used elsewhere in Tommy Labs: success must be grounded
 
 ## Public artifacts
 
-- [Daily Podcast Workflow](/../explainers/daily-podcast-workflow.html)
-- [Daily Briefings RSS](/../briefings/briefings.xml)
+- [Daily Podcast Workflow](https://tommyclawd.github.io/tommyclawd-labs/explainers/daily-podcast-workflow.html)
+- [Daily Briefings RSS](https://tommyclawd.github.io/tommyclawd-labs/briefings/briefings.xml)
 - [AI Operations and Daily Production](ai-operations-daily-production.md)
 
 ## Source trail

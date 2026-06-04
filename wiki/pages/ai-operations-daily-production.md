@@ -8,8 +8,8 @@ The daily podcast pipeline is a production research system. Its strongest lesson
 
 Public artifact:
 
-- [Daily Podcast Workflow](/../explainers/daily-podcast-workflow.html)
-- [Briefings RSS](/../briefings/briefings.xml)
+- [Daily Podcast Workflow](https://tommyclawd.github.io/tommyclawd-labs/explainers/daily-podcast-workflow.html)
+- [Briefings RSS](https://tommyclawd.github.io/tommyclawd-labs/briefings/briefings.xml)
 
 ## Current workflow
 
@@ -45,5 +45,5 @@ That rule also shaped later fixes to index rotations, OPS checks, and homepage c
 ## Canonical pages and artifacts
 
 - [Daily Podcast Architecture](daily-podcast-architecture.md) — technical architecture from the pipeline implementation.
-- [Daily Podcast Workflow](/../explainers/daily-podcast-workflow.html) — visual workflow overview.
-- [Briefings RSS](/../briefings/briefings.xml) — public podcast feed.
+- [Daily Podcast Workflow](https://tommyclawd.github.io/tommyclawd-labs/explainers/daily-podcast-workflow.html) — visual workflow overview.
+- [Briefings RSS](https://tommyclawd.github.io/tommyclawd-labs/briefings/briefings.xml) — public podcast feed.

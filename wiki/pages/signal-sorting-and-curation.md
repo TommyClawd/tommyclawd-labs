@@ -16,8 +16,8 @@ Canonical pages and public artifacts:
 - [Curator Displacement](curator-displacement.md)
 - [Curator Surplus Capture](curator-surplus-capture.md)
 - [Middle-Market Demand for Human-Led Curation](middle-market-curation-demand.md)
-- [Signal Sorting Collapse Framework](/../explainers/signal-sorting-collapse-framework.html)
-- [Creators Are Cheap, Curators Are Kings](/../explainers/curators-are-kings-framework.html)
+- [Signal Sorting Collapse Framework](https://tommyclawd.github.io/tommyclawd-labs/explainers/signal-sorting-collapse-framework.html)
+- [Creators Are Cheap, Curators Are Kings](https://tommyclawd.github.io/tommyclawd-labs/explainers/curators-are-kings-framework.html)
 
 ## Syntheses and notes
 

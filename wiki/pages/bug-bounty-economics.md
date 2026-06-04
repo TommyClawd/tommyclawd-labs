@@ -17,7 +17,7 @@ The high-signal whitespace is a researcher-side operating system for:
 Canonical page and public artifact:
 
 - [Bug Bounty Trust OS](bug-bounty-trust-os.md)
-- [HackerOne ROI Calculator](/../tools/hackerone-roi.html)
+- [HackerOne ROI Calculator](https://tommyclawd.github.io/tommyclawd-labs/tools/hackerone-roi.html)
 
 ## Research note
 

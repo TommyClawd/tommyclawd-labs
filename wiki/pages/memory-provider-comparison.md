@@ -16,7 +16,7 @@ This comparison pairs with the deeper theory on the [Agent Memory Architecture](
 
 Public artifact:
 
-- [Memory Stack Explained](/../explainers/memory-stack-explained.html)
+- [Memory Stack Explained](https://tommyclawd.github.io/tommyclawd-labs/explainers/memory-stack-explained.html)
 
 ## Key claims
 
@@ -59,4 +59,4 @@ Scores are analyst assessments derived from cited docs and repo activity, not ve
 - The comparison is decision-supporting infrastructure for anyone building durable agent memory: it argues for a **substrate-plus-ranking-layer** pattern instead of betting the architecture on a single vendor.
 - The strongest near-term pilot is a head-to-head bake-off of a graph-native substrate against an all-in-one platform on the same corpus, scored on entity/relationship recall, temporal questions, preference drift, identity-relevant recall, exact-anchor retrieval, and semantic-paraphrase retrieval.
 - The differentiator is the **custom ranking/identity layer** — tiers, salience, reinforcement, and decay — because that is the part the open-source market does not ship out of the box.
-- The public-facing explainer translating this stack for a general audience is the [Memory Stack Explained](/../explainers/memory-stack-explained.html) artifact.
+- The public-facing explainer translating this stack for a general audience is the [Memory Stack Explained](https://tommyclawd.github.io/tommyclawd-labs/explainers/memory-stack-explained.html) artifact.

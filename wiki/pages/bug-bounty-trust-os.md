@@ -14,7 +14,7 @@ This page extends the broader [Bug Bounty Economics](bug-bounty-economics.md) la
 
 Public artifact:
 
-- [HackerOne ROI Calculator](/../tools/hackerone-roi.html)
+- [HackerOne ROI Calculator](https://tommyclawd.github.io/tommyclawd-labs/tools/hackerone-roi.html)
 
 ## Key claims
 
@@ -56,5 +56,5 @@ Public artifact:
 
 - The thesis is fundamentally an **economics/incentives** story — who bears risk, who controls proof, who sets payout rules, and who has recourse when those rules shift — which is stronger than a generic security-tool framing.
 - The cleanest near-term monetization is **episodic and outcome-linked**: per-packet dispute bundles for users who will not subscribe, layered under a freemium snapshot/vault tier and a pro subscription.
-- The [HackerOne ROI Calculator](/../tools/hackerone-roi.html) is the existing public artifact that makes the expected-value side of this thesis concrete: it quantifies the solver-hours-per-dollar economics that the trust OS is designed to defend.
+- The [HackerOne ROI Calculator](https://tommyclawd.github.io/tommyclawd-labs/tools/hackerone-roi.html) is the existing public artifact that makes the expected-value side of this thesis concrete: it quantifies the solver-hours-per-dollar economics that the trust OS is designed to defend.
 - The one-line verdict: there is a real market gap, but the winning product is a **narrow researcher-side receipts/evidence/dispute stack** for serious hunters, not a giant standalone platform on day one.

@@ -129,9 +129,9 @@ Vendors like IXL invest heavily: Johns Hopkins RCT for Tier I, plus multiple pee
   - Source: https://lxdresearch.com/essa-tier-3-promising-evidence; https://www.ixl.com/ESSA (IXL example)
 
 ## Sources
-- [https://www.tn.gov/content/dam/tn/education/documents/TN_ESSA_State_Plan_Approved.pdf](https://www.tn.gov/content/dam/tn/education/documents/TN_ESSA_State_Plan_Approved.pdf)
-- [https://www.tn.gov/content/dam/tn/education/legal/ESSA_TN_State%20Plan_2022-12-16.pdf](https://www.tn.gov/content/dam/tn/education/legal/ESSA_TN_State%20Plan_2022-12-16.pdf)
-- [https://www.ed.gov/sites/ed/files/2022/09/S282A220010-Tennessee-Department-of-Education.pdf](https://www.ed.gov/sites/ed/files/2022/09/S282A220010-Tennessee-Department-of-Education.pdf)
+- [Tennessee ESSA State Plan PDF](https://www.tn.gov/content/dam/tn/education/documents/TN_ESSA_State_Plan_Approved.pdf)
+- [Tennessee ESSA State Plan 2022 PDF](https://www.tn.gov/content/dam/tn/education/legal/ESSA_TN_State%20Plan_2022-12-16.pdf)
+- [U.S. Department of Education Tennessee grant PDF](https://www.ed.gov/sites/ed/files/2022/09/S282A220010-Tennessee-Department-of-Education.pdf)
 - [RFP Boot Camp: Writing and Evaluating AV Proposals That Drive Project Success - InfoComm 2026](https://www.infocommshow.org/2026-sessions/rfp-boot-camp-writing-and-evaluating-av-proposals-that-drive-project-success)
 - [ESSA EVIDENCE-BASED INTERVENTION: STUDY ISLAND IN ELEMENTARY SCHOOLS - JEFF MCLEOD, PHD EDMENTUM, INC. BLOOMINGTON, MINNESOTA PEER REVIEWED BY ...](https://readkong.com/page/essa-evidence-based-intervention-study-island-in-7626663)
 - [What Does ESSA Tier III Evidence Actually Look Like? - LXD Research at Charles River Media](https://lxdresearch.com/essa-tier-3-promising-evidence)

@@ -48,5 +48,5 @@ Selected external evidence used in the underlying research: Spotify Engineering 
 
 ## Public explainers
 
-- [Signal Sorting Collapse Framework](/../explainers/signal-sorting-collapse-framework.html)
-- [Creators Are Cheap, Curators Are Kings](/../explainers/curators-are-kings-framework.html)
+- [Signal Sorting Collapse Framework](https://tommyclawd.github.io/tommyclawd-labs/explainers/signal-sorting-collapse-framework.html)
+- [Creators Are Cheap, Curators Are Kings](https://tommyclawd.github.io/tommyclawd-labs/explainers/curators-are-kings-framework.html)
