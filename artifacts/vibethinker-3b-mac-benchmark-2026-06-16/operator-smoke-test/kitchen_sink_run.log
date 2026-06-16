@@ -1,0 +1,95 @@
+{
+  "model": "WeiboAI/VibeThinker-3B",
+  "device": "mps",
+  "dtype": "torch.float16",
+  "cases": 28,
+  "max_new_default": 512,
+  "temp": 0.6,
+  "top_p": 0.95
+}
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+Loading weights:   0%|          | 0/434 [00:00<?, ?it/s]Loading weights:   0%|          | 1/434 [00:00<07:12,  1.00it/s]Loading weights:  31%|███       | 135/434 [00:01<00:01, 164.97it/s]Loading weights:  47%|████▋     | 202/434 [00:01<00:01, 129.13it/s]Loading weights:  56%|█████▌    | 243/434 [00:02<00:01, 139.69it/s]Loading weights:  63%|██████▎   | 275/434 [00:02<00:01, 141.57it/s]Loading weights:  69%|██████▉   | 301/434 [00:02<00:01, 127.42it/s]Loading weights:  74%|███████▍  | 322/434 [00:02<00:01, 101.01it/s]Loading weights:  78%|███████▊  | 338/434 [00:03<00:00, 101.28it/s]Loading weights:  81%|████████  | 352/434 [00:03<00:00, 83.71it/s] Loading weights:  84%|████████▎ | 363/434 [00:03<00:00, 86.73it/s]Loading weights:  86%|████████▋ | 375/434 [00:03<00:00, 84.40it/s]Loading weights:  89%|████████▉ | 387/434 [00:03<00:00, 87.15it/s]Loading weights:  92%|█████████▏| 399/434 [00:03<00:00, 89.06it/s]Loading weights:  94%|█████████▍| 409/434 [00:03<00:00, 91.13it/s]Loading weights:  97%|█████████▋| 419/434 [00:04<00:00, 74.06it/s]Loading weights:  99%|█████████▊| 428/434 [00:04<00:00, 68.22it/s]Loading weights: 100%|██████████| 434/434 [00:04<00:00, 99.81it/s]
+LOADED 9.22s
+CASE 1/28 gsm8k_manual/gsm8k_01 in=60 max=384
+RESULT gsm8k_manual/gsm8k_01 pass=True new=384 elapsed=27.9s tok_s=13.76
+CASE 2/28 gsm8k_manual/gsm8k_02 in=60 max=384
+RESULT gsm8k_manual/gsm8k_02 pass=True new=312 elapsed=28.8s tok_s=10.85
+CASE 3/28 gsm8k_manual/gsm8k_03 in=55 max=384
+RESULT gsm8k_manual/gsm8k_03 pass=False new=384 elapsed=36.1s tok_s=10.65
+CASE 4/28 gsm8k_manual/gsm8k_04 in=53 max=384
+RESULT gsm8k_manual/gsm8k_04 pass=False new=384 elapsed=35.9s tok_s=10.69
+CASE 5/28 gsm8k_manual/gsm8k_05 in=54 max=384
+RESULT gsm8k_manual/gsm8k_05 pass=True new=141 elapsed=11.9s tok_s=11.83
+CASE 6/28 gsm8k_manual/gsm8k_06 in=48 max=384
+RESULT gsm8k_manual/gsm8k_06 pass=True new=223 elapsed=12.9s tok_s=17.33
+CASE 7/28 gsm8k_manual/gsm8k_07 in=57 max=384
+RESULT gsm8k_manual/gsm8k_07 pass=True new=251 elapsed=14.4s tok_s=17.38
+CASE 8/28 gsm8k_manual/gsm8k_08 in=57 max=384
+RESULT gsm8k_manual/gsm8k_08 pass=True new=291 elapsed=18.9s tok_s=15.36
+CASE 9/28 gsm8k_manual/gsm8k_09 in=61 max=384
+RESULT gsm8k_manual/gsm8k_09 pass=True new=384 elapsed=35.9s tok_s=10.70
+CASE 10/28 gsm8k_manual/gsm8k_10 in=59 max=384
+RESULT gsm8k_manual/gsm8k_10 pass=False new=384 elapsed=35.9s tok_s=10.69
+CASE 11/28 math_reasoning/contradiction_marbles in=71 max=512
+RESULT math_reasoning/contradiction_marbles pass=True new=512 elapsed=38.8s tok_s=13.21
+CASE 12/28 math_reasoning/modular in=59 max=512
+RESULT math_reasoning/modular pass=False new=512 elapsed=50.3s tok_s=10.17
+CASE 13/28 math_reasoning/probability in=44 max=384
+RESULT math_reasoning/probability pass=True new=383 elapsed=22.6s tok_s=16.97
+CASE 14/28 math_reasoning/quadratic in=43 max=384
+RESULT math_reasoning/quadratic pass=True new=384 elapsed=30.7s tok_s=12.52
+CASE 15/28 math_reasoning/geometry in=38 max=384
+RESULT math_reasoning/geometry pass=True new=384 elapsed=36.4s tok_s=10.55
+CASE 16/28 code_tests/first_unique in=46 max=512
+RESULT code_tests/first_unique pass=True new=512 elapsed=50.1s tok_s=10.22
+CASE 17/28 code_tests/is_palindrome in=40 max=512
+RESULT code_tests/is_palindrome pass=True new=512 elapsed=48.3s tok_s=10.60
+CASE 18/28 code_tests/merge_intervals in=39 max=768
+RESULT code_tests/merge_intervals pass=False new=768 elapsed=85.1s tok_s=9.03
+CASE 19/28 code_tests/top_k_frequent in=44 max=768
+RESULT code_tests/top_k_frequent pass=True new=768 elapsed=78.4s tok_s=9.79
+CASE 20/28 code_tests/roman_to_int in=38 max=768
+RESULT code_tests/roman_to_int pass=True new=768 elapsed=81.9s tok_s=9.38
+CASE 21/28 instruction_following/json_only in=48 max=256
+RESULT instruction_following/json_only pass=False new=169 elapsed=14.6s tok_s=11.54
+CASE 22/28 instruction_following/no_think in=35 max=128
+RESULT instruction_following/no_think pass=False new=108 elapsed=9.0s tok_s=12.02
+CASE 23/28 instruction_following/bullet_count in=37 max=256
+RESULT instruction_following/bullet_count pass=False new=256 elapsed=22.8s tok_s=11.22
+CASE 24/28 instruction_following/quote_wrapper in=31 max=128
+RESULT instruction_following/quote_wrapper pass=False new=128 elapsed=7.3s tok_s=17.61
+CASE 25/28 instruction_following/csv in=42 max=128
+RESULT instruction_following/csv pass=False new=128 elapsed=7.1s tok_s=18.11
+CASE 26/28 untidy_reasoning/queue_race in=60 max=768
+RESULT untidy_reasoning/queue_race pass=True new=768 elapsed=67.3s tok_s=11.42
+CASE 27/28 untidy_reasoning/compose_deprecation in=59 max=512
+RESULT untidy_reasoning/compose_deprecation pass=False new=512 elapsed=49.2s tok_s=10.40
+CASE 28/28 untidy_reasoning/service_state in=63 max=768
+RESULT untidy_reasoning/service_state pass=False new=768 elapsed=84.2s tok_s=9.12
+Traceback (most recent call last):
+  File "/Users/ric/vibethinker-test/run_kitchen_sink.py", line 229, in <module>
+    main()
+  File "/Users/ric/vibethinker-test/run_kitchen_sink.py", line 216, in main
+    (OUT/"kitchen_sink_results.json").write_text(json.dumps(summary, indent=2))
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.12/3.12.2_1/Frameworks/Python.framework/Versions/3.12/lib/python3.12/json/__init__.py", line 238, in dumps
+    **kw).encode(obj)
+          ^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.12/3.12.2_1/Frameworks/Python.framework/Versions/3.12/lib/python3.12/json/encoder.py", line 202, in encode
+    chunks = list(chunks)
+             ^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.12/3.12.2_1/Frameworks/Python.framework/Versions/3.12/lib/python3.12/json/encoder.py", line 432, in _iterencode
+    yield from _iterencode_dict(o, _current_indent_level)
+  File "/opt/homebrew/Cellar/python@3.12/3.12.2_1/Frameworks/Python.framework/Versions/3.12/lib/python3.12/json/encoder.py", line 406, in _iterencode_dict
+    yield from chunks
+  File "/opt/homebrew/Cellar/python@3.12/3.12.2_1/Frameworks/Python.framework/Versions/3.12/lib/python3.12/json/encoder.py", line 326, in _iterencode_list
+    yield from chunks
+  File "/opt/homebrew/Cellar/python@3.12/3.12.2_1/Frameworks/Python.framework/Versions/3.12/lib/python3.12/json/encoder.py", line 406, in _iterencode_dict
+    yield from chunks
+  File "/opt/homebrew/Cellar/python@3.12/3.12.2_1/Frameworks/Python.framework/Versions/3.12/lib/python3.12/json/encoder.py", line 439, in _iterencode
+    o = _default(o)
+        ^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.12/3.12.2_1/Frameworks/Python.framework/Versions/3.12/lib/python3.12/json/encoder.py", line 180, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+TypeError: Object of type set is not JSON serializable
