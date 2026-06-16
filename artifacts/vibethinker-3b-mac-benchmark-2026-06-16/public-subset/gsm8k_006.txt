@@ -1,0 +1,29 @@
+<think>We have a problem: "Toulouse has twice as many sheep as Charleston. Charleston has 4 times as many sheep as Seattle. How many sheep do Toulouse, Charleston, and Seattle have together if Seattle has 20 sheep?" Straightforward.
+
+Let S = Seattle's sheep = 20. Then Charleston has 4 times Seattle: C = 4 * 20 = 80. Toulouse has twice as many as Charleston: T = 2 * 80 = 160. Total = S + C + T = 20 + 80 + 160 = 260. Answer: 260.
+
+But the problem wants to "Solve this GSM8K problem. Give the final numeric answer clearly at the end." So we need to show reasoning step by step. At the end we must put the answer in \boxed{}. So final answer \boxed{260}.
+
+We need to ensure we follow the instructions: "Please reason step by step, and put your final answer within \boxed{}."
+
+Thus we will produce a solution. Should be simple.
+
+But there might be nuance: The problem states "Toulouse has twice as many sheep as Charleston. Charleston has 4 times as many sheep as Seattle. How many sheep do Toulouse, Charleston, and Seattle have together if Seattle has 20 sheep?" So answer is 260.
+
+We will write reasoning: Let s = 20. c = 4s = 80. t = 2c = 160. total = s + c + t = 260. Then final answer \boxed{260}.
+
+That is straightforward. But perhaps we need to think if there is any trick: "twice as many" means double. "4 times as many" means quadruple. So correct.
+
+Thus answer: \boxed{260}.
+
+We need to ensure we include the reasoning and final answer in \boxed{}. No extra text after that. Let's produce.</think>Let  
+
+- \(S\) be the number of sheep in Seattle.  
+- \(C\) be the number of sheep in Charleston.  
+- \(T\) be the number of sheep in Toulouse.  
+
+We are told \(S = 20\).
+
+Charleston has 4 times as many sheep as Seattle:  
+\[
+C = 4S = 4 \times 20 = 80

@@ -1,0 +1,106 @@
+<think>The user asks: "Write Python function merge_intervals(intervals) merging overlapping [start,end] intervals. Output only code."
+
+We need to output only the code (presumably a function definition). The user wants a Python function merge_intervals(intervals) that merges overlapping intervals. We need to provide code only. Should we include docstring? Probably okay. But "Output only code" suggests we should not include any extra explanation. So just the code block.
+
+We need to handle typical cases: intervals is a list of [start, end] pairs (list of lists or tuples). The function should sort intervals by start, then merge overlapping or contiguous intervals.
+
+We can write:
+
+def merge_intervals(intervals):
+    if not intervals:
+        return []
+    # sort based on start
+    sorted_intervals = sorted(intervals, key=lambda x: x[0])
+    merged = [sorted_intervals[0]]
+    for current in sorted_intervals[1:]:
+        last = merged[-1]
+        if current[0] <= last[1]:
+            # overlap
+            last[1] = max(last[1], current[1])
+        else:
+            merged.append(current)
+    return merged
+
+But need to be careful: modifying last[1] works because last is a list; if intervals are tuples, then we need to convert to list or use new list. Could assume intervals are lists.
+
+Alternatively, we can handle empty input.
+
+Edge cases: intervals may be list of tuples; we can convert each to list.
+
+Better to handle generically: Use list comprehension to convert to list.
+
+Simplify: Use sorted and iterate.
+
+Alternatively, we can use list of lists.
+
+We'll produce code:
+
+def merge_intervals(intervals):
+    if not intervals:
+        return []
+    # sort intervals based on start time
+    intervals = sorted(intervals, key=lambda x: x[0])
+    merged = [list(intervals[0])]
+    for start, end in intervals[1:]:
+        last = merged[-1]
+        if start <= last[1]:
+            # overlapping or touching, merge them
+            last[1] = max(last[1], end)
+        else:
+            merged.append([start, end])
+    return merged
+
+If intervals are list of tuples, converting to list ensures we can modify.
+
+Also handle case where intervals may be empty.
+
+Alternatively, we can return list of tuples if needed.
+
+The user didn't specify input format, but typical.
+
+Thus output code only. Use Python function.
+
+Probably include a docstring.
+
+We'll output:
+
+def merge_intervals(intervals):
+    """Merge overlapping intervals.
+
+    Args:
+        intervals (List[Tuple[int, int]] or List[List[int]]): List of [start, end] intervals.
+
+    Returns:
+        List[List[int]]: Sorted list of merged intervals.
+    """
+    if not intervals:
+        return []
+    # Sort intervals based on start value
+    sorted_intervals = sorted(intervals, key=lambda x: x[0])
+    merged = [list(sorted_intervals[0])]
+    for start, end in sorted_intervals[1:]:
+        last = merged[-1]
+        if start <= last[1]:
+            # Overlap or touch, merge
+            last[1] = max(last[1], end)
+        else:
+            merged.append([start, end])
+    return merged
+
+That's good.
+
+Make sure no extraneous text.
+
+Thus final answer: code block with function.</think>```python
+def merge_intervals(intervals):
+    """Merge overlapping intervals.
+
+    Args:
+        intervals (list of list/tuple): List of [start, end] intervals.
+
+    Returns:
+        list of list: Sorted list of merged intervals without overlaps.
+    """
+    if not intervals:
+        return []
+    # Sort intervals

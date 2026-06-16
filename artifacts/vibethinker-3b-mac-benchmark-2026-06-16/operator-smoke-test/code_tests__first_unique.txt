@@ -1,0 +1,60 @@
+<think>The user asks: "Write Python function first_unique(xs) returning the first element appearing exactly once, preserving order. Return None if none. Output only code."
+
+We need to produce code that defines a function first_unique(xs) that returns the first element appearing exactly once, preserving order, else None.
+
+We need to output only code, no explanation.
+
+We need to think about the input xs: could be any iterable? Probably a list. We need to preserve order, so we can count frequencies using a dictionary or collections.Counter, then iterate through the list and return first element with count == 1. If none, return None.
+
+Edge cases: empty input returns None. The elements could be any hashable type.
+
+Implementation:
+
+def first_unique(xs):
+    # count frequencies
+    freq = {}
+    for x in xs:
+        freq[x] = freq.get(x, 0) + 1
+    # find first unique
+    for x in xs:
+        if freq[x] == 1:
+            return x
+    return None
+
+Alternatively using collections.Counter.
+
+But code should be minimal.
+
+The user wants only code. So output a code block with function definition.
+
+Potential improvements: Use default dict, but simple dict fine.
+
+Thus answer:
+
+```python
+def first_unique(xs):
+    freq = {}
+    for x in xs:
+        freq[x] = freq.get(x, 0) + 1
+    for x in xs:
+        if freq[x] == 1:
+            return x
+    return None
+```
+
+That's it.
+
+But ensure no extra text. The user says "Output only code." So we should output just the code, possibly with a code block or not? They didn't specify code block format, but typical output is code block. Usually they want just code plain text? The instruction: "Output only code." I'd output the code without any extra commentary. Use a code block for readability, but that is still code? Actually the code block markers are not code but formatting. Might be considered extraneous. The safest is to output plain code without markdown formatting. The user says "Output only code." So I'd output just the code as plain text, no markdown fences, no explanation.
+
+Thus output:
+
+def first_unique(xs):
+    freq = {}
+    for x in xs:
+        freq[x] = freq.get(x, 0) + 1
+    for x in xs:
+        if freq[x] == 1:
+            return x
+    return None
+
+That

@@ -1,0 +1,64 @@
+<think>The user asks: "Wear OS Kotlin app: playQueue(tracks,startIndex) writes queue async then starts playback. On process death it restores last queue/index. List concrete race tests and minimal robust ordering. Be specific."
+
+The request is ambiguous. It seems the user wants to write a Kotlin app for the OS (maybe Android?), with a function playQueue(tracks, startIndex) that writes a queue asynchronously and then starts playback. On process death (i.e., process termination), it should restore the last queue/index. They want a list of concrete race tests and minimal robust ordering. "Be specific."
+
+Thus the user likely wants test cases that cover race conditions in the playQueue function, ensuring that the ordering of asynchronous writes and playback start is correct, and that on process death it correctly restores the last queue/index.
+
+We need to produce a list of concrete race tests and minimal robust ordering specifications. Likely they are asking for test cases for unit tests, integration tests. They want "concrete race tests" meaning test scenarios that test concurrency (race conditions) and robust ordering.
+
+We need to be specific: define test cases with steps, expected results, maybe using Kotlin test libraries, mocking.
+
+We should assume some context: There's a class PlaybackManager with a method playQueue, which takes a list of tracks and a start index. It enqueues tracks into a queue asynchronously (maybe using some queue API), then starts playback from the given index. On process death (like process kill), it should restore the last queue and index.
+
+Thus we need to list test cases that cover:
+
+- Concurrency: multiple threads trying to enqueue tracks at same time, ensure order preserved.
+- Asynchronous write vs immediate playback: ensure that if asynchronous write is delayed, playback starts based on the correct state.
+- Race between process death handler and playback finishing: ensure that if process dies before playback finishes, it restores state.
+- Race between multiple calls to playQueue: ensure that only one queue is active at a time, or that each call's ordering is respected.
+- Edge cases: empty tracks list, startIndex out of bounds.
+- Race with cancellation: if process dies, the cancellation should be handled before playback ends.
+
+We can propose test frameworks: JUnit, MockK, MockitoK.
+
+We need to list concrete test steps: e.g.,
+
+1. Test asynchronous enqueue ordering:
+   - Start two tasks that both add tracks to the queue concurrently.
+   - Verify the queue order matches insertion order.
+
+2. Test playback start after async write:
+   - Start async write first, then start playback.
+   - Verify that playback starts only after write completes.
+
+3. Test process death restoration:
+   - Start playQueue, then kill the process.
+   - Verify that the queue is restored to last state and playback is stopped.
+
+4. Test race between playback finish and process death:
+   - Start playback that will finish after a short delay.
+   - Simulate process death before playback finishes.
+   - Verify that playback is stopped and state restored.
+
+5. Test concurrent playQueue calls:
+   - Start playQueue for two different queues concurrently.
+   - Verify that only one playback is active and queue ordering is correct.
+
+6. Test cancellation handling:
+   - Use a shared counter for cancellation.
+   - Simulate cancellation while playback is in progress.
+   - Verify that playback stops and state restored.
+
+7. Test empty tracks:
+   - Call playQueue with empty list.
+   - Verify no errors and proper handling.
+
+8. Test invalid startIndex:
+   - Call playQueue with startIndex out of range.
+   - Verify appropriate error or handling.
+
+9. Test network latency in async write:
+   - Simulate network delay before enqueuing.
+   - Ensure playback starts after async write completes, not before.
+
+10

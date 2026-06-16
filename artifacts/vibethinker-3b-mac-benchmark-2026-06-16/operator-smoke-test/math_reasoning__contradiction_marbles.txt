@@ -1,0 +1,25 @@
+<think>We have a problem: a bag contains red and blue marbles. Let initial counts be R red, B blue, both nonnegative integers (presumably positive). Two scenarios:
+
+Scenario 1: Remove 3 red marbles, then the ratio red:blue becomes 2:5. So after removal: (R - 3) : B = 2 : 5. So (R - 3)/B = 2/5 => 5(R - 3) = 2B => 5R - 15 = 2B. (Equation 1)
+
+Scenario 2: If instead of removing 3 red, we add 2 blue marbles (starting from original counts), the ratio red:blue becomes 3:8. So after adding: R : (B + 2) = 3 : 8 => R/(B + 2) = 3/8 => 8R = 3(B + 2) => 8R = 3B + 6 => 8R - 3B = 6. (Equation 2)
+
+We have two linear equations in integers:
+
+(1) 5R - 2B = 15.
+(2) 8R - 3B = 6.
+
+Solve for R, B.
+
+Multiply (1) by 3: 15R - 6B = 45.
+Multiply (2) by 2: 16R - 6B = 12.
+
+Subtract first from second: (16R - 6B) - (15R - 6B) = 12 - 45 => R = -33. So R = -33. That's impossible (negative). So inconsistent? Let's double-check algebra.
+
+Equation (1): (R - 3)/B = 2/5 => cross-multiplying: 5(R - 3) = 2B => 5R - 15 = 2B => 5R - 2B = 15. Yes.
+
+Equation (2): R/(B + 2) = 3/8 => 8R = 3(B + 2) => 8R = 3B + 6 => 8R - 3B = 6. Yes.
+
+Solve: Let's solve system properly:
+
+From (1): 5R - 

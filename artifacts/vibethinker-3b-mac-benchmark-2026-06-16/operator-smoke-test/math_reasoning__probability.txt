@@ -1,0 +1,26 @@
+<think>We need to solve: A fair coin is flipped 4 times. Probability of exactly 3 heads. It's a binomial distribution: n=4, k=3, p=0.5. Probability = C(4,3)*(0.5)^3*(0.5)^(1) = 4 * (0.5)^4 = 4/16 = 1/4. So answer is \boxed{\frac14}. But the problem says "Give as a reduced fraction." So that is correct.
+
+We need to reason step by step.
+
+Thus answer: \boxed{\frac{1}{4}}.</think>To find the probability of getting exactly 3 heads in 4 flips of a fair coin, we use the binomial distribution.
+
+1. **Number of possible outcomes:**  
+   Each flip has 2 possibilities (H or T). For 4 flips, there are \(2^4 = 16\) equally likely sequences.
+
+2. **Number of favorable outcomes (exactly 3 heads):**  
+   We need to choose which 3 of the 4 flips are heads. The number of ways to do this is given by the binomial coefficient:
+   \[
+   \binom{4}{3} = \frac{4!}{3!\,1!} = 4.
+   \]
+   So there are 4 sequences with exactly 3 heads (HHHT, HHTH, HTHH, THHH).
+
+3. **Probability:**  
+   \[
+   P(\text{exactly 3 heads}) = \frac{\text{favorable outcomes}}{\text{total outcomes}} = \frac{4}{16} = \frac{1}{4}.
+   \]
+
+The fraction is already reduced.
+
+\[
+\boxed{\frac{1}{4}}
+\]

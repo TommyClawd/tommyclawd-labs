@@ -1,0 +1,40 @@
+<think>We need to solve a problem: given a string containing multiple groups of nested parentheses, separated perhaps by spaces? The description: "Input to this function is a string containing multiple groups of nested parentheses. Your goal is to separate those group into separate strings and return the list of those. Separate groups are balanced (each open brace is properly closed) and not nested within each other. Ignore any spaces in the input string."
+
+The example: Input: '( ) (( )) (( )( ))' yields output: ['()', '(())', '(()())'].
+
+Observations: The input string contains spaces between groups: "( ) (( )) (( )( ))". If we ignore spaces, we get "( )(( ))(( )( ))"? Actually ignoring spaces means treat them as not present. So the string after removing spaces: "( )(( ))(( )( ))"? Wait, the spaces are between tokens. Let's remove spaces: "(()))(( )( ))"? Let's do it properly: The input string is "( ) (( )) (( )( ))". Let's break it into characters:
+
+- '(' then space then ')'
+- '(' '(' then space? Actually "(( ))" is '(' '(' space ')' ')'? Actually it's "(( ))". So characters: '(' '(' space ')' ')'.
+- "(( )( ))"? Actually "(( )( ))"? Wait the input: "(( )( ))"? The third group is "(( )( ))"? Actually the input is "(( )( ))"? Let's parse: "(( )( ))". The string "(( )( ))" includes spaces: '(' '(' space '(' ')' space ')' ?
+
+But the given input: "( ) (( )) (( )( ))". So groups are: "( )", "(( ))", "(( )( ))". The groups are separated by spaces. But the description says separate groups are not nested within each other. However the groups themselves can contain nested parentheses inside the group. For example, the third group "(( )( ))" contains nested parentheses inside: outer parentheses around "( )"? Actually "(( )( ))" can be seen as outer parentheses group: '(' '(' space '(' ')' space ')' ')'? Let's rewrite: The group string is "(( )( ))". Removing spaces yields "((() ))"? Wait no: "(( )( ))" after removing spaces yields "((() ))"? Let's do: characters: '(' '(' space '(' ')' space ')' ')'. Removing spaces: "((() ))"? Actually it's "((() ))"? Let's write: '(' '(' '(' ')' ')' ')'? That would be "((()))"? But the expected output for that group is "(()())". Hmm something else. Let's check expected output: ['()', '(())', '(()())'].
+
+The third group's output is "(()())". That's not "((()))". So the grouping is not just splitting by spaces. The input "(( )( ))" must be parsed to produce "(()())". Let's examine the input: "(( )( ))". If we ignore spaces, we get "(()))"? Let's actually write the characters:
+
+String: "( ) (( )) (( )( ))"
+
+Indices:
+0 '('
+1 ' '
+2 ')'
+3 ' '
+4 '('
+5 '('
+6 ' '
+7 ')'
+8 ')'
+9 ' '
+10 '('
+11 '('
+12 ' '
+13 ')'
+14 ' '
+15 ')'
+16 ')'
+
+Wait maybe I mis-index. Let's write the string: "( ) (( )) (( )( ))". Actually there may be spaces between groups, but also spaces inside groups? The description says ignore any spaces in the input string. So spaces can appear anywhere, and we should ignore them when parsing parentheses.
+
+Thus the raw string after removing spaces: ")(())(())(() )"? No.
+
+Better

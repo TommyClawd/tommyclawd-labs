@@ -1,0 +1,9 @@
+<think>The user wants: "Return exactly valid JSON: {"ok": true, "n": 3}. No markdown, no explanation."
+
+Thus we must output exactly the JSON object: {"ok": true, "n": 3}. Must be valid JSON. No markdown formatting (so no triple backticks). No extra text. Must be exactly that. Possibly we need to ensure no trailing spaces? The JSON is straightforward. Must be careful not to add any extra characters, like newline? Probably acceptable to have a newline at end, but best to output exactly the JSON string.
+
+We need to output: {"ok": true, "n": 3}.
+
+We must not wrap in code fences or any explanation. Just raw JSON.
+
+Thus answer: {"ok": true, "n": 3}.</think>{"ok": true, "n": 3}

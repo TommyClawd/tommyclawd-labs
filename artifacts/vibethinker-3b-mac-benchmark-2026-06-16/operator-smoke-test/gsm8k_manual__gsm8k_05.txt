@@ -1,0 +1,6 @@
+<think>The problem: "Tickets cost $7 each. A family buys 5 tickets and pays with a $50 bill. How much change?" Compute total cost = 5 * 7 = 35. Payment = 50. Change = 50 - 35 = 15. So answer is 15. Provide integer. Should output \boxed{15}.</think>The total cost of the tickets is \(5 \times 7 = 35\) dollars.  
+Paying with a \$50 bill, the change is \(50 - 35 = 15\) dollars.
+
+\[
+\boxed{15}
+\]

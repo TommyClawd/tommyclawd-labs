@@ -1,0 +1,29 @@
+<think>The problem: Nina has 4 packs of pencils with 12 pencils each. So initial total pencils = 4 * 12 = 48. She loses 9 and gives 6 away. So total lost/given away = 9 + 6 = 15. So remaining = 48 - 15 = 33. So answer: 33.
+
+But we need to give final answer as an integer inside \boxed{}. So \boxed{33}.
+
+We need to reason step by step. So we can write explanation: compute initial, subtract lost, subtract given away. Then answer.
+
+Thus final answer: \boxed{33}.</think>Nina starts with  
+
+\[
+4\text{ packs}\times 12\text{ pencils/pack}=48\text{ pencils}.
+\]
+
+She then loses 9 pencils and gives away 6 pencils, a total of  
+
+\[
+9+6=15\text{ pencils}.
+\]
+
+Subtracting these from the original amount:
+
+\[
+48-15 = 33.
+\]
+
+Thus, the number of pencils remaining is  
+
+\[
+\boxed{33}.
+\]

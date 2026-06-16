@@ -1,0 +1,9 @@
+<think>We need to solve the problem: "Josh decides to try flipping a house. He buys a house for $80,000 and then puts in $50,000 in repairs. This increased the value of the house by 150%. How much profit did he make?" We need to compute profit. The problem: He buys house for $80k, puts in $50k in repairs, and as a result the value of the house increased by 150%. We need to interpret: The "value of the house increased by 150%" relative to what? Typically, the increase in value is relative to the original purchase price. So the final value after repairs is original price plus 150% of original price = original * (1 + 1.5) = original * 2.5. So original is $80k, so final value = $80k * 2.5 = $200,000. The total cost to him is purchase $80k + repairs $50k = $130,000. Profit = final value - total cost = $200k - $130k = $70,000. However, sometimes "increased the value of the house by 150%" might be interpreted as the value increased by 150% of the total cost? But typical phrase: "This increased the value of the house by 150%" after the repairs. So the increase is relative to original value. So answer $70,000. Let's double-check: If original $80k, 150% increase means new value = $80k + 1.5*$80k = $80k + $120k = $200k. Yes. Then profit = $200k - $130k = $70k. So answer: $70,000.
+
+But maybe the problem expects profit as net profit after all expenses. Yes. So answer: 70,000.
+
+Thus final answer: \boxed{70000}.</think>The house’s original price was \$80,000.  
+A 150% increase means the final value is  
+
+\[
+80{,}000 + 1.5 \times

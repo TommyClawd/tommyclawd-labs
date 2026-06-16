@@ -1,0 +1,20 @@
+<think>We need to solve a simple problem: a train travels at 45 mph for 2 hours, then at 60 mph for 3 hours. Compute total distance traveled. Distance = speed * time. So first segment: 45 mph * 2 h = 90 miles. Second segment: 60 mph * 3 h = 180 miles. Total = 90 + 180 = 270 miles. Answer: \boxed{270}. However, the problem states "How many miles total?" So indeed total distance. So answer is 270. That's straightforward.
+
+But the user wants step-by-step reasoning and final answer in \boxed{}. So we will give explanation and final answer.
+
+Thus answer: \boxed{270}.</think>The distance traveled in each segment is found by multiplying speed by time.
+
+1. **First segment:**  
+   Speed = 45 mi/h, time = 2 h  
+   Distance = \(45 \times 2 = 90\) mi.
+
+2. **Second segment:**  
+   Speed = 60 mi/h, time = 3 h  
+   Distance = \(60 \times 3 = 180\) mi.
+
+3. **Total distance:**  
+   \(90 + 180 = 270\) mi.
+
+\[
+\boxed{270}
+\]

@@ -1,0 +1,11 @@
+<think>The user asks: "Return exactly valid JSON with keys verdict and score. verdict must be "pass" and score must be 7. No markdown. No explanation."
+
+We need to respond with a JSON object: {"verdict":"pass","score":7}. Must be exactly that, no extra whitespace? Probably whitespace is okay but must be valid JSON. Must not include any markdown formatting (like code fences). Must not include any explanation. So just output the JSON text.
+
+We need to be careful to not wrap in triple backticks or any other formatting. Just plain text JSON.
+
+Thus answer: {"verdict":"pass","score":7}.
+
+Make sure it's valid JSON: keys in double quotes, values as string and number.
+
+Thus final answer is that.</think>{"verdict":"pass","score":7}

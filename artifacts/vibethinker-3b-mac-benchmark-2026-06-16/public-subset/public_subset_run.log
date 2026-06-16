@@ -1,0 +1,57 @@
+{
+  "model": "WeiboAI/VibeThinker-3B",
+  "device": "mps",
+  "dtype": "torch.float16",
+  "temp": 0.6,
+  "top_p": 0.95,
+  "datasets": {
+    "gsm8k": "openai/gsm8k main/test indices 0-9",
+    "openai_humaneval": "openai/openai_humaneval test indices 0-4",
+    "ifeval_like": "local exact-format probes, not official IFEval"
+  }
+}
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+Loading weights:   0%|          | 0/434 [00:00<?, ?it/s]Loading weights:   0%|          | 1/434 [00:00<07:00,  1.03it/s]Loading weights:  34%|███▍      | 147/434 [00:01<00:01, 186.18it/s]Loading weights:  52%|█████▏    | 226/434 [00:01<00:01, 191.40it/s]Loading weights:  64%|██████▍   | 278/434 [00:01<00:00, 188.62it/s]Loading weights:  73%|███████▎  | 317/434 [00:02<00:01, 98.34it/s] Loading weights:  79%|███████▉  | 344/434 [00:03<00:00, 95.49it/s]Loading weights:  84%|████████▍ | 365/434 [00:03<00:00, 91.09it/s]Loading weights:  88%|████████▊ | 381/434 [00:03<00:00, 97.61it/s]Loading weights:  91%|█████████▏| 397/434 [00:03<00:00, 99.57it/s]Loading weights:  95%|█████████▍| 412/434 [00:03<00:00, 84.88it/s]Loading weights:  98%|█████████▊| 424/434 [00:04<00:00, 80.82it/s]Loading weights: 100%|██████████| 434/434 [00:04<00:00, 106.31it/s]
+RESULT gsm8k index=0 pass=False expected=18 extracted=7 new=512 elapsed=44.9s tok_s=11.39
+RESULT gsm8k index=1 pass=True expected=3 extracted=3 new=311 elapsed=29.2s tok_s=10.65
+RESULT gsm8k index=2 pass=False expected=70000 extracted=1.5 new=512 elapsed=49.5s tok_s=10.35
+RESULT gsm8k index=3 pass=True expected=540 extracted=540 new=386 elapsed=35.9s tok_s=10.76
+RESULT gsm8k index=4 pass=False expected=20 extracted=1 new=512 elapsed=52.9s tok_s=9.68
+RESULT gsm8k index=5 pass=True expected=64 extracted=64 new=497 elapsed=48.0s tok_s=10.36
+RESULT gsm8k index=6 pass=False expected=260 extracted=80 new=512 elapsed=49.2s tok_s=10.40
+RESULT gsm8k index=7 pass=False expected=160 extracted=100 new=512 elapsed=49.7s tok_s=10.31
+RESULT gsm8k index=8 pass=False expected=45 extracted=30 new=512 elapsed=33.7s tok_s=15.18
+RESULT gsm8k index=9 pass=True expected=460 extracted=460 new=359 elapsed=34.4s tok_s=10.45
+RESULT humaneval index=0 task=HumanEval/0 pass=True new=768 elapsed=76.0s tok_s=10.10
+RESULT humaneval index=1 task=HumanEval/1 pass=False new=768 elapsed=79.5s tok_s=9.67
+RESULT humaneval index=2 task=HumanEval/2 pass=True new=757 elapsed=73.5s tok_s=10.30
+RESULT humaneval index=3 task=HumanEval/3 pass=True new=768 elapsed=76.9s tok_s=9.99
+RESULT humaneval index=4 task=HumanEval/4 pass=False new=768 elapsed=84.4s tok_s=9.10
+RESULT ifeval_like id=json_exact pass=False new=176 elapsed=15.5s tok_s=11.39
+RESULT ifeval_like id=one_word pass=False new=120 elapsed=10.7s tok_s=11.25
+RESULT ifeval_like id=quoted pass=False new=127 elapsed=7.3s tok_s=17.38
+RESULT ifeval_like id=csv_row pass=False new=219 elapsed=12.7s tok_s=17.31
+RESULT ifeval_like id=two_bullets pass=False new=256 elapsed=20.1s tok_s=12.71
+SUMMARY
+# VibeThinker-3B public benchmark subset
+
+{
+  "model": "WeiboAI/VibeThinker-3B",
+  "device": "mps",
+  "dtype": "torch.float16",
+  "temp": 0.6,
+  "top_p": 0.95,
+  "datasets": {
+    "gsm8k": "openai/gsm8k main/test indices 0-9",
+    "openai_humaneval": "openai/openai_humaneval test indices 0-4",
+    "ifeval_like": "local exact-format probes, not official IFEval"
+  }
+}
+
+## Summary
+- gsm8k: 4/10 (40.0%), 10.82 tok/s aggregate
+- humaneval: 3/5 (60.0%), 9.81 tok/s aggregate
+- ifeval_like: 0/5 (0.0%), 13.56 tok/s aggregate
+- overall: 7/20 (35.0%)
+

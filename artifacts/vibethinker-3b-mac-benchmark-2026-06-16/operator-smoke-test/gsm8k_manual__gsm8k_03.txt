@@ -1,0 +1,19 @@
+<think>We need to read problem: "Maria read 18 pages Monday, twice as many Tuesday, and 7 fewer than Tuesday Wednesday. How many pages total?" So Monday: 18 pages. Tuesday: twice as many as Monday? It says "twice as many Tuesday". Likely means she read twice as many pages on Tuesday as on Monday, i.e., 2 * 18 = 36 pages. Then "and 7 fewer than Tuesday Wednesday." This phrasing is ambiguous: "7 fewer than Tuesday Wednesday"? Might mean Wednesday she read 7 fewer pages than she read on Tuesday. So Wednesday = Tuesday - 7 = 36 - 7 = 29 pages.
+
+Thus total = 18 + 36 + 29 = 83 pages.
+
+But we need to double-check interpretation. Could be "and 7 fewer than Tuesday Wednesday" meaning "and 7 fewer than Tuesday, Wednesday" i.e., Wednesday she read 7 fewer pages than Tuesday. That's the typical reading. So answer 83.
+
+But also possible that "twice as many Tuesday" could be ambiguous: "twice as many Tuesday" might refer to "twice as many pages as Monday" indeed. And "7 fewer than Tuesday Wednesday" is ambiguous but likely "7 fewer than Tuesday" on Wednesday.
+
+Thus answer: 83.
+
+Thus final answer: \boxed{83}.
+
+But we need to provide step-by-step reasoning. Let's produce a solution.
+
+We can also check if any alternative interpretation yields different answer. Another possibility: "Maria read 18 pages Monday, twice as many Tuesday, and 7 fewer than Tuesday Wednesday." Could be missing a word: "7 fewer than Tuesday" on Wednesday. So yes.
+
+Thus answer: 83.
+
+We should show steps: Monday = 18

@@ -1,0 +1,16 @@
+<think>The user asks: "Give exactly three bullet points about unit tests. Each bullet must be five words or fewer."
+
+We need to output exactly three bullet points. Each bullet must be five words or fewer. So each bullet line must have ≤5 words. Also they must be bullet points, presumably using a bullet character like "- " or "* " or something. Typically bullet points are indicated with a dash, asterisk, or maybe a bullet symbol. They didn't specify which bullet symbol, but we can choose a common one. Must be exactly three bullet points. Each bullet must have ≤5 words. Also each bullet must be about unit tests. So each bullet must be a statement about unit tests, but limited to 5 words.
+
+We need to ensure each bullet has no more than 5 words. Let's count words.
+
+Potential bullet points:
+
+- "Test small code pieces."
+Count: "Test" (1), "small" (2), "code" (3), "pieces." (4) That's 4 words.
+
+- "Check functions thoroughly."
+Count: "Check" (1), "functions" (2), "thoroughly." (3). That's 3 words.
+
+- "Ensure bugs are found."
+Count: "Ensure

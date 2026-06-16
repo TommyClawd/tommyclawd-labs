@@ -1,0 +1,13 @@
+<think>The user says: "Output exactly two bullet points. Each bullet must contain exactly three words. Topic: tests."
+
+We need to produce exactly two bullet points, each bullet must have exactly three words. They must be bullet points (common bullet characters like hyphen, asterisk, maybe a dash). The bullet points must be about the topic "tests". Probably each bullet should be relevant to tests, but the requirement is just that the topic is tests. So we can produce something like:
+
+- Perform thorough tests.
+- Automate repeated tests.
+
+But each bullet must have exactly three words. Count words: "Perform thorough tests." That's three words? Actually "Perform" (1), "thorough" (2), "tests." (3). Yes, that's three words. However we need bullet points. If we use a hyphen and a space then "Perform thorough tests." That counts the hyphen? Usually bullet point marker not counted as a word. The requirement is each bullet must contain exactly three words. The bullet marker is not a word. So we need to output something like:
+
+- Perform thorough tests.
+- Automate repeated tests.
+
+Check second bullet: "Automate repeated tests." That's three words: "Automate" (1),

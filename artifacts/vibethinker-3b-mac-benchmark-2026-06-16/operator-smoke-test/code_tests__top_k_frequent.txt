@@ -1,0 +1,79 @@
+<think>The user asks: "Write Python function top_k_frequent(nums, k) returning the k most frequent integers in any order. Output only code."
+
+We need to produce a Python function that takes a list of numbers `nums` and an integer `k`, and returns the `k` most frequent integers (the numbers with highest frequencies), in any order. The answer should be only code, no extra explanation. The function should be robust.
+
+We need to follow the developer instruction: we must respond with only code (the final answer). The user specifically says "Output only code." So we must output just the code (the function). No extra text. The code should define a function top_k_frequent(nums, k). We'll implement using collections.Counter or maybe using a dict to count and then use heapq.nlargest or sort.
+
+We need to adhere to the policy: It's a normal programming problem, no disallowed content. So we can produce code.
+
+We must ensure we output only code, no additional commentary. The code should be a Python function. The function returns a list of the k most frequent integers, order doesn't matter.
+
+Potential solution:
+
+```
+from collections import Counter
+import heapq
+
+def top_k_frequent(nums, k):
+    count = Counter(nums)
+    return heapq.nlargest(k, count.keys(), key=count.__getitem__)
+```
+
+Or we can sort:
+
+```
+def top_k_frequent(nums, k):
+    freq = {}
+    for n in nums:
+        freq[n] = freq.get(n, 0) + 1
+    return sorted(freq.keys(), key=lambda x: -freq[x])[:k]
+```
+
+Better to use Counter and Counter.most_common.
+
+```
+def top_k_frequent(nums, k):
+    return [num for num, _ in Counter(nums).most_common(k))
+```
+
+We can also handle edge cases: if k > number of unique elements, just return all.
+
+But the problem likely expects typical solution.
+
+We must output only code. Use a single function definition. Might include import statements. Usually we can assume imports are allowed.
+
+Thus final answer should be something like:
+
+```python
+from collections import Counter
+
+def top_k_frequent(nums, k):
+    return [num for num, _ in Counter(nums).most_common(k))
+```
+
+Make sure syntax correct: `most_common(k)` returns list of `(num, count)` tuples. So list comprehension picks the first element.
+
+We need to ensure proper indentation. The code should be in a code block? The user didn't specify but "output only code". Usually we output a code block with the code inside. That is fine. The code block is considered part of the answer, but it's code. It's okay.
+
+We must not add any explanation.
+
+Thus final answer: just code.
+
+Check for potential issues: The function returns a list of ints, order is the order from most common to less, but any order is fine.
+
+We need to be careful about the final punctuation: no trailing spaces.
+
+Thus answer: a Python code block with imports and function.
+
+We need to obey the developer instruction: "Only code." So we must not include any extra text outside the code block.
+
+Thus final answer:
+
+```
+from collections import Counter
+
+def top_k_frequent(nums, k):
+    return [num for num, _ in Counter(nums).most_common(k))
+```
+
+Make sure parentheses: `most_common(k)` returns list, we need to close the list comprehension after parentheses. The code: `return [num for num, _ in Counter(nums).most_common(k))]` Wait, need to check syntax: The list comprehension is `[num for num, _ in Counter(nums).most_common(k))]` Actually, we

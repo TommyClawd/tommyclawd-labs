@@ -1,0 +1,11 @@
+<think>The user asks: "Output exactly the word benchmark wrapped in double quotes and nothing else."
+
+We need to output exactly: "benchmark". That is, double quotes around the word benchmark, and nothing else. So the output should be:
+
+"benchmark"
+
+No extra spaces, no extra newline? Usually we can include a newline at the end but it's okay. The instruction: "Output exactly the word benchmark wrapped in double quotes and nothing else." So we must output exactly the string "benchmark". So we should output:
+
+"benchmark"
+
+We must not add any explanation. So final answer: "benchmark".</think>"benchmark"

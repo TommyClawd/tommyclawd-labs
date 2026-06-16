@@ -1,0 +1,5 @@
+<think>The user says: "Output exactly this CSV row and nothing else: model,VibeThinker-3B,result,loaded". So they want the assistant to output exactly that CSV row and nothing else. The user says "Output exactly this CSV row and nothing else: model,VibeThinker-3B,result,loaded". So we should output exactly "model,VibeThinker-3B,result,loaded". No extra spaces? The phrase "exactly this CSV row and nothing else" implies we must output just the line: model,VibeThinker-3B,result,loaded. Should we include newline? Probably just the line. The user likely expects exactly that text. Must not include any explanation or additional text. So we must respond with exactly that line and nothing else.
+
+Thus answer: "model,VibeThinker-3B,result,loaded". Ensure no extra whitespace, no punctuation beyond line break maybe.
+
+We must obey content policy. It's safe. So final answer: exactly that line.</think>model,VibeThinker-3B,result,loaded

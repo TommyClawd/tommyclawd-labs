@@ -1,0 +1,29 @@
+<think>We have a user query: "A right triangle has legs 9 and 12. What is the hypotenuse? Please reason step by step, and put your final answer within \boxed{}."
+
+We need to compute the hypotenuse using Pythagorean theorem: c = sqrt(9^2 + 12^2) = sqrt(81 + 144) = sqrt(225) = 15.
+
+Thus answer is 15. Provide reasoning step by step, final answer in \boxed{15}. It's straightforward.
+
+We must produce a final answer with reasoning and final answer in \boxed{}.
+
+We need to be mindful of instructions: "You are an intelligent assistant designed to write solutions to the given math problem. ... Provide step-by-step reasoning, final answer in \boxed{}."
+
+Thus answer: The hypotenuse is 15.
+
+We can include reasoning: In a right triangle, legs a and b, hypotenuse c satisfies a^2 + b^2 = c^2. So c = sqrt(a^2 + b^2) = sqrt(81+144) = sqrt(225) = 15.
+
+Thus final answer: \boxed{15}.
+
+We should ensure we follow the format: final answer in \boxed{}.
+
+Thus answer.
+
+No issues.
+
+But the user wants step-by-step reasoning. So we can write:
+
+1. Identify legs a=9, b=12.
+2. Use Pythagorean theorem: c^2 = a^2 + b^2.
+3. Compute a^2 = 81, b^2 = 144.
+4. Sum: 81+144 = 225.
+5. Take square root: sqrt(225) = 15

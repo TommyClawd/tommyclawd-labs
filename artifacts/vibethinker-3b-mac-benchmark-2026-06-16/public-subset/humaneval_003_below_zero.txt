@@ -1,0 +1,92 @@
+<think>We need to write a Python function below_zero that takes a list of integers representing deposit (positive) and withdrawal (negative) operations. Starting from zero balance, we apply each operation sequentially, updating the balance. If at any point the balance falls below zero (i.e., becomes negative), the function should return True immediately. If after processing all operations the balance never goes below zero, return False.
+
+Edge cases: empty list returns False (balance never negative). List may contain zeros; zero does not change balance. The function must be robust.
+
+We need to produce code only, not explanation. Use type hints. Implementation straightforward:
+
+def below_zero(operations: List[int]) -> bool:
+    balance = 0
+    for op in operations:
+        balance += op
+        if balance < 0:
+            return True
+    return False
+
+That's it.
+
+But also we might consider that the problem statement says "detect if at any point the balance falls below zero, and at that point function should return True". So we need to return True if at any point the cumulative sum is negative. Equivalent to checking if any prefix sum is negative.
+
+Implementation as above.
+
+Potential nuance: The function signature expects List[int] input. Should import List from typing. Already imported.
+
+Add docstring as shown.
+
+Testing: Provided examples: [1,2,3] => sum goes 1,3,6 => never negative => False. [1,2,-4,5] => cumulative: 1,3,-1 => negative at third step => return True.
+
+Thus code is trivial.
+
+But we need to follow the instruction: "Output only code." So we should output only the code block containing the function. Possibly with a comment about solution? No, just code.
+
+Thus final answer: Provide the code.
+
+Potential improvements: Use any() with accumulate, but simplest loop.
+
+I'll write:
+
+from typing import List
+from itertools import accumulate
+
+def below_zero(operations: List[int]) -> bool:
+    """..."""
+    balance = 0
+    for op in operations:
+        balance += op
+        if balance < 0:
+            return True
+    return False
+
+But we can also use accumulate:
+
+def below_zero(operations: List[int]) -> bool:
+    balance = 0
+    for balance in accumulate(operations, initial=0):
+        if balance < 0:
+            return True
+    return False
+
+But need to import accumulate. However, we already have import from itertools. The simplest is loop.
+
+Thus final answer is code.
+
+Make sure to include docstring and type hint.
+
+Thus output:
+
+```python
+from typing import List
+
+def below_zero(operations: List[int]) -> bool:
+    """You're given a list of deposit and withdrawal operations on a bank account that starts with zero balance. Your task is to detect if at any point the balance falls below zero, and at that point function should return True. Otherwise it should return False."""
+    balance = 0
+    for op in operations:
+        balance += op
+        if balance < 0:
+            return True
+    return False
+```
+
+That's it.
+
+Check if any additional details needed: The docstring may be updated to match the triple quotes.
+
+Thus final answer: code only.</think>```python
+from typing import List
+
+def below_zero(operations: List[int]) -> bool:
+    """You're given a list of deposit and withdrawal operations on a bank account that starts with zero balance. Your task is to detect if at any point the balance falls below zero, and at that point function should return True. Otherwise it should return False."""
+    balance = 0
+    for op in operations:
+        balance += op
+        if balance < 0:
+           

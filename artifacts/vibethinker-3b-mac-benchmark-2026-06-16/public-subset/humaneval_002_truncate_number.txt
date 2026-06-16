@@ -1,0 +1,93 @@
+<think>The user asks: "Complete this Python function. Output only code."
+
+We have a function stub:
+
+def truncate_number(number: float) -> float:
+    """ Given a positive floating point number, it can be decomposed into
+    and integer part (largest integer smaller than given number) and decimals
+    (leftover part always smaller than 1).
+
+    Return the decimal part of the number.
+    >>> truncate_number(3.5)
+    0.5
+    """
+...
+
+We need to fill in implementation.
+
+Goal: Given a positive floating point number, return the decimal part (fractional part), i.e., number - floor(number). For positive numbers, integer part is floor. So we can use math.floor or int conversion (int truncates toward zero, which for positive is same as floor). So return number - int(number). Or using math.modf which returns fractional and integer parts. Use math.modf maybe.
+
+Edge cases: If number is integer like 5.0, decimal part is 0.0. For positive floats.
+
+We need to produce only code. Should we include import? Yes if using math. But could use built-in int. Simpler: return number - int(number). That's fine.
+
+Add docstring maybe more details.
+
+We must output only code. So output the entire function with implementation.
+
+Thus:
+
+def truncate_number(number: float) -> float:
+    """ Given a positive floating point number, it can be decomposed into
+    and integer part (largest integer smaller than given number) and decimals
+    (leftover part always smaller than 1).
+
+    Return the decimal part of the number.
+    >>> truncate_number(3.5)
+    0.5
+    >>> truncate_number(2.0)
+    0.0
+    """
+    return number - int(number)
+
+Alternatively, using math.modf: fractional, integer = math.modf(number); return fractional.
+
+But need import math. Simpler is above.
+
+Thus final answer: code only. Ensure no extra text. Provide the code block.
+
+Make sure to include type hints and docstring. The function should be complete.
+
+Thus output:
+
+```python
+def truncate_number(number: float) -> float:
+    """Given a positive floating point number, return its decimal part
+    (the fractional component) after removing the integer portion.
+
+    The integer part is defined as the largest integer less than or equal
+    to the number (i.e., the floor for positive numbers). The fractional
+    part is always in the range [0, 1).
+
+    This implementation works for positive numbers by subtracting the
+    integer part (obtained via int()) from the original value.
+
+    >>> truncate_number(3.5)
+    0.5
+    >>> truncate_number(7.0)
+    0.0
+    """
+    return number - int(number)
+```
+
+Make sure no extra text.
+
+Thus answer.</think>```python
+def truncate_number(number: float) -> float:
+    """Given a positive floating point number, return its decimal part
+    (the fractional component) after removing the integer portion.
+
+    The integer part is defined as the largest integer less than or equal
+    to the number (i.e., the floor for positive numbers). The fractional
+    part is always in the range [0, 1).
+
+    This implementation works for positive numbers by subtracting the
+    integer part (obtained via int()) from the original value.
+
+    >>> truncate_number(3.5)
+    0.5
+    >>> truncate_number(7.0)
+    0.0
+    """
+    return number - int(number)
+```

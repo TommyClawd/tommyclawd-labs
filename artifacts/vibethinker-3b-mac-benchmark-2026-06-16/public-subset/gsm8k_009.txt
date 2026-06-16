@@ -1,0 +1,45 @@
+<think>We need to solve the problem: Eliza's rate per hour for the first 40 hours she works each week is $10. Overtime pay is 1.2 times regular hourly rate. She worked 45 hours this week. Compute earnings.
+
+Regular rate $10 per hour for first 40 hours = 40*10 = $400.
+
+Overtime hours = 45 - 40 = 5 hours. Overtime rate = 1.2 * 10 = $12 per hour. Overtime earnings = 5 * 12 = $60.
+
+Total earnings = 400 + 60 = $460.
+
+Thus answer: $\boxed{460}$.
+
+But we need to output final numeric answer within \boxed{}. Provide step-by-step reasoning. Provide final answer.
+
+Thus answer: \boxed{460}.</think>The first 40 hours are paid at the regular rate:
+
+\[
+40\text{ hr} \times \$10/\text{hr}= \$400.
+\]
+
+Overtime hours:
+
+\[
+45\text{ hr} - 40\text{ hr}=5\text{ hr}.
+\]
+
+Overtime rate is \(1.2\) times the regular rate:
+
+\[
+1.2 \times \$10 = \$12\text{ per hour}.
+\]
+
+Overtime pay:
+
+\[
+5\text{ hr} \times \$12/\text{hr}= \$60.
+\]
+
+Total weekly earnings:
+
+\[
+\$400 + \$60 = \$460.
+\]
+
+\[
+\boxed{460}
+\]

@@ -1,0 +1,32 @@
+<think>We need to solve the problem. It's about buying 16 glasses. The first glass costs $5. Every second glass costs only 60% of the price. Interpretation: "every second glass" meaning the second, fourth, sixth, etc. costs 60% of the price (i.e., 0.6 * $5 = $3). The odd-numbered glasses cost full price $5. So for 16 glasses, we have 8 full price glasses (odd positions) and 8 discounted glasses (even positions). So total cost = 8 * $5 + 8 * ($5 * 0.6) = 8*5 + 8*3 = 40 + 24 = $64.
+
+Thus answer $64.
+
+But let's double-check: The phrase "every second glass costs only 60% of the price." Could be interpreted as "every second glass (i.e., each second glass you buy, like the 2nd, 4th, etc.) costs 60% of the original price." That's typical discount scheme. So yes.
+
+Thus final answer: \boxed{64}.
+
+But we must present step-by-step reasoning. Also check if any nuance: Could be "every second glass" meaning "for each pair of glasses, the second one is 60% price." So same as above.
+
+Thus final answer: \boxed{64}.
+
+We'll produce a solution with reasoning.
+
+Potential pitfalls: Might ask to compute for 16 glasses, each second glass costs 60% of $5 = $3. So total = 8*$5 + 8*$3 = $64.
+
+Thus final answer: \boxed{64}.</think>The first glass costs \$5.  
+Every second glass (the 2nd, 4th, 6th, …) costs 60 % of the regular price:
+
+\[
+0.60 \times 5 = \$3.
+\]
+
+For 16 glasses there are 8 full‑price glasses (the odd‑numbered ones) and 8 discounted glasses (the even‑numbered ones).
+
+\[
+\text{Total cost}=8(\$5)+8(\$3)=40+24=\$64.
+\]
+
+\[
+\boxed{64}
+\]

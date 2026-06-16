@@ -1,0 +1,49 @@
+<think>We need to write a Python function is_palindrome(s) that ignores case and non-alphanumeric characters. Output only code.
+
+We need to implement a function that returns True if the string s (or maybe a boolean) indicates a palindrome after ignoring case and non-alphanumeric characters. The function signature is is_palindrome(s). The function should ignore case (so convert to same case) and ignore non-alphanumeric characters (i.e., only consider letters and digits). Then check if the resulting string is a palindrome (reads the same forward and backward). The function should probably return a boolean.
+
+The user says "Output only code." So we need to output only the code, no extra explanation. Possibly include docstring? Probably not needed, but can include. But they said output only code, so we should output just the code block. Probably something like:
+
+def is_palindrome(s):
+    filtered = [c for c in s if c.isalnum()]
+    return len(filtered) == len(filtered[::-1])  # maybe also ignore case
+
+But we need to ignore case, so we can convert to lower case: filtered = [c.lower() for c in s if c.isalnum()] or filter then lower.
+
+Better: filtered = [c.lower() for c in s if c.isalnum()] then check palindrome.
+
+Alternatively, we can use a two-pointer approach: left and right pointers moving inward skipping non-alphanumeric characters and comparing case-insensitively.
+
+We can implement the straightforward approach: filter then compare.
+
+Thus code:
+
+def is_palindrome(s):
+    filtered = [c.lower() for c in s if c.isalnum()]
+    return filtered == filtered[::-1]
+
+Or more explicit:
+
+def is_palindrome(s):
+    s = ''.join(ch.lower() for ch in s if ch.isalnum())
+    return s == s[::-1]
+
+That is succinct.
+
+The user wants only code. So we output:
+
+```python
+def is_palindrome(s):
+    s = ''.join(ch.lower() for ch in s if ch.isalnum())
+    return s == s[::-1]
+```
+
+We can optionally include if __name__ == '__main__' test, but not required. The instruction is to write a function, not to include testing. So just the function.
+
+Thus final answer: code block with the function.
+
+Make sure we follow "Output only code." So we should not include any explanation. Provide code only.
+
+Thus final answer: a code block with the function.
+
+Potential edge cases: empty string should be

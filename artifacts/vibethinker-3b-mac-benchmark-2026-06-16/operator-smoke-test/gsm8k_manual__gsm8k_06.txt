@@ -1,0 +1,19 @@
+<think>We need to solve a simple geometry problem: rectangle dimensions: length 14 cm, width 9 cm. Perimeter = 2*(length+width) = 2*(14+9) = 2*23 = 46 cm. So answer: 46. Output as integer. Provide reasoning steps. Provide final answer in \boxed{}.
+
+We must produce step-by-step reasoning. Then final answer in \boxed{46}. The user says "Give final answer as an integer." So just integer inside box.
+
+Thus answer: \boxed{46}.</think>The perimeter \(P\) of a rectangle is twice the sum of its length \(l\) and width \(w\):
+
+\[
+P = 2(l + w)
+\]
+
+Given \(l = 14\) cm and \(w = 9\) cm,
+
+\[
+P = 2(14 + 9) = 2(23) = 46 \text{ cm}
+\]
+
+\[
+\boxed{46}
+\]

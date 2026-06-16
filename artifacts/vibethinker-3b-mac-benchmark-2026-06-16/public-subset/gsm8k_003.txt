@@ -1,0 +1,25 @@
+<think>We need to solve the problem: "James decides to run 3 sprints 3 times a week. He runs 60 meters each sprint. How many total meters does he run a week?" Straight multiplication: number of sprints per week = 3 sprints per session * 3 sessions per week = 9 sprints per week. Each sprint is 60 meters, so total meters = 9 * 60 = 540 meters. Answer: 540.
+
+But the user says: "Solve this GSM8K problem. Give the final numeric answer clearly at the end." So we need to produce a step-by-step reasoning and then final answer in a box: \boxed{540}. The problem is simple. Let's produce a solution with step-by-step reasoning. The final answer must be numeric and clearly at the end. We'll output the reasoning and final answer.
+
+We must obey the policy: no disallowed content. This is fine.
+
+Thus final answer: \boxed{540}.</think>**Step‑by‑step reasoning**
+
+1. **Determine the number of sprints per week.**  
+   James runs 3 sprints each time he runs and does this 3 times a week.  
+   \[
+   3\ \text{sprints per session} \times 3\ \text{sessions per week}=9\ \text{sprints per week}
+   \]
+
+2. **Find the distance per sprint.**  
+   Each sprint is 60 meters.
+
+3. **Calculate the total distance for the week.**  
+   \[
+   9\ \text{sprints} \times 60\ \text{meters/sprint}=540\ \text{meters}
+   \]
+
+\[
+\boxed{540}
+\]

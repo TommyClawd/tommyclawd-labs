@@ -1,0 +1,19 @@
+<think>We have a problem: "There are 96 students. They split equally into 8 buses. Then 3 students leave each bus. How many students are left on each bus?" This is a simple arithmetic problem. Steps: total 96, equally into 8 buses => each bus initially has 96/8 = 12 students. Then 3 leave each bus, so each bus now has 12 - 3 = 9. So answer: 9. So final answer \boxed{9}. However, we need to produce a solution with step-by-step reasoning and final answer in \boxed{}. Let's elaborate.
+
+But the user says "Solve. Give final answer as an integer. There are 96 students. They split equally into 8 buses. Then 3 students leave each bus. How many students are left on each bus? Please reason step by step, and put your final answer within \boxed{}."
+
+Thus answer: \boxed{9}.
+
+But we must produce a step-by-step solution. I'll produce reasoning: total 96, divide by 8 yields 12 per bus, subtract 3 yields 9. So answer: \boxed{9}.
+
+Thus final answer: \boxed{9}.
+
+That's straightforward. However, we need to ensure we follow instructions: "Give final answer as an integer. Please reason step by step, and put your final answer within \boxed{}." So we should have a final answer \boxed{9}. Good.
+
+But the instruction says "Solve. Give final answer as an integer." So final answer is integer 9.
+
+Thus answer: \boxed{9}.
+
+Thus solution: 96/8 = 12. Then 12 - 3 = 9. So each bus has 9 students.
+
+Thus final answer: \

@@ -1,0 +1,32 @@
+<think>The user asks: "A TIDAL Wear OS player service exposes UI state via StateFlow. Network callbacks, Media3 player callbacks, and UI actions can all mutate state. What invariants and tests would catch stale queue/current track bugs?" This is a question about testing in a mobile OS (Wear OS) that uses StateFlow (Kotlin Coroutines) to expose UI state. The question asks what invariants and tests would catch stale queue/current track bugs. This is likely about audio player service where the queue and current track may be stale due to asynchronous updates, e.g., from network callbacks (like receiving new track info from network), Media3 player callbacks (like when a track finishes, the player may update internal state), and UI actions (like playing a track, selecting from UI). The system exposes UI state via StateFlow, so the UI observes the StateFlow and updates accordingly. The question: "What invariants and tests would catch stale queue/current track bugs?" So we need to discuss invariants that must hold for correct behavior, and tests (unit tests, integration tests) that could detect bugs that cause stale queue or current track. Likely invariants include:
+
+- The StateFlow holds a single, up-to-date reference to the current track being played.
+- The queue contains only tracks that are not currently playing, and the order reflects the order of arrival and processing.
+- The current track's state (e.g., playing, paused, finished) matches the player's internal state.
+- When a track starts playing (Play action), it is removed from the queue and set as current.
+- When a track finishes, it is removed from the queue and current track is updated to the next track (or null).
+- Network callbacks that provide new track info must update the StateFlow to reflect the new current track if the track is accepted, or add to the queue if not.
+- Media3 player callbacks (like onTrackFinished) must update the internal state and propagate to UI via StateFlow.
+- UI actions (like playing a track from UI) must synchronize with the player's internal state.
+
+Thus invariants:
+
+1. **Consistent relationship between internal player state and exposed StateFlow**: The StateFlow's current track always reflects the player's internal "currently playing" track.
+
+2. **Queue consistency**: The queue contains all tracks that have been received but not currently playing, in the correct order. The first element of the queue should be the next track to play if the player is idle or paused.
+
+3. **State consistency after network arrival**: When a network callback delivers a new track, either it is accepted as current (if playing is idle) or enqueued, and the StateFlow updates accordingly.
+
+4. **Post-finish handling**: When a track finishes (via Media3 callback), the internal state resets and the next track (if any) becomes current, and the StateFlow reflects this.
+
+5. **No double plays**: A track should not be played twice concurrently; if a UI attempts to play a track while it is playing or in queue, the player should either reject or queue it appropriately.
+
+6. **Synchronization after pause/resume**: Pausing a track should not affect the current track identity in StateFlow; only when resuming should the track continue playing.
+
+7. **Edge cases**: When the queue is empty and playing is idle, current track should be null.
+
+Testing:
+
+- **Unit tests**: Isolate the state management logic using a mock StateFlow or a simple data class representing track state. Test network callback handling: feed in track data, verify StateFlow updates correctly to either current or queue.
+
+- **Integration tests**: Simulate the whole flow: network server sends track data, UI selects track, player starts playing, track finishes, UI
