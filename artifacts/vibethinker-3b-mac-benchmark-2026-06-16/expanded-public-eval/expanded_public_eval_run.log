@@ -1,0 +1,50 @@
+{
+  "model": "WeiboAI/VibeThinker-3B",
+  "device": "mps",
+  "dtype": "torch.float16",
+  "temp": 0.6,
+  "top_p": 0.95,
+  "slices": {
+    "aime": "MathArena/aime_2024_I train indices 0-4",
+    "ifeval": "google/IFEval train indices [0,5,25,60,120] with simplified local scorer, not official score",
+    "livecodebench": "livecodebench/code_generation default test indices 0-2 public tests only; not release_v6 official runner"
+  }
+}
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+Loading weights:   0%|          | 0/434 [00:00<?, ?it/s]Loading weights:   0%|          | 1/434 [00:01<09:18,  1.29s/it]Loading weights:  34%|███▍      | 147/434 [00:01<00:01, 144.54it/s]Loading weights:  52%|█████▏    | 224/434 [00:01<00:01, 141.41it/s]Loading weights:  63%|██████▎   | 272/434 [00:02<00:01, 134.97it/s]Loading weights:  71%|███████   | 306/434 [00:02<00:01, 110.88it/s]Loading weights:  76%|███████▋  | 331/434 [00:03<00:01, 82.49it/s] Loading weights:  80%|████████  | 349/434 [00:03<00:01, 81.82it/s]Loading weights:  84%|████████▍ | 364/434 [00:03<00:00, 77.51it/s]Loading weights:  87%|████████▋ | 376/434 [00:04<00:00, 78.52it/s]Loading weights:  89%|████████▉ | 387/434 [00:04<00:00, 80.01it/s]Loading weights:  92%|█████████▏| 399/434 [00:04<00:00, 76.79it/s]Loading weights:  95%|█████████▍| 411/434 [00:04<00:00, 76.44it/s]Loading weights:  97%|█████████▋| 423/434 [00:04<00:00, 75.27it/s]Loading weights: 100%|██████████| 434/434 [00:04<00:00, 90.56it/s]
+RESULT aime index=0 pass=True expected=204 extracted=204 new=1024 elapsed=142.4s tok_s=7.19
+RESULT aime index=1 pass=False expected=25 extracted=0 new=1024 elapsed=94.6s tok_s=10.82
+RESULT aime index=2 pass=False expected=809 extracted=10 new=1024 elapsed=101.3s tok_s=10.11
+RESULT aime index=3 pass=True expected=116 extracted=116 new=1024 elapsed=84.4s tok_s=12.13
+RESULT aime index=4 pass=False expected=104 extracted=16 new=1024 elapsed=81.9s tok_s=12.51
+RESULT ifeval index=0 pass=False supported_checks=[('no_comma', False), ('highlighted_sections', True), ('word_count', True)] new=768 elapsed=57.8s tok_s=13.28
+RESULT ifeval index=5 pass=False supported_checks=[('bullet_count', False)] new=768 elapsed=79.8s tok_s=9.63
+RESULT ifeval index=25 pass=False supported_checks=[('change_case:english_capital', None), ('forbidden_words', False)] new=768 elapsed=78.2s tok_s=9.82
+RESULT ifeval index=60 pass=True supported_checks=[('detectable_content:postscript', None), ('bullet_count', True)] new=768 elapsed=74.4s tok_s=10.33
+RESULT ifeval index=120 pass=False supported_checks=[('no_comma', False), ('word_count', False)] new=768 elapsed=79.5s tok_s=9.66
+RESULT lcb index=0 qid=abc301_f pass=False new=1536 elapsed=191.3s tok_s=8.03
+RESULT lcb index=1 qid=abc301_a pass=False new=1536 elapsed=221.7s tok_s=6.93
+RESULT lcb index=2 qid=abc301_c pass=False new=1536 elapsed=228.3s tok_s=6.73
+SUMMARY
+# VibeThinker-3B expanded public eval
+
+{
+  "model": "WeiboAI/VibeThinker-3B",
+  "device": "mps",
+  "dtype": "torch.float16",
+  "temp": 0.6,
+  "top_p": 0.95,
+  "slices": {
+    "aime": "MathArena/aime_2024_I train indices 0-4",
+    "ifeval": "google/IFEval train indices [0,5,25,60,120] with simplified local scorer, not official score",
+    "livecodebench": "livecodebench/code_generation default test indices 0-2 public tests only; not release_v6 official runner"
+  }
+}
+
+## Summary
+- aime_2024_I: 2/5 (40.0%), 10.15 tok/s aggregate
+- ifeval_simplified: 1/5 (20.0%), 10.39 tok/s aggregate
+- livecodebench_public_tests: 0/3 (0.0%), 7.19 tok/s aggregate
+- overall: 3/13 (23.1%)
+

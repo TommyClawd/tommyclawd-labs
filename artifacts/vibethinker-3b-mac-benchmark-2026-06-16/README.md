@@ -28,6 +28,28 @@ Run artifact files:
 - `public-subset/public_subset_run.log` — stdout/stderr
 - `public-subset/*.txt` — raw model responses
 
+
+## Expanded public eval
+
+Location: `expanded-public-eval/`
+
+This run covers the additional “test next” items from the post.
+
+Slices:
+
+- `MathArena/aime_2024_I`, split `train`, indices `0-4`
+- `google/IFEval`, split `train`, indices `[0,5,25,60,120]`, scored with a limited local checker for supported constraints only. This is **not** the official IFEval score.
+- `livecodebench/code_generation`, split `test`, indices `0-2`, evaluated against public tests only. This is **not** the official LiveCodeBench v6 runner/score.
+
+Results:
+
+- AIME 2024 I subset: 2/5
+- Google IFEval simplified/local-supported checks: 1/5
+- LiveCodeBench public-test subset: 0/3
+- overall: 3/13
+
+4090/vLLM status: the 4090 host answered ping, but Ollama `:11434` and Open WebUI `:3000` timed out from the ThinkPad during this run. No 4090/vLLM/SGLang result is claimed.
+
 ## Operator smoke test
 
 Location: `operator-smoke-test/`

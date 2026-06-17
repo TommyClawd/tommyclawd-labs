@@ -1,0 +1,21 @@
+<think>The user asks: "Write a 300+ word summary of the wikipedia page 'https://en.wikipedia.org/wiki/Raymond_III,_Count_of_Tripoli'. Do not use any commas and highlight at least 3 sections that has titles in markdown format, for example *highlighted section part 1*, *highlighted section part 2*, *highlighted section part 3*."
+
+We need to produce a summary of the Wikipedia page about "Raymond III, Count of Trieste"? Actually the page is "Raymond_III,_Count_of_Tripoli". I need to check the content. Since I cannot access the internet, I need to rely on knowledge. However, I can approximate. But also constraints: Must be 300+ words, no commas at all! That's a huge constraint: No commas anywhere in the output. Also need to highlight at least 3 sections that have titles in markdown format, e.g., *highlighted section part 1*.
+
+The formatting: "highlight at least 3 sections that has titles in markdown format, for example *highlighted section part 1*". The example uses asterisks for emphasis (italic) but they say "titles in markdown format". Possibly they want headings like ** or #? But they give example "*highlighted section part 1*". So we need to include at least three such highlighted sections. The asterisks around text will make italics in markdown. So we need at least three occurrences of *something*.
+
+We must produce a summary of at least 300 words, with no commas. That's extremely tricky because we must avoid the comma punctuation character (','). We can use periods, semicolons, colons, but not commas. Also cannot use commas in the highlighted sections. Must ensure no commas appear anywhere.
+
+We must also ensure we have at least three highlighted sections with asterisks like *section*.
+
+We must also ensure the total word count is at least 300 words. Counting words manually is tough but we can approximate. Must avoid commas. Must avoid any comma characters. Must also avoid any commas inside the URLs? The user gave a URL but we cannot include it? We can mention it without commas. But we need to be careful not to include any commas. Also avoid using numbers with commas like "1,000". Must avoid any comma characters.
+
+We must also avoid using "e.g." because that includes a comma? Actually "e.g.," includes a comma after. But "e.g." is okay but includes a period and a comma? Actually "e.g." includes a period after e and after g and a period after maybe? "e.g." includes a period after e and after g and a period after? It's "e.g." which includes a period after e and after g and a period after the final g? That's fine. No comma. So it's okay.
+
+But we must avoid any commas. Also must avoid typical list punctuation. Use simple sentences separated by periods.
+
+We must produce at least 300 words. Let's aim for about 330 words. Must be careful not to accidentally include a comma. Must also avoid using "i.e.," etc. Must avoid "for example," as that includes a comma after for example. So we need to be careful.
+
+We also need to include at least three highlighted sections. Use *section name* style. Eg *Introduction*, *Historical Background*, *Legacy*. Must ensure those sections are within the text. Must also not use commas inside them.
+
+We must ensure the entire text has no commas. So we must write sentences without commas. Use simple short sentences. Use conjunctions like and but

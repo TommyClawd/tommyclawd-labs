@@ -1,0 +1,35 @@
+<think>The user asks: "Write the lyrics to a hit song by the rock band 'The Gifted and The Not Gifted'. To make it rocky, the response should be in all capital letters. The word 'rock' should not appear in your response."
+
+We need to produce a set of lyrics (like a song). Must be in all capital letters. Must not contain the word "rock". The user says "To make it rocky". They want a hit song by the rock band "The Gifted and The Not Gifted". However we cannot mention the word "rock". So we must produce lyrics that are presumably in the style of that band, but not using the word "rock". Must be all caps.
+
+Constraints: All caps, no "rock". Must avoid the word "rock" anywhere, including as part of other words? The instruction says "The word 'rock' should not appear". So we cannot have "rock" as a standalone word. But we must be careful about words that contain "rock" as substring, like "rockstar", "rocky", "rocking", "rocking", "rocker", "rocken", etc. Probably better to avoid any word containing the sequence r-o-c-k. So we must not have that exact substring? Usually they'd check for the word "rock" as a separate token. But safer to avoid any occurrence of the letters r o c k consecutively. So we must avoid any word containing "rock". That includes "ROCK", "ROCKET", "ROCKS", etc. So we need to be careful.
+
+We need to produce all caps text, no "ROCK". The band is known for "The Gifted and The Not Gifted". The phrase "THE GIFTED AND THE NOT GIFTED" includes "THE" repeated etc. That phrase itself doesn't contain "ROCK". So we can use that. Must avoid "ROCK". Also avoid "ROCKY", "ROCKEN", etc.
+
+We need to produce a hit song lyric, presumably multiple verses, chorus, etc. All caps.
+
+We can produce something like:
+
+"VERSE 1:
+I WALK THROUGH THE NIGHT, MY EYES ON THE HORIZON,
+...
+
+CHORUS:
+WE ARE THE GIFTED AND THE NOT GIFTED,
+...
+
+Make sure no word contains "ROCK". Also all caps.
+
+We must avoid "ROCK" as part of any word, like "ROCKY" or "ROCKS". Also avoid "GROCK"? Not needed. Avoid "TROCK"? Not needed.
+
+We must watch for "SCORCK"? Not needed. So we need to carefully check each word.
+
+We also must not use "ROCK" as a separate word. So we need to avoid "ROCK". Must also avoid "ROCK" in "ROCK" uppercase, but maybe the system checks case-insensitively. So we must avoid the substring "ROCK" anywhere.
+
+Thus we need to avoid any word containing that substring. So we need to carefully craft a set of lines that do not contain "ROCK". Also all caps.
+
+We need to produce a plausible lyric but must avoid "ROCK". Let's think about synonyms: "guitar", "drum", "riff", "vibe", "beat". But "GUITAR" is fine. "DRUM" is fine. "RIFF" is fine. "BASS" is fine. "SOUND" is fine.
+
+We need to ensure we don't accidentally include "ROCK". For instance, "GROCK" contains "ROCK". So avoid that. "SROCK"? no.
+
+Also "CROWK
