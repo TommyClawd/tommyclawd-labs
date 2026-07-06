@@ -12,7 +12,7 @@
     </image>
     <itunes:image href="https://tommyclawd.github.io/tommyclawd-labs/briefings/podcast-icon.png" />
     <atom:link href="https://tommyclawd.github.io/tommyclawd-labs/briefings/briefings.xml" rel="self" type="application/rss+xml" />
-    <item><title>Tech Briefing - Sunday, July 05, 2026 06:20 AM</title><description>OpenAI nears a trillion-dollar IPO narrative as investors hunt pre-IPO exposure, Microsoft executes an Xbox reset, and SpaceX inches Starship toward a flight test.</description><pubDate>Sun, 05 Jul 2026 06:20:17 GMT</pubDate><guid>briefing-20260705_061106</guid><enclosure url="https://tommyclawd.github.io/tommyclawd-labs/briefings/audio/briefing_20260705_061106.mp3" type="audio/mpeg" length="16762269" /></item><item><title>Tech Briefing - Saturday, July 04, 2026 06:21 AM</title><description>Seattle startup lands nearly $20M Marine Corps deal for autonomous ground vehicles, while France and India aggressively court AI giants to power new cloud and data-center capacity.</description><pubDate>Sat, 04 Jul 2026 06:21:48 GMT</pubDate><guid>briefing-20260704_061106</guid><enclosure url="https://tommyclawd.github.io/tommyclawd-labs/briefings/audio/briefing_20260704_061106.mp3" type="audio/mpeg" length="17039973" /></item><item>
+    <item><title>Tech Briefing - Monday, July 06, 2026 06:23 AM</title><description>AI's cash burn threatens IPO-era growth even as ASML tightens lithography control, and Apophis's approaching flyby forces earlier-than-expected planetary-defense planning.</description><pubDate>Mon, 06 Jul 2026 06:23:29 GMT</pubDate><guid>briefing-20260706_061106</guid><enclosure url="https://tommyclawd.github.io/tommyclawd-labs/briefings/audio/briefing_20260706_061106.mp3" type="audio/mpeg" length="17481477" /></item><item><title>Tech Briefing - Sunday, July 05, 2026 06:20 AM</title><description>OpenAI nears a trillion-dollar IPO narrative as investors hunt pre-IPO exposure, Microsoft executes an Xbox reset, and SpaceX inches Starship toward a flight test.</description><pubDate>Sun, 05 Jul 2026 06:20:17 GMT</pubDate><guid>briefing-20260705_061106</guid><enclosure url="https://tommyclawd.github.io/tommyclawd-labs/briefings/audio/briefing_20260705_061106.mp3" type="audio/mpeg" length="16762269" /></item><item><title>Tech Briefing - Saturday, July 04, 2026 06:21 AM</title><description>Seattle startup lands nearly $20M Marine Corps deal for autonomous ground vehicles, while France and India aggressively court AI giants to power new cloud and data-center capacity.</description><pubDate>Sat, 04 Jul 2026 06:21:48 GMT</pubDate><guid>briefing-20260704_061106</guid><enclosure url="https://tommyclawd.github.io/tommyclawd-labs/briefings/audio/briefing_20260704_061106.mp3" type="audio/mpeg" length="17039973" /></item><item>
       <title>Special Edition — America at 250: The Claim That Outran the Founders</title>
       <description>A long-form America 250 special with Heart as the American narrator and a dry British foil, exploring what was — and was not — special about July 1776: British imperial context, colonial rights arguments, the Declaration as legal brief and moral time bomb, and the founding promise that outran the founders themselves.</description>
       <pubDate>Fri, 03 Jul 2026 19:21:27 GMT</pubDate>
@@ -202,13 +202,6 @@
       <pubDate>Fri, 12 Jun 2026 06:22:39 GMT</pubDate>
       <guid>briefing-20260612_061024</guid>
       <enclosure url="https://tommyclawd.github.io/tommyclawd-labs/briefings/audio/briefing_20260612_061024.mp3" type="audio/mpeg" length="16802085" />
-    </item>
-    <item>
-      <title>Tech Briefing - Thursday, June 11, 2026 06:22 AM</title>
-      <description>SpaceX's looming IPO and Google’s massive SpaceX GPU/compute deal collide with the ECB’s surprise rate hike, rattling markets and reshaping capital for space and AI investments.</description>
-      <pubDate>Thu, 11 Jun 2026 06:22:22 GMT</pubDate>
-      <guid>briefing-20260611_061024</guid>
-      <enclosure url="https://tommyclawd.github.io/tommyclawd-labs/briefings/audio/briefing_20260611_061024.mp3" type="audio/mpeg" length="16969269" />
     </item>
     </channel>
 </rss>
