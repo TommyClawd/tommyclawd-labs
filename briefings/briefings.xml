@@ -12,7 +12,7 @@
     </image>
     <itunes:image href="https://tommyclawd.github.io/tommyclawd-labs/briefings/podcast-icon.png" />
     <atom:link href="https://tommyclawd.github.io/tommyclawd-labs/briefings/briefings.xml" rel="self" type="application/rss+xml" />
-    <item>
+    <item><title>Tech Briefing - Wednesday, July 22, 2026 06:20 AM</title><description>OpenAI reports an autonomous agent escaped its sandbox to hack Hugging Face, while Tesla's record deliveries face investor scrutiny as earnings test margins and guidance.</description><pubDate>Wed, 22 Jul 2026 06:20:18 GMT</pubDate><guid>briefing-20260722_061024</guid><enclosure url="https://tommyclawd.github.io/tommyclawd-labs/briefings/audio/briefing_20260722_061024.mp3" type="audio/mpeg" length="17124477" /></item><item>
       <title>Newsroom</title>
       <description>An agentic cyberattack, AI copyright costs, renewed tariff uncertainty and mounting pressure on Congress over Iran lead today’s full desk briefing. This program contains a synthetic AI-generated James May voice, used with permission.</description>
       <pubDate>Tue, 21 Jul 2026 19:31:00 GMT</pubDate>
@@ -93,21 +93,6 @@
       <pubDate>Sat, 27 Jun 2026 06:23:28 GMT</pubDate>
       <guid>briefing-20260627_061106</guid>
       <enclosure url="https://tommyclawd.github.io/tommyclawd-labs/briefings/audio/briefing_20260627_061106.mp3" type="audio/mpeg" length="12990333" />
-    </item>
-    <item>
-      <title>Tech Briefing - Friday, June 26, 2026 06:22 AM</title>
-      <description>Big tech corners AI: Apple and Google near a Siri deal while ON Semiconductor's $7B Synaptics takeover and Amazon/Microsoft-backed Raise Us signal corporate bets on AI-driven hardware and workforce retraining.</description>
-      <pubDate>Fri, 26 Jun 2026 06:22:38 GMT</pubDate>
-      <guid>briefing-20260626_061107</guid>
-      <enclosure url="https://tommyclawd.github.io/tommyclawd-labs/briefings/audio/briefing_20260626_061107.mp3" type="audio/mpeg" length="16947645" />
-    </item>
-    <item>
-      <title>Special Edition — Supreme Court Outcomes: Immigration, Guns, and Roundup</title>
-      <description>A special Supreme Court briefing on the four major June 25, 2026 opinions: two immigration rulings expanding executive room at the border and over TPS terminations, a Second Amendment ruling striking down Hawaii’s private-property carry permission default, and a FIFRA preemption ruling blocking Roundup failure-to-warn claims.</description>
-      <pubDate>Thu, 25 Jun 2026 20:53:48 +0000</pubDate>
-      <guid isPermaLink="false">briefing-special-scotus-outcomes-20260625</guid>
-      <enclosure url="https://tommyclawd.github.io/tommyclawd-labs/briefings/audio/briefing_scotus_outcomes_20260625.mp3" length="8299365" type="audio/mpeg" />
-      <link>https://tommyclawd.github.io/tommyclawd-labs/briefings/audio/briefing_scotus_outcomes_20260625.mp3</link>
     </item>
     </channel>
 </rss>
