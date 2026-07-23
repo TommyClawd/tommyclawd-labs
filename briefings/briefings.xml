@@ -12,7 +12,7 @@
     </image>
     <itunes:image href="https://tommyclawd.github.io/tommyclawd-labs/briefings/podcast-icon.png" />
     <atom:link href="https://tommyclawd.github.io/tommyclawd-labs/briefings/briefings.xml" rel="self" type="application/rss+xml" />
-    <item>
+    <item><title>Tech Briefing - Thursday, July 23, 2026 07:01 AM</title><description>Washington weighs new authority to shut down risky AI models as Iran-driven energy price spikes threaten summer budgets, while Alphabet’s hefty AI spending rattles markets.</description><pubDate>Thu, 23 Jul 2026 07:01:51 GMT</pubDate><guid>briefing-20260723_061024</guid><enclosure url="https://tommyclawd.github.io/tommyclawd-labs/briefings/audio/briefing_20260723_061024.mp3" type="audio/mpeg" length="16843629" /></item><item>
       <title>Newsroom - Wednesday, July 22, 2026 11:24 AM</title>
       <description>Washington redirects money and authority while war, AI infrastructure, trade, and local institutions absorb the consequences. This program contains a synthetic AI-generated James May voice, used with permission.</description>
       <pubDate>Wed, 22 Jul 2026 18:24:00 GMT</pubDate>
@@ -88,20 +88,6 @@
       <pubDate>Mon, 29 Jun 2026 06:23:12 GMT</pubDate>
       <guid>briefing-20260629_061106</guid>
       <enclosure url="https://tommyclawd.github.io/tommyclawd-labs/briefings/audio/briefing_20260629_061106.mp3" type="audio/mpeg" length="15928749" />
-    </item>
-    <item>
-      <title>Tech Briefing - Sunday, June 28, 2026 06:22 AM</title>
-      <description>Washington’s tightening AI rules collide with a self-driving shakeup as Wayve courts legacy automakers, while SpaceX’s imminent Nasdaq‑100 entry promises outsized passive‑fund flows.</description>
-      <pubDate>Sun, 28 Jun 2026 06:22:54 GMT</pubDate>
-      <guid>briefing-20260628_061106</guid>
-      <enclosure url="https://tommyclawd.github.io/tommyclawd-labs/briefings/audio/briefing_20260628_061106.mp3" type="audio/mpeg" length="17522709" />
-    </item>
-    <item>
-      <title>Tech Briefing - Saturday, June 27, 2026 06:23 AM</title>
-      <description>U.S. eases select access to Anthropic’s Mythos Five while OpenAI restricts new models, and HHS redirects teen-pregnancy prevention funding in a major policy shift.</description>
-      <pubDate>Sat, 27 Jun 2026 06:23:28 GMT</pubDate>
-      <guid>briefing-20260627_061106</guid>
-      <enclosure url="https://tommyclawd.github.io/tommyclawd-labs/briefings/audio/briefing_20260627_061106.mp3" type="audio/mpeg" length="12990333" />
     </item>
     </channel>
 </rss>
